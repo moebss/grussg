@@ -1,0 +1,9 @@
+{
+    "name": "grussgenerator-landingpage",
+    "version": "1.0.0",
+    "description": "Premium Landingpage for grussgenerator.de",
+    "main": "index.html",
+    "scripts": {
+        "dev": "npx servor"
+    }
+}

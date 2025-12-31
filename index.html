@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grussgenerator.de | Der perfekte Text für jeden Anlass</title>
+    <meta name="description" content="Kommende Plattform für KI-generierte Grüße & Texte. Trag dich jetzt ein!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <header class="logo-wrapper">
+            <span class="logo">grussgenerator.de</span>
+        </header>
+
+        <main class="hero-content">
+            <h1>Der perfekte Text <br>für <span style="color: var(--color-primary);">jeden Anlass.</span></h1>
+            <p>
+                Egal ob Geburtstag, Hochzeit oder Neujahr – wir finden die richtigen Worte für dich.
+                Trag dich in unseren Newsletter ein und erfahre sofort, sobald wir online gehen!
+            </p>
+
+            <div id="formContainer" class="newsletter-form">
+                <form id="subscribeForm">
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="deine@email.com" required>
+                        <button type="submit" class="btn-submit" id="submitBtn">Erinnert mich! 🔔</button>
+                    </div>
+                </form>
+                <div class="privacy-notice">
+                    Wir hassen Spam genauso wie du. Abmeldung jederzeit möglich.
+                </div>
+            </div>
+
+            <div id="successMessage" class="success-msg">
+                🎉 Du bist auf der Liste! Wir melden uns bald.
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
