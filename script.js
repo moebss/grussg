@@ -1,9 +1,236 @@
+// ===========================
+// CONFIGURATION
+// ===========================
+const LAUNCH_DATE = new Date('2026-03-01T00:00:00'); // Adjust launch date
+
+// ===========================
+// TYPEWRITER EFFECT
+// ===========================
+const texts = [
+    'jeden Anlass. 🎉',
+    'Geburtstage. 🎂',
+    'Hochzeiten. 💍',
+    'Neujahr. 🎆',
+    'Weihnachten. 🎄',
+    'jede Feier. 🥳'
+];
+
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typewriterElement = document.getElementById('typewriter');
+
+function typeWriter() {
+    const currentText = texts[textIndex];
+
+    if (isDeleting) {
+        typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    if (!isDeleting && charIndex === currentText.length) {
+        setTimeout(() => isDeleting = true, 2000);
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length;
+    }
+
+    const speed = isDeleting ? 50 : 100;
+    setTimeout(typeWriter, speed);
+}
+
+// ===========================
+// PARTICLE ANIMATION
+// ===========================
+function initParticles() {
+    const canvas = document.getElementById('particleCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2;
+            this.alpha = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.fillStyle = `rgba(255, 215, 0, ${this.alpha})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 80; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
+// ===========================
+// CONFETTI EXPLOSION
+// ===========================
+function createConfetti() {
+    const container = document.getElementById('confettiContainer');
+    const colors = ['#ffd700', '#c77dff', '#00d9ff', '#ff006e', '#ff9500'];
+
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 4000);
+    }
+}
+
+// ===========================
+// COUNTDOWN TIMER
+// ===========================
+function updateCountdown() {
+    const now = new Date();
+    const distance = LAUNCH_DATE - now;
+
+    if (distance < 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+}
+
+// ===========================
+// DEMO TEXT EXAMPLES
+// ===========================
+const demoTexts = [
+    "Liebe Anna, zu deinem Geburtstag wünsche ich dir von Herzen alles Glück dieser Welt! Möge das neue Lebensjahr voller wundervoller Momente, unvergesslicher Abenteuer und strahlender Sonnentage sein. Du bist ein besonderer Mensch und verdienst nur das Beste! 🎂✨",
+    "Lieber Michael, herzlichen Glückwunsch zur Hochzeit! Möge eure gemeinsame Reise voller Liebe, Lachen und unvergesslicher Momente sein. Auf viele glückliche Jahre zusammen! 💍❤️",
+    "Liebes Team, ein frohes neues Jahr 2026! Möge es uns allen Erfolg, Gesundheit und viele gemeinsame Highlights bringen. Auf ein großartiges Jahr! 🎆🥂"
+];
+
+let currentDemoIndex = 0;
+
+function showDemoText() {
+    const demoElement = document.getElementById('demoText');
+    demoElement.style.opacity = '0';
+
+    setTimeout(() => {
+        demoElement.textContent = demoTexts[currentDemoIndex];
+        demoElement.style.opacity = '1';
+        currentDemoIndex = (currentDemoIndex + 1) % demoTexts.length;
+    }, 300);
+}
+
+// ===========================
+// FAQ ACCORDION
+// ===========================
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            // Close all
+            faqItems.forEach(i => i.classList.remove('active'));
+
+            // Open clicked if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+// ===========================
+// NEWSLETTER FORM HANDLING
+// ===========================
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('subscribeForm');
     const formContainer = document.getElementById('formContainer');
     const successMessage = document.getElementById('successMessage');
     const submitBtn = document.getElementById('submitBtn');
+    const subscriberCountEl = document.getElementById('subscriberCount');
 
+    // Initialize features
+    typeWriter();
+    initParticles();
+    updateCountdown();
+    setInterval(updateCountdown, 60000); // Update every minute
+
+    // Show first demo text
+    setTimeout(showDemoText, 1000);
+
+    // Demo refresh button
+    const demoRefreshBtn = document.getElementById('demoRefresh');
+    if (demoRefreshBtn) {
+        demoRefreshBtn.addEventListener('click', showDemoText);
+    }
+
+    // Initialize FAQ
+    initFAQ();
+
+    // Increment subscriber count randomly (for demo)
+    let currentCount = parseInt(subscriberCountEl.textContent);
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            currentCount += Math.floor(Math.random() * 3) + 1;
+            subscriberCountEl.textContent = currentCount;
+        }
+    }, 10000);
+
+    // Form submission
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -11,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Loading state
             submitBtn.disabled = true;
-            submitBtn.innerHTML = 'Wird geladen... ⏳';
+            submitBtn.innerHTML = '<span>Wird geladen... ⏳</span>';
 
             try {
                 const response = await fetch('/api/subscribe', {
@@ -25,17 +252,62 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Success
+                    // Success - hide form, show success message
                     formContainer.style.display = 'none';
                     successMessage.style.display = 'block';
+
+                    // Trigger confetti
+                    createConfetti();
+
+                    // Increment counter
+                    currentCount++;
+                    subscriberCountEl.textContent = currentCount;
                 } else {
                     throw new Error(data.error || 'Fehler beim Abonnieren');
                 }
             } catch (err) {
+                console.error('Subscription error:', err);
                 alert('Ups! Da ist was schiefgelaufen: ' + err.message);
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Erinnert mich! 🔔';
+                submitBtn.innerHTML = '<span>Erinnert mich! 🚀</span>';
             }
         });
     }
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s ease';
+        observer.observe(section);
+    });
 });

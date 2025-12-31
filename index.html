@@ -5,44 +5,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grussgenerator.de | Der perfekte Text für jeden Anlass</title>
-    <meta name="description" content="Kommende Plattform für KI-generierte Grüße & Texte. Trag dich jetzt ein!">
+    <meta name="description"
+        content="KI-generierte Grüße für jeden Anlass. Geburtstag, Hochzeit, Neujahr - wir finden die richtigen Worte. Jetzt kostenlos anmelden!">
+
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Grußgenerator, KI Grüße, Geburtstagswünsche, Hochzeitsglückwünsche, Neujahrsgrüße">
+    <link rel="canonical" href="https://grussgenerator.de">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Grussgenerator.de | Der perfekte Text für jeden Anlass">
+    <meta property="og:description"
+        content="KI-generierte Grüße für Geburtstag, Hochzeit & mehr. Nie wieder sprachlos!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://grussgenerator.de">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="bg-glow"></div>
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Confetti Container -->
+    <div id="confettiContainer"></div>
 
     <div class="container">
-        <header class="logo-wrapper">
-            <span class="logo">grussgenerator.de</span>
-        </header>
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <div class="logo-wrapper">
+                <span class="logo">grussgenerator.de</span>
+                <div class="beta-badge">Bald verfügbar</div>
+            </div>
 
-        <main class="hero-content">
-            <h1>Der perfekte Text <br>für <span style="color: var(--color-primary);">jeden Anlass.</span></h1>
-            <p>
-                Egal ob Geburtstag, Hochzeit oder Neujahr – wir finden die richtigen Worte für dich.
-                Trag dich in unseren Newsletter ein und erfahre sofort, sobald wir online gehen!
+            <h1 class="hero-title">
+                Der perfekte Text für <br>
+                <span class="typewriter" id="typewriter"></span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Nie wieder sprachlos! Mit KI-Power generierst du in Sekunden herzliche Grüße für jeden Anlass.
+                Von Geburtstag über Hochzeit bis Neujahr – wir finden die richtigen Worte.
             </p>
 
-            <div id="formContainer" class="newsletter-form">
+            <!-- Newsletter Form -->
+            <div id="formContainer" class="newsletter-card">
+                <div class="card-header">
+                    <h3>🔔 Sei der Erste, der es erfährt!</h3>
+                    <p>Trag dich jetzt ein und erhalte exklusiven Early Access.</p>
+                </div>
                 <form id="subscribeForm">
                     <div class="input-group">
                         <input type="email" id="email" placeholder="deine@email.com" required>
-                        <button type="submit" class="btn-submit" id="submitBtn">Erinnert mich! 🔔</button>
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span>Erinnert mich! 🚀</span>
+                        </button>
+                    </div>
+                    <div class="privacy-notice">
+                        🔒 Wir hassen Spam. Abmeldung jederzeit möglich.
                     </div>
                 </form>
-                <div class="privacy-notice">
-                    Wir hassen Spam genauso wie du. Abmeldung jederzeit möglich.
+
+                <!-- Counter -->
+                <div class="subscriber-count">
+                    <span class="pulse-dot"></span>
+                    Bereits <strong id="subscriberCount">127</strong> Interessenten angemeldet!
                 </div>
             </div>
 
-            <div id="successMessage" class="success-msg">
-                🎉 Du bist auf der Liste! Wir melden uns bald.
+            <!-- Success Message -->
+            <div id="successMessage" class="success-card">
+                <div class="success-icon">🎉</div>
+                <h3>Willkommen an Bord!</h3>
+                <p>Du bist jetzt auf der Liste. Wir melden uns, sobald es losgeht!</p>
             </div>
-        </main>
+
+            <!-- Countdown -->
+            <div class="countdown-wrapper">
+                <p class="countdown-label">Launch in ca.:</p>
+                <div id="countdown" class="countdown">
+                    <div class="countdown-item">
+                        <span id="days">--</span>
+                        <span class="countdown-unit">Tage</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours">--</span>
+                        <span class="countdown-unit">Std</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes">--</span>
+                        <span class="countdown-unit">Min</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Use Cases Section -->
+        <section class="section use-cases">
+            <h2 class="section-title">Für jeden Anlass die richtigen Worte</h2>
+            <p class="section-subtitle">Egal ob privat oder beruflich – wir haben dich covered.</p>
+
+            <div class="cards-grid">
+                <div class="feature-card">
+                    <div class="card-icon">🎂</div>
+                    <h3>Geburtstag</h3>
+                    <p>Personalisierte Glückwünsche für Freunde, Familie oder Kollegen.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">💍</div>
+                    <h3>Hochzeit</h3>
+                    <p>Romantische & herzliche Worte für den schönsten Tag.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">🎆</div>
+                    <h3>Neujahr</h3>
+                    <p>Inspirierende Neujahrswünsche für 2026 und darüber hinaus.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Abschluss</h3>
+                    <p>Glückwünsche zu Schulabschluss, Studium oder Ausbildung.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">👶</div>
+                    <h3>Geburt</h3>
+                    <p>Herzliche Worte für frischgebackene Eltern.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">🎄</div>
+                    <h3>Weihnachten</h3>
+                    <p>Festliche Grüße für die besinnliche Zeit.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section how-it-works">
+            <h2 class="section-title">So einfach geht's</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Anlass wählen</h3>
+                    <p>Geburtstag, Hochzeit, Neujahr oder ein anderer Anlass.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Personalisieren</h3>
+                    <p>Name, Beziehung und besondere Details eingeben.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Fertig!</h3>
+                    <p>Dein perfekter Gruß – bereit zum Versenden.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Preview -->
+        <section class="section demo-preview">
+            <h2 class="section-title">Vorschau: So könnte dein Gruß aussehen</h2>
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <span class="demo-label">Beispiel: Geburtstagsgruß</span>
+                </div>
+                <div class="demo-card-body">
+                    <p id="demoText">Wird geladen...</p>
+                </div>
+                <div class="demo-card-footer">
+                    <button class="btn-demo" id="demoRefresh">✨ Neues Beispiel</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section faq">
+            <h2 class="section-title">Häufige Fragen</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Wann geht ihr online?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Wir planen den Launch für Q1 2026. Trag dich in den Newsletter ein, um als Erster informiert zu
+                        werden!
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Ist der Service kostenlos?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ja! Wir werden eine kostenlose Basis-Version anbieten. Premium-Features mit erweiterten
+                        Funktionen kommen später.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Welche Sprachen werden unterstützt?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Zum Start: Deutsch, Englisch, Türkisch, Spanisch, Französisch und Italienisch. Weitere Sprachen
+                        folgen!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">grussgenerator.de</span>
+                    <p>Der perfekte Text für jeden Anlass.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Projekt</h4>
+                    <a href="https://neujahrsgruss2026.de" target="_blank">Neujahrsgruß 2026</a>
+                    <a href="https://ko-fi.com/alexanderrheindorf" target="_blank">Support ☕</a>
+                </div>
+                <div class="footer-social">
+                    <h4>Folge uns</h4>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 grussgenerator.de | Ein Projekt von Alexander Rheindorf</p>
+                <div class="footer-legal">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="script.js"></script>
