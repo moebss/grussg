@@ -246,7 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({
+                        email: email,
+                        source: 'grussgenerator_landingpage'
+                    })
                 });
 
                 const data = await response.json();
