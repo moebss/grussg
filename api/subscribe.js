@@ -41,8 +41,7 @@ export default async (req, res) => {
                 email: email,
                 created_at: new Date().toISOString(),
                 signup_ip: ip,
-                confirmed: false,
-                source: 'grussgenerator_landingpage'
+                confirmed: false
             })
         });
 
