@@ -208,6 +208,49 @@ document.addEventListener('DOMContentLoaded', () => {
     initParticles();
     updateCountdown();
     setInterval(updateCountdown, 60000); // Update every minute
+    initTiltExample(); // 3D Tilt
+
+    // Continue execution...
+
+    // ===========================
+    // 3D TILT EFFECT
+    // ===========================
+    function initTiltExample() {
+        const card = document.querySelector('.newsletter-card');
+        if (!card) return;
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return; // Disable on mobile to save battery
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Calculate center relative position
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Max tilt rotation (degrees)
+            const maxTilt = 10;
+
+            // Calculate rotation based on cursor distance from center
+            // But only if cursor is near the card to avoid extreme tilts
+            const mouseX = (e.clientX - (rect.left + centerX)) / centerX;
+            const mouseY = (e.clientY - (rect.top + centerY)) / centerY;
+
+            // Apply tilt to card content wrapper inside (if exists) or card itself
+            // Using requestAnimationFrame for performance
+            if (Math.abs(mouseX) < 2 && Math.abs(mouseY) < 2) {
+                card.style.transform = `perspective(1000px) rotateY(${mouseX * maxTilt}deg) rotateX(${-mouseY * maxTilt}deg)`;
+            } else {
+                // Reset smoothly
+                card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
+            }
+        });
+
+        // Add transition for smooth reset
+        card.style.transition = 'transform 0.1s ease-out';
+    }
 
     // Show first demo text
     setTimeout(showDemoText, 1000);
