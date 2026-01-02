@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danke für deine Anmeldung! | Grussgenerator</title>
+    <meta name="description"
+        content="Willkommen an Bord! Du bist jetzt auf der Early Access Liste für grussgenerator.de">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .thank-you-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .thank-you-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            padding: 4rem 3rem;
+            border-radius: 2rem;
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+            max-width: 600px;
+            animation: scaleUp 0.6s ease;
+        }
+
+        .success-emoji {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        .thank-you-card h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .thank-you-card p {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .next-steps {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .next-steps h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 0.5rem 0;
+            color: var(--color-text);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="thank-you-container">
+        <div class="thank-you-card">
+            <div class="success-emoji">🎉</div>
+            <h1>Willkommen an Bord!</h1>
+            <p>
+                <strong>Du bist jetzt auf der Early Access Liste.</strong><br>
+                Wir benachrichtigen dich per E-Mail, sobald grussgenerator.de live geht.
+            </p>
+
+            <div class="next-steps">
+                <h3>Was passiert jetzt? 📬</h3>
+                <ul>
+                    <li>✅ Bestätigungs-E-Mail ist unterwegs</li>
+                    <li>🚀 Du bekommst als Erster Zugang zum Launch</li>
+                    <li>🎁 Exklusive Launch-Rabatte nur für Early Birds</li>
+                </ul>
+            </div>
+
+            <div class="share-actions">
+                <p style="margin-bottom: 1rem; color: var(--color-text-muted);">
+                    Erhöhe deine Chance auf Frühzugang:
+                </p>
+                <button class="btn-share btn-whatsapp" onclick="shareVia('whatsapp')">
+                    <span>📱 Freunden erzählen</span>
+                </button>
+                <button class="btn-share btn-copy" onclick="shareVia('copy')">
+                    <span>🔗 Link kopieren</span>
+                </button>
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 0.9rem;">
+                <a href="/" style="color: var(--color-primary); text-decoration: none;">← Zurück zur Startseite</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -349,6 +349,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Increment counter
                     currentCount++;
                     subscriberCountEl.textContent = currentCount;
+
+                    // Redirect to thank-you page for conversion tracking
+                    setTimeout(() => {
+                        window.location.href = '/thank-you.html';
+                    }, 2000); // Wait 2s to show confetti
                 } else {
                     throw new Error(data.error || 'Fehler beim Abonnieren');
                 }
