@@ -152,22 +152,63 @@ function updateCountdown() {
 // ===========================
 // DEMO TEXT EXAMPLES
 // ===========================
-const demoTexts = [
-    "Liebe Anna, zu deinem Geburtstag wünsche ich dir von Herzen alles Glück dieser Welt! Möge das neue Lebensjahr voller wundervoller Momente, unvergesslicher Abenteuer und strahlender Sonnentage sein. Du bist ein besonderer Mensch und verdienst nur das Beste! 🎂✨",
-    "Lieber Michael, herzlichen Glückwunsch zur Hochzeit! Möge eure gemeinsame Reise voller Liebe, Lachen und unvergesslicher Momente sein. Auf viele glückliche Jahre zusammen! 💍❤️",
-    "Liebes Team, ein frohes neues Jahr 2026! Möge es uns allen Erfolg, Gesundheit und viele gemeinsame Highlights bringen. Auf ein großartiges Jahr! 🎆🥂"
+// ===========================
+// DEMO TEXT EXAMPLES & THEMES
+// ===========================
+const demoData = [
+    {
+        type: "Geburtstag",
+        text: "Liebe Anna, zu deinem Geburtstag wünsche ich dir von Herzen alles Glück dieser Welt! Möge das neue Lebensjahr voller wundervoller Momente, unvergesslicher Abenteuer und strahlender Sonnentage sein. 🎂✨",
+        theme: "theme-birthday",
+        icon: "🎂"
+    },
+    {
+        type: "Hochzeit",
+        text: "Lieber Michael, herzlichen Glückwunsch zur Hochzeit! Möge eure gemeinsame Reise voller Liebe, Lachen und unvergesslicher Momente sein. Auf viele glückliche Jahre zusammen! 💍❤️",
+        theme: "theme-wedding",
+        icon: "💍"
+    },
+    {
+        type: "Neujahr",
+        text: "Eine frohes neues Jahr 2026! Möge es uns allen Erfolg, Gesundheit und viele gemeinsame Highlights bringen. Auf ein großartiges Jahr! 🎆🥂",
+        theme: "theme-newyear",
+        icon: "🎆"
+    },
+    {
+        type: "Baby",
+        text: "Willkommen auf der Welt, kleiner Schatz! Wir wünschen euch eine wundervolle Kennenlernzeit und alles Glück der Erde für eure kleine Familie. 👶🍼",
+        theme: "theme-baby",
+        icon: "👶"
+    }
 ];
 
 let currentDemoIndex = 0;
 
 function showDemoText() {
-    const demoElement = document.getElementById('demoText');
-    demoElement.style.opacity = '0';
+    const demoCard = document.querySelector('.demo-card');
+    const demoBody = document.querySelector('.demo-card-body');
+    const demoText = document.getElementById('demoText');
+    const demoLabel = document.querySelector('.demo-label');
+
+    // Fade out
+    demoBody.style.opacity = '0';
+    demoLabel.style.opacity = '0';
 
     setTimeout(() => {
-        demoElement.textContent = demoTexts[currentDemoIndex];
-        demoElement.style.opacity = '1';
-        currentDemoIndex = (currentDemoIndex + 1) % demoTexts.length;
+        const data = demoData[currentDemoIndex];
+
+        // Update Content
+        demoText.textContent = data.text;
+        demoLabel.textContent = `Beispiel: ${data.type} ${data.icon}`;
+
+        // Update Theme Classes
+        demoCard.className = `demo-card ${data.theme}`;
+
+        // Fade in
+        demoBody.style.opacity = '1';
+        demoLabel.style.opacity = '1';
+
+        currentDemoIndex = (currentDemoIndex + 1) % demoData.length;
     }, 300);
 }
 
