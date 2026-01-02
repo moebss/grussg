@@ -157,25 +157,25 @@ function updateCountdown() {
 // ===========================
 const demoData = [
     {
-        type: "Geburtstag",
+        type: "Geburtstagskarte",
         text: "Liebe Anna, zu deinem Geburtstag wünsche ich dir von Herzen alles Glück dieser Welt! Möge das neue Lebensjahr voller wundervoller Momente, unvergesslicher Abenteuer und strahlender Sonnentage sein. 🎂✨",
         theme: "theme-birthday",
         icon: "🎂"
     },
     {
-        type: "Hochzeit",
+        type: "Hochzeitskarte",
         text: "Lieber Michael, herzlichen Glückwunsch zur Hochzeit! Möge eure gemeinsame Reise voller Liebe, Lachen und unvergesslicher Momente sein. Auf viele glückliche Jahre zusammen! 💍❤️",
         theme: "theme-wedding",
         icon: "💍"
     },
     {
-        type: "Neujahr",
+        type: "Neujahrskarte",
         text: "Eine frohes neues Jahr 2026! Möge es uns allen Erfolg, Gesundheit und viele gemeinsame Highlights bringen. Auf ein großartiges Jahr! 🎆🥂",
         theme: "theme-newyear",
         icon: "🎆"
     },
     {
-        type: "Baby",
+        type: "Babyglückwunsch",
         text: "Willkommen auf der Welt, kleiner Schatz! Wir wünschen euch eine wundervolle Kennenlernzeit und alles Glück der Erde für eure kleine Familie. 👶🍼",
         theme: "theme-baby",
         icon: "👶"
