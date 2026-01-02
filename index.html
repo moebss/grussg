@@ -28,6 +28,23 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
 
+    <!-- JSON-LD SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Grussgenerator",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "description": "KI-generierte Grüße für Geburtstag, Hochzeit & mehr. Der perfekte Text für jeden Anlass in Sekunden.",
+      "featureList": "Geburtstagsgrüße, Hochzeitswünsche, KI-Texterstellung, Mehrsprachig"
+    }
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -81,11 +98,23 @@
                 </div>
             </div>
 
-            <!-- Success Message -->
+            <!-- Success Message with Viral Loop -->
             <div id="successMessage" class="success-card">
                 <div class="success-icon">🎉</div>
                 <h3>Willkommen an Bord!</h3>
-                <p>Du bist jetzt auf der Liste. Wir melden uns, sobald es losgeht!</p>
+                <p>Du bist auf der Liste. Erhöhe deine Chance auf Early Access:</p>
+
+                <div class="share-actions">
+                    <button class="btn-share btn-whatsapp" onclick="shareVia('whatsapp')">
+                        <span>📱 WhatsApp</span>
+                    </button>
+                    <button class="btn-share btn-twitter" onclick="shareVia('twitter')">
+                        <span>🐦 Twitter</span>
+                    </button>
+                    <button class="btn-share btn-copy" onclick="shareVia('copy')">
+                        <span>🔗 Link kopieren</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Countdown -->

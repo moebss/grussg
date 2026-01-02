@@ -357,3 +357,21 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 });
+
+// ===========================
+// VIRAL LOOP LOGIC
+// ===========================
+function shareVia(platform) {
+    const url = 'https://grussgenerator.de';
+    const text = 'Warteliste geöffnet! 🚀 Hol dir perfekte KI-Grüße für jeden Anlass. Early Access hier:';
+
+    if (platform === 'whatsapp') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+    } else if (platform === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    } else if (platform === 'copy') {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link kopiert! Jetzt Freunden schicken. 🚀');
+        });
+    }
+}

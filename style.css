@@ -827,3 +827,51 @@ input[type="email"]::placeholder {
         text-align: center;
     }
 }
+
+/* ===========================
+   VIRAL LOOP SHARE BUTTONS
+   =========================== */
+.share-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-share {
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-whatsapp {
+    background: #25D366;
+}
+
+.btn-twitter {
+    background: #1DA1F2;
+}
+
+.btn-copy {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-share:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.btn-share:active {
+    transform: scale(0.95);
+}
