@@ -350,6 +350,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentCount++;
                     subscriberCountEl.textContent = currentCount;
 
+                    // Google Ads Conversion Tracking
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17847371154/CONVERSION_LABEL', // Replace CONVERSION_LABEL with actual label from Google Ads
+                            'value': 1.0,
+                            'currency': 'EUR'
+                        });
+                    }
+
                     // Redirect to thank-you page for conversion tracking
                     setTimeout(() => {
                         window.location.href = '/thank-you.html';
