@@ -23,6 +23,135 @@ const historyList = document.getElementById('historyList');
 const historyBadge = document.getElementById('historyBadge');
 
 // ===========================
+// ANIMATED BACKGROUND
+// ===========================
+function initBackground() {
+    const canvas = document.getElementById('bgCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+        particles = [];
+        const count = Math.floor((canvas.width * canvas.height) / 15000);
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 0.5,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                alpha: Math.random() * 0.5 + 0.2,
+                color: Math.random() > 0.5 ? '#6366f1' : '#f472b6'
+            });
+        }
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw gradient background
+        const gradient = ctx.createRadialGradient(
+            canvas.width / 2, 0, 0,
+            canvas.width / 2, canvas.height, canvas.height
+        );
+        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.08)');
+        gradient.addColorStop(0.5, 'rgba(10, 10, 18, 0)');
+        gradient.addColorStop(1, 'rgba(244, 114, 182, 0.05)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw particles
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color.replace(')', `, ${p.alpha})`).replace('rgb', 'rgba');
+            ctx.fill();
+
+            // Update position
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Wrap around edges
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+        });
+
+        // Draw connections
+        particles.forEach((p1, i) => {
+            particles.slice(i + 1).forEach(p2 => {
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - dist / 100)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            });
+        });
+
+        animationId = requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener('resize', () => {
+        resize();
+        createParticles();
+    });
+
+    resize();
+    createParticles();
+    drawParticles();
+}
+
+// ===========================
+// CONFETTI CELEBRATION
+// ===========================
+function launchConfetti() {
+    if (typeof confetti === 'undefined') return;
+
+    // First burst
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#6366f1', '#f472b6', '#fbbf24', '#22c55e']
+    });
+
+    // Side cannons
+    setTimeout(() => {
+        confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#6366f1', '#f472b6']
+        });
+        confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#6366f1', '#f472b6']
+        });
+    }, 200);
+}
+
+// ===========================
 // TOAST NOTIFICATIONS
 // ===========================
 function showToast(message, type = 'info') {
@@ -34,6 +163,7 @@ function showToast(message, type = 'info') {
 
     setTimeout(() => {
         toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
@@ -57,14 +187,11 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentLanguage = btn.dataset.lang;
-        updateUILanguage();
+        if (typeof applyTranslations === 'function') {
+            applyTranslations(currentLanguage);
+        }
     });
 });
-
-function updateUILanguage() {
-    // This will be enhanced with full i18n later
-    console.log('Language switched to:', currentLanguage);
-}
 
 // ===========================
 // FORM SUBMISSION / GENERATE
@@ -121,7 +248,10 @@ greetingForm.addEventListener('submit', async (e) => {
             date: new Date().toISOString()
         });
 
-        showToast('Gruß erfolgreich generiert! 🎉', 'success');
+        showToast('Gruß erfolgreich generiert!', 'success');
+
+        // Launch confetti celebration!
+        launchConfetti();
 
     } catch (err) {
         console.error('Generation error:', err);
@@ -211,7 +341,7 @@ historyToggle.addEventListener('click', () => {
 // Copy to clipboard
 document.getElementById('copyBtn').addEventListener('click', () => {
     navigator.clipboard.writeText(generatedMessage.textContent)
-        .then(() => showToast('Text kopiert! 📋', 'success'))
+        .then(() => showToast('Text kopiert!', 'success'))
         .catch(() => showToast('Kopieren fehlgeschlagen', 'error'));
 });
 
@@ -239,7 +369,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     link.download = 'gruss.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
-    showToast('Bild heruntergeladen! 📸', 'success');
+    showToast('Bild heruntergeladen!', 'success');
 });
 
 // Text-to-Speech
@@ -253,7 +383,7 @@ document.getElementById('ttsBtn').addEventListener('click', () => {
                         currentLanguage === 'tr' ? 'tr-TR' :
                             currentLanguage === 'it' ? 'it-IT' : 'de-DE';
         speechSynthesis.speak(utterance);
-        showToast('Wird vorgelesen... 🔊', 'info');
+        showToast('Wird vorgelesen...', 'info');
     } else {
         showToast('Vorlesen nicht unterstützt', 'error');
     }
@@ -274,5 +404,11 @@ document.getElementById('newGreetingBtn').addEventListener('click', () => {
 // INIT
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
+    initBackground();
     loadHistory();
+
+    // Apply initial language
+    if (typeof applyTranslations === 'function') {
+        applyTranslations(currentLanguage);
+    }
 });

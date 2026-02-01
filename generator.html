@@ -21,6 +21,12 @@
 </head>
 
 <body>
+    <!-- Animated Background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Confetti Container -->
+    <div id="confettiContainer"></div>
+
     <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
 
@@ -49,70 +55,169 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <a href="index.html" class="logo">💌 grussgenerator.de</a>
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+                grussgenerator.de
+            </a>
             <p class="tagline" data-i18n="tagline">Der perfekte Text für jeden Anlass</p>
         </header>
 
         <main class="main-content">
             <!-- Input Section -->
-            <section class="card input-section" id="inputSection">
-                <h2 data-i18n="form-title">✨ Erstelle deinen Gruß</h2>
+            <section class="card glass input-section" id="inputSection">
+                <h2 data-i18n="form-title">
+                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    Erstelle deinen Gruß
+                </h2>
 
                 <form id="greetingForm">
                     <!-- Occasion Selection -->
                     <div class="form-group">
-                        <label data-i18n="label-occasion">📅 Anlass</label>
+                        <label data-i18n="label-occasion">
+                            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            Anlass
+                        </label>
                         <div class="occasion-grid">
+                            <!-- Birthday -->
                             <button type="button" class="occasion-btn active" data-occasion="birthday">
-                                <span class="occasion-icon">🎂</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" />
+                                    <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1" />
+                                    <path d="M2 21h20" />
+                                    <path d="M7 8v3" />
+                                    <path d="M12 8v3" />
+                                    <path d="M17 8v3" />
+                                    <circle cx="7" cy="5" r="1" />
+                                    <circle cx="12" cy="5" r="1" />
+                                    <circle cx="17" cy="5" r="1" />
+                                </svg>
                                 <span data-i18n="occasion-birthday">Geburtstag</span>
                             </button>
+                            <!-- Wedding -->
                             <button type="button" class="occasion-btn" data-occasion="wedding">
-                                <span class="occasion-icon">💍</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
                                 <span data-i18n="occasion-wedding">Hochzeit</span>
                             </button>
+                            <!-- Christmas -->
                             <button type="button" class="occasion-btn" data-occasion="christmas">
-                                <span class="occasion-icon">🎄</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 2L2 17h7v5h6v-5h7L12 2z" />
+                                    <line x1="12" y1="2" x2="12" y2="6" />
+                                </svg>
                                 <span data-i18n="occasion-christmas">Weihnachten</span>
                             </button>
+                            <!-- New Year -->
                             <button type="button" class="occasion-btn" data-occasion="newyear">
-                                <span class="occasion-icon">🎆</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                </svg>
                                 <span data-i18n="occasion-newyear">Neujahr</span>
                             </button>
+                            <!-- Easter -->
                             <button type="button" class="occasion-btn" data-occasion="easter">
-                                <span class="occasion-icon">🐰</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <ellipse cx="12" cy="14" rx="6" ry="8" />
+                                    <path d="M12 6V2" />
+                                    <path d="M8 8l-2-4" />
+                                    <path d="M16 8l2-4" />
+                                </svg>
                                 <span data-i18n="occasion-easter">Ostern</span>
                             </button>
+                            <!-- Thanks -->
                             <button type="button" class="occasion-btn" data-occasion="thanks">
-                                <span class="occasion-icon">💐</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                </svg>
                                 <span data-i18n="occasion-thanks">Danke</span>
                             </button>
+                            <!-- Baby -->
                             <button type="button" class="occasion-btn" data-occasion="baby">
-                                <span class="occasion-icon">👶</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="8" r="5" />
+                                    <path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2" />
+                                </svg>
                                 <span data-i18n="occasion-baby">Geburt</span>
                             </button>
+                            <!-- Get Well -->
                             <button type="button" class="occasion-btn" data-occasion="getwell">
-                                <span class="occasion-icon">🏥</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                </svg>
                                 <span data-i18n="occasion-getwell">Gute Besserung</span>
                             </button>
+                            <!-- Mother's Day -->
                             <button type="button" class="occasion-btn" data-occasion="mothersday">
-                                <span class="occasion-icon">👩</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                                    <path d="M4 22h16" />
+                                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                                </svg>
                                 <span data-i18n="occasion-mothersday">Muttertag</span>
                             </button>
+                            <!-- Father's Day -->
                             <button type="button" class="occasion-btn" data-occasion="fathersday">
-                                <span class="occasion-icon">👨</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                </svg>
                                 <span data-i18n="occasion-fathersday">Vatertag</span>
                             </button>
+                            <!-- Graduation -->
                             <button type="button" class="occasion-btn" data-occasion="graduation">
-                                <span class="occasion-icon">🎓</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+                                </svg>
                                 <span data-i18n="occasion-graduation">Abschluss</span>
                             </button>
+                            <!-- Anniversary -->
                             <button type="button" class="occasion-btn" data-occasion="anniversary">
-                                <span class="occasion-icon">🥂</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M8 22h8" />
+                                    <path d="M7 10h10" />
+                                    <path d="M12 15v7" />
+                                    <path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z" />
+                                </svg>
                                 <span data-i18n="occasion-anniversary">Jubiläum</span>
                             </button>
+                            <!-- General -->
                             <button type="button" class="occasion-btn" data-occasion="general">
-                                <span class="occasion-icon">💌</span>
+                                <svg class="occasion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
                                 <span data-i18n="occasion-general">Sonstiges</span>
                             </button>
                         </div>
@@ -121,7 +226,11 @@
                     <!-- Name -->
                     <div class="form-group">
                         <label for="recipientName">
-                            <span class="icon">👤</span>
+                            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
                             <span data-i18n="label-name">Name der Person</span>
                         </label>
                         <input type="text" id="recipientName" name="recipientName"
@@ -132,7 +241,13 @@
                     <!-- Relationship -->
                     <div class="form-group">
                         <label for="relationship">
-                            <span class="icon">💝</span>
+                            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
                             <span data-i18n="label-relationship">Beziehung</span>
                         </label>
                         <select id="relationship" name="relationship" required>
@@ -149,7 +264,12 @@
                     <!-- Additional Info -->
                     <div class="form-group">
                         <label for="additionalInfo">
-                            <span class="icon">💡</span>
+                            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
                             <span data-i18n="label-info">Zusätzliche Infos (optional)</span>
                         </label>
                         <textarea id="additionalInfo" data-i18n-placeholder="placeholder-info"
@@ -159,7 +279,15 @@
                     <!-- Tone -->
                     <div class="form-group">
                         <label for="tone">
-                            <span class="icon">🎨</span>
+                            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="13.5" cy="6.5" r=".5" />
+                                <circle cx="17.5" cy="10.5" r=".5" />
+                                <circle cx="8.5" cy="7.5" r=".5" />
+                                <circle cx="6.5" cy="12.5" r=".5" />
+                                <path
+                                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z" />
+                            </svg>
                             <span data-i18n="label-tone">Stil / Tonalität</span>
                         </label>
                         <select id="tone" name="tone" required>
@@ -173,17 +301,34 @@
 
                     <!-- Submit -->
                     <button type="submit" class="btn-generate" id="generateBtn">
-                        <span class="btn-text" data-i18n="btn-generate">✨ Gruß generieren ✨</span>
-                        <span class="btn-loading hidden">Generiere...</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg>
+                        <span class="btn-text" data-i18n="btn-generate">Gruß generieren</span>
+                        <span class="btn-loading hidden">
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
+                                    stroke-dasharray="30 70" />
+                            </svg>
+                            Generiere...
+                        </span>
                     </button>
                 </form>
 
                 <!-- History Collapse -->
                 <div class="history-section" id="historySection">
                     <button class="history-toggle" id="historyToggle">
-                        <span>📜 Deine letzten Grüße</span>
+                        <svg class="history-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Deine letzten Grüße</span>
                         <span class="history-badge" id="historyBadge">0</span>
-                        <span class="toggle-arrow">▼</span>
+                        <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
                     </button>
                     <div class="history-content hidden" id="historyContent">
                         <div id="historyList" class="history-list">
@@ -194,12 +339,24 @@
             </section>
 
             <!-- Output Section -->
-            <section class="card output-section hidden" id="outputSection">
-                <h2 data-i18n="output-title">🎉 Dein persönlicher Gruß</h2>
+            <section class="card glass output-section hidden" id="outputSection">
+                <h2 data-i18n="output-title">
+                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="7" />
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                    </svg>
+                    Dein persönlicher Gruß
+                </h2>
 
                 <div class="message-display">
                     <div class="message-header">
-                        <button id="ttsBtn" class="tts-btn" title="Vorlesen">🔊</button>
+                        <button id="ttsBtn" class="tts-btn" title="Vorlesen">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                            </svg>
+                        </button>
                     </div>
                     <div id="generatedMessage" class="message-text"></div>
                 </div>
@@ -207,25 +364,42 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button class="btn-action btn-copy" id="copyBtn">
-                        <span class="icon">📋</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
                         <span data-i18n="btn-copy">Kopieren</span>
                     </button>
                     <button class="btn-action btn-whatsapp" id="whatsappBtn">
-                        <span class="icon">💬</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                        </svg>
                         <span data-i18n="btn-whatsapp">WhatsApp</span>
                     </button>
                     <button class="btn-action btn-email" id="emailBtn">
-                        <span class="icon">📧</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
                         <span data-i18n="btn-email">E-Mail</span>
                     </button>
                     <button class="btn-action btn-download" id="downloadBtn">
-                        <span class="icon">📸</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
                         <span data-i18n="btn-download">Als Bild</span>
                     </button>
                 </div>
 
                 <button class="btn-new" id="newGreetingBtn">
-                    <span data-i18n="btn-new">🎊 Neuen Gruß erstellen</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span data-i18n="btn-new">Neuen Gruß erstellen</span>
                 </button>
             </section>
         </main>
@@ -238,6 +412,7 @@
     </div>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="i18n.js"></script>
     <script src="generator.js"></script>
 </body>
