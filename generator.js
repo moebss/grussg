@@ -1148,38 +1148,69 @@ removeBgBtn?.addEventListener('click', () => {
 // Sticker Upload
 uploadStickerZone?.addEventListener('click', () => stickerUpload?.click());
 
+// Resize Variables
+let isResizing = false;
+let currentResizer = null;
+let originalWidth = 0;
+let originalMouseX = 0;
+
 stickerUpload?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-        if (stickerCount >= 15) { // Higher limit for images? Keep same for consistency
+        if (stickerCount >= 15) {
             showToast('Zu viele Elemente auf der Karte!', 'warning');
             return;
         }
 
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const sticker = document.createElement('span');
-            sticker.className = 'placed-sticker image-sticker';
-            sticker.innerHTML = `<img src="${e.target.result}" style="width: 100px; height: auto; pointer-events: none; display: block;">`;
+        reader.onload = (event) => {
+            // Wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'placed-sticker image-sticker-wrapper';
+            wrapper.style.left = '30%';
+            wrapper.style.top = '30%';
+            wrapper.style.width = '150px'; // Initial size
 
-            sticker.style.left = '40%';
-            sticker.style.top = '40%';
+            // Image
+            const img = document.createElement('img');
+            img.src = event.target.result;
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            img.style.display = 'block';
+            img.style.pointerEvents = 'none'; // Ensure clicks go to wrapper
 
-            // Drag support
-            sticker.addEventListener('mousedown', startDrag);
-            sticker.addEventListener('touchstart', startDrag);
+            // Resize Handle
+            const handle = document.createElement('div');
+            handle.className = 'sticker-resize-handle';
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(handle);
+
+            // Drag event (Move)
+            wrapper.addEventListener('mousedown', startDrag);
+            wrapper.addEventListener('touchstart', startDrag);
+
+            // Resize event
+            handle.addEventListener('mousedown', function (e) {
+                e.stopPropagation(); // Prevent drag start
+                initResize(e, wrapper);
+            });
+            handle.addEventListener('touchstart', function (e) {
+                e.stopPropagation();
+                initResize(e, wrapper);
+            });
 
             // Remove
-            sticker.addEventListener('dblclick', () => {
-                sticker.remove();
+            wrapper.addEventListener('dblclick', () => {
+                wrapper.remove();
                 stickerCount--;
                 playSound(clickSound);
             });
 
-            placedStickers?.appendChild(sticker);
+            placedStickers?.appendChild(wrapper);
             stickerCount++;
             playSound(successSound);
-            showToast('Bild als Sticker hinzugefügt! 🧩', 'success');
+            showToast('Bild hinzugefügt! Ziehe an der Ecke zum Skalieren. 📐', 'success');
         };
         reader.readAsDataURL(file);
 
@@ -1187,6 +1218,48 @@ stickerUpload?.addEventListener('change', (e) => {
         stickerUpload.value = '';
     }
 });
+
+// Resize Logic
+function initResize(e, element) {
+    isResizing = true;
+    currentResizer = element;
+    currentResizer.classList.add('resizing');
+
+    // Get X position (Mouse or Touch)
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+
+    originalWidth = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+    originalMouseX = clientX;
+
+    window.addEventListener('mousemove', resize);
+    window.addEventListener('touchmove', resize);
+    window.addEventListener('mouseup', stopResize);
+    window.addEventListener('touchend', stopResize);
+}
+
+function resize(e) {
+    if (!isResizing || !currentResizer) return;
+
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    const widthChange = clientX - originalMouseX;
+    const newWidth = originalWidth + widthChange;
+
+    if (newWidth > 50) { // Min width
+        currentResizer.style.width = newWidth + 'px';
+    }
+}
+
+function stopResize() {
+    isResizing = false;
+    if (currentResizer) {
+        currentResizer.classList.remove('resizing');
+        currentResizer = null;
+    }
+    window.removeEventListener('mousemove', resize);
+    window.removeEventListener('touchmove', resize);
+    window.removeEventListener('mouseup', stopResize);
+    window.removeEventListener('touchend', stopResize);
+}
 
 // ===========================
 // INIT

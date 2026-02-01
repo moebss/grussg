@@ -2615,16 +2615,45 @@ body {
 
 .placed-sticker {
     position: absolute;
-    font-size: 2rem;
-    cursor: move;
-    pointer-events: auto;
+    cursor: grab;
     user-select: none;
-    transition: transform 0.1s ease;
+    transition: transform 0.2s ease;
+    z-index: 1;
+    /* Behind text (z-index 2), but above bg */
 }
 
-.placed-sticker:hover {
-    transform: scale(1.2);
+.placed-sticker:active {
+    cursor: grabbing;
+    transform: scale(1.05);
 }
+
+/* Resize Handle for Image Stickers */
+.image-sticker-wrapper {
+    position: absolute;
+    display: inline-block;
+    z-index: 1;
+}
+
+.sticker-resize-handle {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: nwse-resize;
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.image-sticker-wrapper:hover .sticker-resize-handle,
+.image-sticker-wrapper.resizing .sticker-resize-handle {
+    opacity: 1;
+}
+
 
 .placed-sticker.dragging {
     transform: scale(1.3);
