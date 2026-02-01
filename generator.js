@@ -1023,36 +1023,34 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     const originalText = generatedMessage.innerText;
     generatedMessage.innerText = originalText.replace(/\*\*/g, '').replace(/\*/g, '');
 
-    const canvas = await html2canvas(card, {
-        backgroundColor: null,
-        scale: 2,
-        useCORS: true,
-        allowTaint: true, // Allow cross-origin images (patterns)
-        logging: false,
-        onclone: (clonedDoc) => {
-            // Fix border scaling if needed (make them slightly thinner for export?)
-            const clonedCard = clonedDoc.getElementById('greetingCard');
-            if (clonedCard) {
-                // Ensure patterns are visible
-                clonedCard.style.overflow = 'hidden';
+    try {
+        const dataUrl = await htmlToImage.toPng(card, {
+            quality: 0.95,
+            pixelRatio: 2, // High res
+            style: {
+                transform: 'scale(1)', // Avoid double scaling issues
             }
-        }
-    });
+        });
+
+        const link = document.createElement('a');
+        link.download = `gruss-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+
+        playSound(successSound);
+        showToast('Bild heruntergeladen! 🎉', 'success');
+
+    } catch (error) {
+        console.error('Export failed:', error);
+        showToast('Fehler beim Exportieren 😢', 'error');
+    }
 
     // Restore text
     generatedMessage.innerText = originalText;
 
-    // Restore TTS button
+    // Restore UI elements
     if (ttsBtn) ttsBtn.style.display = '';
     if (messageHeader) messageHeader.style.display = '';
-
-    const link = document.createElement('a');
-    link.download = `gruss-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-
-    playSound(successSound);
-    showToast('Bild heruntergeladen! 🎉', 'success');
 });
 
 // Twitter share
