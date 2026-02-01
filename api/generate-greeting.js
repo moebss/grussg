@@ -106,7 +106,8 @@ IMPORTANT RULES:
 - Output ONLY the greeting text itself
 - Do NOT include any intro like "Here is your greeting:"
 - Do NOT include placeholders like "[Your Name]" at the end
-- Keep appropriate length for the occasion (2-4 paragraphs)`
+- Keep the message visually balanced for a 1:1 square card
+- Maximum 3-5 concise sentences. Avoid long paragraphs.`
                     },
                     {
                         role: 'user',
