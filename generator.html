@@ -480,12 +480,18 @@
 
                         <!-- Upload -->
                         <div class="design-section">
-                            <span class="section-label">Hintergrund</span>
-                            <div class="upload-mini" id="uploadZone">
-                                <input type="file" id="imageUpload" accept="image/*" class="hidden">
-                                <span>📷 Bild</span>
+                            <span class="section-label">Bild hinzufügen</span>
+                            <div class="upload-controls-row" style="display: flex; gap: 8px;">
+                                <div class="upload-mini" id="uploadBgZone" title="Als Hintergrund" style="flex: 1;">
+                                    <input type="file" id="bgUpload" accept="image/*" class="hidden">
+                                    <span>🖼️ H'grund</span>
+                                </div>
+                                <div class="upload-mini" id="uploadStickerZone" title="Als Sticker" style="flex: 1;">
+                                    <input type="file" id="stickerUpload" accept="image/*" class="hidden">
+                                    <span>🧩 Sticker</span>
+                                </div>
                             </div>
-                            <button class="btn-remove-mini hidden" id="removeBgBtn">❌</button>
+                            <button class="btn-remove-mini hidden" id="removeBgBtn">❌ H'grund entfernen</button>
                         </div>
                     </div>
                 </div>

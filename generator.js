@@ -1106,6 +1106,89 @@ document.getElementById('newGreetingBtn').addEventListener('click', () => {
 });
 
 // ===========================
+// ADVANCED IMAGE UPLOAD
+// ===========================
+const uploadBgZone = document.getElementById('uploadBgZone');
+const bgUpload = document.getElementById('bgUpload');
+const cardCustomBg = document.getElementById('cardCustomBg');
+const removeBgBtn = document.getElementById('removeBgBtn');
+
+const uploadStickerZone = document.getElementById('uploadStickerZone');
+const stickerUpload = document.getElementById('stickerUpload');
+
+// Background Upload
+uploadBgZone?.addEventListener('click', () => bgUpload?.click());
+
+bgUpload?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (cardCustomBg) {
+                cardCustomBg.style.backgroundImage = `url(${e.target.result})`;
+                greetingCard.classList.add('has-custom-bg');
+                removeBgBtn?.classList.remove('hidden');
+                playSound(successSound);
+                showToast('Hintergrundbild gesetzt! 🖼️', 'success');
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+removeBgBtn?.addEventListener('click', () => {
+    if (cardCustomBg) cardCustomBg.style.backgroundImage = '';
+    greetingCard.classList.remove('has-custom-bg');
+    removeBgBtn?.classList.add('hidden');
+    // Also reset input so same file can be selected again
+    if (bgUpload) bgUpload.value = '';
+    playSound(clickSound);
+});
+
+// Sticker Upload
+uploadStickerZone?.addEventListener('click', () => stickerUpload?.click());
+
+stickerUpload?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        if (stickerCount >= 15) { // Higher limit for images? Keep same for consistency
+            showToast('Zu viele Elemente auf der Karte!', 'warning');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const sticker = document.createElement('span');
+            sticker.className = 'placed-sticker image-sticker';
+            sticker.innerHTML = `<img src="${e.target.result}" style="width: 100px; height: auto; pointer-events: none; display: block;">`;
+
+            sticker.style.left = '40%';
+            sticker.style.top = '40%';
+
+            // Drag support
+            sticker.addEventListener('mousedown', startDrag);
+            sticker.addEventListener('touchstart', startDrag);
+
+            // Remove
+            sticker.addEventListener('dblclick', () => {
+                sticker.remove();
+                stickerCount--;
+                playSound(clickSound);
+            });
+
+            placedStickers?.appendChild(sticker);
+            stickerCount++;
+            playSound(successSound);
+            showToast('Bild als Sticker hinzugefügt! 🧩', 'success');
+        };
+        reader.readAsDataURL(file);
+
+        // Reset input
+        stickerUpload.value = '';
+    }
+});
+
+// ===========================
 // INIT
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
