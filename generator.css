@@ -2766,3 +2766,40 @@ body {
         grid-template-columns: repeat(8, 1fr);
     }
 }
+
+/* ===========================
+   Signature Feature
+   =========================== */
+.sticker-special {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.sticker-special:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 165, 0, 0.4);
+}
+
+.placed-sticker.signature {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    color: var(--color-text);
+    /* Fallback */
+    color: #ffffff;
+    /* Default white for readability */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    transform: rotate(-5deg);
+    z-index: 10;
+    white-space: nowrap;
+}

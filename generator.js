@@ -1351,3 +1351,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clickSound) clickSound.load();
     if (successSound) successSound.load();
 });
+
+// ===========================
+// SIGNATURE FEATURE
+// ===========================
+const signBtn = document.getElementById('signBtn');
+if (signBtn) {
+    signBtn.addEventListener('click', () => {
+        const name = prompt('Dein Name für die Unterschrift:', 'Dein Name');
+        if (name && name.trim()) {
+            addSignatureSticker(name);
+        }
+    });
+}
+
+function addSignatureSticker(text) {
+    const sticker = document.createElement('div');
+    sticker.className = 'placed-sticker signature';
+    sticker.textContent = text;
+
+    // Random position
+    const x = Math.random() * 40 + 30;
+    const y = Math.random() * 40 + 30;
+    sticker.style.left = `${x}%`;
+    sticker.style.top = `${y}%`;
+
+    // Make interactive
+    makeDraggable(sticker);
+    addRemoveButton(sticker);
+
+    // Append
+    const container = document.querySelector('.placed-stickers') || document.getElementById('greetingCard');
+    container.appendChild(sticker);
+
+    playSound(clickSound);
+}
