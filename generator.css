@@ -2166,78 +2166,70 @@ body {
    =========================== */
 .greeting-card[data-mood="sunset"] {
     background:
-        radial-gradient(circle at 10% 20%, rgba(255, 200, 100, 0.4) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255, 100, 50, 0.3) 0%, transparent 40%),
+        repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.15) 0deg 15deg, transparent 15deg 30deg),
         linear-gradient(135deg, #ff6b35, #f7931e, #ffd23f, #ff6b35);
-    background-size: 100% 100%, 100% 100%, 200% 200%;
-
+    background-size: 100% 100%, 200% 200%;
 }
 
 .greeting-card[data-mood="ocean"] {
     background:
-        radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.2) 0%, transparent 70%),
+        repeating-radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.1) 0, rgba(255, 255, 255, 0.1) 10px, transparent 10px, transparent 20px),
         linear-gradient(135deg, #0077b6, #00b4d8, #90e0ef, #0077b6);
     background-size: 100% 100%, 100% 100%, 200% 200%;
-
 }
 
 .greeting-card[data-mood="forest"] {
     background:
-        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 2px, transparent 2px, transparent 20px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 2px, transparent 2px, transparent 20px),
         linear-gradient(135deg, #2d6a4f, #40916c, #74c69d, #2d6a4f);
-    background-size: 200% 200%;
-
+    background-size: 100% 100%, 100% 100%, 200% 200%;
 }
 
 .greeting-card[data-mood="lavender"] {
     background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.4) 2px, transparent 2.5px),
         linear-gradient(135deg, #7b2cbf, #9d4edd, #c77dff, #7b2cbf);
-    background-position: 0 0, 0 0;
-    background-size: 20px 20px, 200% 200%;
-
+    background-size: 30px 30px, 200% 200%;
 }
 
 .greeting-card[data-mood="fire"] {
     background:
-        radial-gradient(circle at 50% 100%, rgba(255, 255, 0, 0.2) 0%, transparent 20%),
-        radial-gradient(circle at 20% 90%, rgba(255, 100, 0, 0.2) 0%, transparent 15%),
-        radial-gradient(circle at 80% 85%, rgba(255, 50, 0, 0.2) 0%, transparent 15%),
+        conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 0, 0.2) 0deg, transparent 60deg, rgba(255, 100, 0, 0.2) 120deg, transparent 180deg),
+        linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 40%, rgba(255, 255, 255, 0.2) 60%, transparent 60%),
         linear-gradient(135deg, #d00000, #e85d04, #faa307, #d00000);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
+    background-size: 100% 100%, 20px 20px, 200% 200%;
 }
 
 .greeting-card[data-mood="candy"] {
     background:
-        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 20px, transparent 20px, transparent 40px),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.3) 0px, rgba(255, 255, 255, 0.3) 20px, transparent 20px, transparent 40px),
         linear-gradient(135deg, #ff69b4, #ff85c1, #ffc8dd, #bde0fe, #ff69b4);
     background-size: 200% 200%;
-
 }
 
 .greeting-card[data-mood="midnight"] {
     background:
-        radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
-        radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
-        radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px),
+        radial-gradient(rgba(255, 255, 255, 0.8) 2px, transparent 3px),
+        radial-gradient(rgba(255, 255, 255, 0.6) 1.5px, transparent 2.5px),
         linear-gradient(135deg, #0d1b2a, #1b263b, #415a77, #0d1b2a);
-    background-size: 550px 550px, 350px 350px, 250px 250px, 200% 200%;
-    background-position: 0 0, 40px 60px, 130px 270px, 0 0;
+    background-size: 60px 60px, 90px 90px, 200% 200%;
+    background-position: 0 0, 30px 45px, 0 0;
 }
 
 .greeting-card[data-mood="aurora"] {
     background:
-        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255, 255, 255, 0.05) 50px, rgba(255, 255, 255, 0.05) 52px),
+        repeating-radial-gradient(circle at 0 0, transparent 0, transparent 20px, rgba(255, 255, 255, 0.1) 20px, rgba(255, 255, 255, 0.1) 22px),
         linear-gradient(135deg, #00ff87, #60efff, #ff00e4, #00ff87);
     background-size: 100% 100%, 300% 300%;
 }
 
 .greeting-card[data-mood="tropical"] {
     background:
-        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
-        radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
-        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 20px),
+        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.3) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.3) 0%, transparent 25%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 2px, transparent 2px, transparent 30px),
         linear-gradient(135deg, #f72585, #7209b7, #3a0ca3, #4cc9f0, #f72585);
     background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
 }
@@ -2252,20 +2244,18 @@ body {
 
 .greeting-card[data-mood="neon"] {
     background:
-        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(transparent 95%, rgba(255, 255, 255, 0.4) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(255, 255, 255, 0.4) 95%),
         linear-gradient(135deg, #39ff14, #ff00ff, #00f0ff, #39ff14);
     background-size: 40px 40px, 40px 40px, 300% 300%;
-
 }
 
 .greeting-card[data-mood="rose"] {
     background:
-        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
-        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
-        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 5px, transparent 5px, transparent 10px),
+        radial-gradient(circle at 50% 50%, transparent 40%, rgba(255, 255, 255, 0.2) 42%, transparent 44%),
+        radial-gradient(circle at 0% 0%, transparent 40%, rgba(255, 255, 255, 0.2) 42%, transparent 44%),
         linear-gradient(135deg, #b5179e, #f72585, #ff4d6d, #b5179e);
-    background-size: 100% 100%, 100% 100%, 200% 200%, 200% 200%;
+    background-size: 100px 100px, 100px 100px, 200% 200%;
 }
 
 @keyframes moodShift {
@@ -2344,61 +2334,58 @@ body {
    =========================== */
 .greeting-card[data-mood="default"] {
     background:
-        repeating-radial-gradient(circle at 0 0, transparent 0, rgba(255, 255, 255, 0.03) 10px),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0, rgba(255, 255, 255, 0.1) 1px, transparent 0, transparent 50%),
         linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-size: 100% 100%, 100% 100%;
+    background-size: 40px 40px, 100% 100%;
 }
 
 .greeting-card[data-mood="birthday"] {
     background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.2) 2px, transparent 2.5px),
-        radial-gradient(circle, rgba(255, 255, 255, 0.15) 3px, transparent 3.5px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.4) 5px, transparent 6px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.3) 3px, transparent 4px),
         linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
-    background-position: 0 0, 25px 25px, 0 0;
-    background-size: 50px 50px, 50px 50px, 300% 300%;
-
+    background-position: 0 0, 30px 30px, 0 0;
+    background-size: 60px 60px, 60px 60px, 300% 300%;
 }
 
 .greeting-card[data-mood="wedding"] {
     background:
-        radial-gradient(circle, transparent 20%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0.3) 22%, transparent 22%, transparent),
-        radial-gradient(circle, transparent 20%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0.3) 22%, transparent 22%, transparent),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(255, 255, 255, 0.4) 46%, transparent 47%),
         linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e, #ffecd2);
-    background-size: 50px 50px, 50px 50px, 200% 200%;
-    background-position: 0 0, 25px 25px, 0 0;
+    background-size: 60px 60px, 200% 200%;
 }
 
 .greeting-card[data-mood="christmas"] {
     background:
-        radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
-        radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255, 255, 255, .5) 3px, transparent 4px),
+        radial-gradient(white, rgba(255, 255, 255, .3) 2px, transparent 3px),
         linear-gradient(135deg, #c41e3a, #1a472a, #c41e3a);
-    background-size: 550px 550px, 350px 350px, 200% 200%;
-    background-position: 0 0, 40px 60px, 0 0;
+    background-size: 100px 100px, 50px 50px, 200% 200%;
+    background-position: 0 0, 25px 25px, 0 0;
 }
 
 .greeting-card[data-mood="newyear"] {
     background:
-        radial-gradient(circle, rgba(255, 215, 0, 0.2) 2px, transparent 4px),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        conic-gradient(from 0deg, transparent 0deg, rgba(255, 215, 0, 0.3) 10deg, transparent 20deg),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
         linear-gradient(135deg, #0c0c1e, #ffd700, #0c0c1e);
-    background-size: 30px 30px, 100% 100%, 200% 200%;
+    background-size: 100px 100px, 100% 100%, 200% 200%;
+    background-position: 50px 50px, 0 0, 0 0;
 }
 
 .greeting-card[data-mood="baby"] {
     background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.5%),
+        radial-gradient(circle, rgba(255, 255, 255, 0.5) 5px, transparent 6px),
         linear-gradient(135deg, #a29bfe, #74b9ff, #ffeaa7, #a29bfe);
-    background-size: 30px 30px, 300% 300%;
-    background-position: 0 0, 0 0;
+    background-size: 40px 40px, 300% 300%;
 }
 
 .greeting-card[data-mood="love"] {
     background:
-        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
-        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.2) 0%, transparent 30%),
         linear-gradient(135deg, #ff6b8a, #c44569, #ff6b8a);
-    background-size: 100% 100%, 100% 100%, 200% 200%;
+    background-size: 60px 60px, 100% 100%, 200% 200%;
 }
 
 .greeting-card[data-mood="party"] {
