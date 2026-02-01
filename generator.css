@@ -673,8 +673,12 @@ body {
     padding: 24px;
     width: 100%;
     max-width: 100%;
-    min-height: 280px;
+    /* Social Media Ratio 1.91:1 (approx 1200x630) */
+    aspect-ratio: 1.91 / 1;
+    width: 100%;
+    /* Remove fixed heights to let ratio dictate size */
     height: auto;
+
     overflow: hidden;
     transition: var(--transition);
     display: flex;

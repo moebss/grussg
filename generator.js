@@ -437,7 +437,15 @@ let dragOffset = { x: 0, y: 0 };
 
 function startDrag(e) {
     e.preventDefault();
-    currentDrag = e.target;
+
+    // Ignore if clicking resize handle
+    if (e.target.classList.contains('sticker-resize-handle')) return;
+
+    // Select the wrapper (if image) or the element itself (if emoji)
+    currentDrag = e.target.closest('.placed-sticker');
+
+    if (!currentDrag) return;
+
     currentDrag.classList.add('dragging');
 
     const rect = currentDrag.getBoundingClientRect();
