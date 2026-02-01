@@ -1636,16 +1636,26 @@ body {
     z-index: 1;
     opacity: 0;
     transition: var(--transition);
+    pointer-events: none;
+    /* Allow clicks to pass through to stickers */
 }
 
 .greeting-card.has-custom-bg .card-overlay {
     opacity: 1;
 }
 
-.greeting-card .message-text,
+.greeting-card .message-text {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+    /* Allow clicks to pass through to stickers */
+}
+
 .greeting-card .card-footer {
     position: relative;
     z-index: 2;
+    pointer-events: auto;
+    /* Keep footer interactive (e.g. links) */
 }
 
 /* ===========================
