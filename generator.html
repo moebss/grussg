@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grussgenerator.de | Grüße erstellen</title>
+    <meta name="description"
+        content="KI-generierte Grüße für jeden Anlass. Geburtstag, Hochzeit, Neujahr - erstelle jetzt deinen persönlichen Gruß!">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
+    <link rel="stylesheet" href="generator.css">
+</head>
+
+<body>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="de" title="Deutsch">
+            <img src="https://flagcdn.com/w40/de.png" alt="DE" width="24" height="18">
+        </button>
+        <button class="lang-btn" data-lang="en" title="English">
+            <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="24" height="18">
+        </button>
+        <button class="lang-btn" data-lang="es" title="Español">
+            <img src="https://flagcdn.com/w40/es.png" alt="ES" width="24" height="18">
+        </button>
+        <button class="lang-btn" data-lang="fr" title="Français">
+            <img src="https://flagcdn.com/w40/fr.png" alt="FR" width="24" height="18">
+        </button>
+        <button class="lang-btn" data-lang="tr" title="Türkçe">
+            <img src="https://flagcdn.com/w40/tr.png" alt="TR" width="24" height="18">
+        </button>
+        <button class="lang-btn" data-lang="it" title="Italiano">
+            <img src="https://flagcdn.com/w40/it.png" alt="IT" width="24" height="18">
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <a href="index.html" class="logo">💌 grussgenerator.de</a>
+            <p class="tagline" data-i18n="tagline">Der perfekte Text für jeden Anlass</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="card input-section" id="inputSection">
+                <h2 data-i18n="form-title">✨ Erstelle deinen Gruß</h2>
+
+                <form id="greetingForm">
+                    <!-- Occasion Selection -->
+                    <div class="form-group">
+                        <label data-i18n="label-occasion">📅 Anlass</label>
+                        <div class="occasion-grid">
+                            <button type="button" class="occasion-btn active" data-occasion="birthday">
+                                <span class="occasion-icon">🎂</span>
+                                <span data-i18n="occasion-birthday">Geburtstag</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="wedding">
+                                <span class="occasion-icon">💍</span>
+                                <span data-i18n="occasion-wedding">Hochzeit</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="christmas">
+                                <span class="occasion-icon">🎄</span>
+                                <span data-i18n="occasion-christmas">Weihnachten</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="newyear">
+                                <span class="occasion-icon">🎆</span>
+                                <span data-i18n="occasion-newyear">Neujahr</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="easter">
+                                <span class="occasion-icon">🐰</span>
+                                <span data-i18n="occasion-easter">Ostern</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="thanks">
+                                <span class="occasion-icon">💐</span>
+                                <span data-i18n="occasion-thanks">Danke</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="baby">
+                                <span class="occasion-icon">👶</span>
+                                <span data-i18n="occasion-baby">Geburt</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="getwell">
+                                <span class="occasion-icon">🏥</span>
+                                <span data-i18n="occasion-getwell">Gute Besserung</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="condolence">
+                                <span class="occasion-icon">🕯️</span>
+                                <span data-i18n="occasion-condolence">Beileid</span>
+                            </button>
+                            <button type="button" class="occasion-btn" data-occasion="general">
+                                <span class="occasion-icon">💌</span>
+                                <span data-i18n="occasion-general">Sonstiges</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="recipientName">
+                            <span class="icon">👤</span>
+                            <span data-i18n="label-name">Name der Person</span>
+                        </label>
+                        <input type="text" id="recipientName" name="recipientName"
+                            data-i18n-placeholder="placeholder-name"
+                            placeholder="z.B. Anna, Michael, Familie Schmidt..." required>
+                    </div>
+
+                    <!-- Relationship -->
+                    <div class="form-group">
+                        <label for="relationship">
+                            <span class="icon">💝</span>
+                            <span data-i18n="label-relationship">Beziehung</span>
+                        </label>
+                        <select id="relationship" name="relationship" required>
+                            <option value="" data-i18n="option-select">Bitte wählen...</option>
+                            <option value="friend" data-i18n="option-friend">Freund/in</option>
+                            <option value="romantic" data-i18n="option-romantic">Partner/in</option>
+                            <option value="family" data-i18n="option-family">Familie</option>
+                            <option value="colleague" data-i18n="option-colleague">Kollege/in</option>
+                            <option value="boss" data-i18n="option-boss">Chef/in</option>
+                            <option value="acquaintance" data-i18n="option-acquaintance">Bekannte/r</option>
+                        </select>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="form-group">
+                        <label for="additionalInfo">
+                            <span class="icon">💡</span>
+                            <span data-i18n="label-info">Zusätzliche Infos (optional)</span>
+                        </label>
+                        <textarea id="additionalInfo" data-i18n-placeholder="placeholder-info"
+                            placeholder="Z.B. 'wird 30', 'liebt Reisen', 'neuer Job'..."></textarea>
+                    </div>
+
+                    <!-- Tone -->
+                    <div class="form-group">
+                        <label for="tone">
+                            <span class="icon">🎨</span>
+                            <span data-i18n="label-tone">Stil / Tonalität</span>
+                        </label>
+                        <select id="tone" name="tone" required>
+                            <option value="warm" data-i18n="tone-warm">Warm & Herzlich</option>
+                            <option value="funny" data-i18n="tone-funny">Humorvoll & Lustig</option>
+                            <option value="formal" data-i18n="tone-formal">Formell & Professionell</option>
+                            <option value="poetic" data-i18n="tone-poetic">Poetisch & Kreativ</option>
+                            <option value="short" data-i18n="tone-short">Kurz & Knackig</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn-generate" id="generateBtn">
+                        <span class="btn-text" data-i18n="btn-generate">✨ Gruß generieren ✨</span>
+                        <span class="btn-loading hidden">Generiere...</span>
+                    </button>
+                </form>
+
+                <!-- History Collapse -->
+                <div class="history-section" id="historySection">
+                    <button class="history-toggle" id="historyToggle">
+                        <span>📜 Deine letzten Grüße</span>
+                        <span class="history-badge" id="historyBadge">0</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div class="history-content hidden" id="historyContent">
+                        <div id="historyList" class="history-list">
+                            <p class="empty-history">Noch keine Grüße erstellt.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <section class="card output-section hidden" id="outputSection">
+                <h2 data-i18n="output-title">🎉 Dein persönlicher Gruß</h2>
+
+                <div class="message-display">
+                    <div class="message-header">
+                        <button id="ttsBtn" class="tts-btn" title="Vorlesen">🔊</button>
+                    </div>
+                    <div id="generatedMessage" class="message-text"></div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn-action btn-copy" id="copyBtn">
+                        <span class="icon">📋</span>
+                        <span data-i18n="btn-copy">Kopieren</span>
+                    </button>
+                    <button class="btn-action btn-whatsapp" id="whatsappBtn">
+                        <span class="icon">💬</span>
+                        <span data-i18n="btn-whatsapp">WhatsApp</span>
+                    </button>
+                    <button class="btn-action btn-email" id="emailBtn">
+                        <span class="icon">📧</span>
+                        <span data-i18n="btn-email">E-Mail</span>
+                    </button>
+                    <button class="btn-action btn-download" id="downloadBtn">
+                        <span class="icon">📸</span>
+                        <span data-i18n="btn-download">Als Bild</span>
+                    </button>
+                </div>
+
+                <button class="btn-new" id="newGreetingBtn">
+                    <span data-i18n="btn-new">🎊 Neuen Gruß erstellen</span>
+                </button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 grussgenerator.de | <a href="impressum.html">Impressum</a> | <a
+                    href="datenschutz.html">Datenschutz</a></p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="i18n.js"></script>
+    <script src="generator.js"></script>
+</body>
+
+</html>
