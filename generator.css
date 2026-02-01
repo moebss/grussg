@@ -2170,7 +2170,7 @@ body {
         radial-gradient(circle at 90% 80%, rgba(255, 100, 50, 0.3) 0%, transparent 40%),
         linear-gradient(135deg, #ff6b35, #f7931e, #ffd23f, #ff6b35);
     background-size: 100% 100%, 100% 100%, 200% 200%;
-    animation: moodShift 10s ease infinite;
+
 }
 
 .greeting-card[data-mood="ocean"] {
@@ -2179,7 +2179,7 @@ body {
         radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
         linear-gradient(135deg, #0077b6, #00b4d8, #90e0ef, #0077b6);
     background-size: 100% 100%, 100% 100%, 200% 200%;
-    animation: moodShift 12s ease infinite;
+
 }
 
 .greeting-card[data-mood="forest"] {
@@ -2187,7 +2187,7 @@ body {
         repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 2px, transparent 2px, transparent 10px),
         linear-gradient(135deg, #2d6a4f, #40916c, #74c69d, #2d6a4f);
     background-size: 200% 200%;
-    animation: moodShift 12s ease infinite;
+
 }
 
 .greeting-card[data-mood="lavender"] {
@@ -2196,13 +2196,13 @@ body {
         linear-gradient(135deg, #7b2cbf, #9d4edd, #c77dff, #7b2cbf);
     background-position: 0 0, 0 0;
     background-size: 20px 20px, 200% 200%;
-    animation: moodShift 8s ease infinite;
+
 }
 
 .greeting-card[data-mood="fire"] {
     background: linear-gradient(135deg, #d00000, #e85d04, #faa307, #d00000);
     background-size: 200% 200%;
-    animation: moodShift 4s ease infinite;
+
 }
 
 .greeting-card[data-mood="candy"] {
@@ -2210,25 +2210,25 @@ body {
         repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 20px, transparent 20px, transparent 40px),
         linear-gradient(135deg, #ff69b4, #ff85c1, #ffc8dd, #bde0fe, #ff69b4);
     background-size: 200% 200%;
-    animation: moodShift 8s ease infinite;
+
 }
 
 .greeting-card[data-mood="midnight"] {
     background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77, #0d1b2a);
     background-size: 200% 200%;
-    animation: moodShift 10s ease infinite;
+
 }
 
 .greeting-card[data-mood="aurora"] {
     background: linear-gradient(135deg, #00ff87, #60efff, #ff00e4, #00ff87);
     background-size: 300% 300%;
-    animation: moodShift 4s ease infinite;
+
 }
 
 .greeting-card[data-mood="tropical"] {
     background: linear-gradient(135deg, #f72585, #7209b7, #3a0ca3, #4cc9f0, #f72585);
     background-size: 300% 300%;
-    animation: moodShift 5s ease infinite;
+
 }
 
 .greeting-card[data-mood="vintage"] {
@@ -2236,7 +2236,7 @@ body {
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E"),
         linear-gradient(135deg, #a68a64, #c8b273, #d4c5a9, #a68a64);
     background-size: 100% 100%, 200% 200%;
-    animation: moodShift 15s ease infinite;
+
 }
 
 .greeting-card[data-mood="neon"] {
@@ -2245,13 +2245,13 @@ body {
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(135deg, #39ff14, #ff00ff, #00f0ff, #39ff14);
     background-size: 40px 40px, 40px 40px, 300% 300%;
-    animation: moodShift 4s ease infinite;
+
 }
 
 .greeting-card[data-mood="rose"] {
     background: linear-gradient(135deg, #b5179e, #f72585, #ff4d6d, #b5179e);
     background-size: 200% 200%;
-    animation: moodShift 6s ease infinite;
+
 }
 
 @keyframes moodShift {
@@ -2337,37 +2337,37 @@ body {
         linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
     background-position: 0 0, 25px 25px, 0 0;
     background-size: 50px 50px, 50px 50px, 300% 300%;
-    animation: moodShift 6s ease infinite;
+
 }
 
 .greeting-card[data-mood="wedding"] {
     background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e, #ffecd2);
     background-size: 200% 200%;
-    animation: moodShift 8s ease infinite;
+
 }
 
 .greeting-card[data-mood="christmas"] {
     background: linear-gradient(135deg, #c41e3a, #1a472a, #c41e3a);
     background-size: 200% 200%;
-    animation: moodShift 6s ease infinite;
+
 }
 
 .greeting-card[data-mood="newyear"] {
     background: linear-gradient(135deg, #0c0c1e, #ffd700, #0c0c1e);
     background-size: 200% 200%;
-    animation: moodShift 4s ease infinite;
+
 }
 
 .greeting-card[data-mood="baby"] {
     background: linear-gradient(135deg, #a29bfe, #74b9ff, #ffeaa7, #a29bfe);
     background-size: 300% 300%;
-    animation: moodShift 6s ease infinite;
+
 }
 
 .greeting-card[data-mood="love"] {
     background: linear-gradient(135deg, #ff6b8a, #c44569, #ff6b8a);
     background-size: 200% 200%;
-    animation: moodShift 4s ease infinite;
+
 }
 
 .greeting-card[data-mood="party"] {
@@ -2377,7 +2377,6 @@ body {
         linear-gradient(135deg, #7c3aed, #ec4899, #f59e0b, #7c3aed);
     background-position: 0 0, 10px 10px, 0 0;
     background-size: 20px 20px, 20px 20px, 300% 300%;
-    animation: moodShift 4s ease infinite;
 }
 
 /* Mobile responsive for mood grid */
