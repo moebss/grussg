@@ -2292,7 +2292,9 @@ body {
     transform: translate(-50%, -50%) rotate(-15deg);
     font-size: 3rem;
     font-weight: 800;
-    color: rgba(255, 255, 255, 0.18);
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.35);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     letter-spacing: 2px;
     white-space: nowrap;
     z-index: 0;
