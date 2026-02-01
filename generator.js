@@ -1019,11 +1019,28 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     if (ttsBtn) ttsBtn.style.display = 'none';
     if (messageHeader) messageHeader.style.display = 'none';
 
+    // Clean text (remove accidental markdown)
+    const originalText = generatedMessage.innerText;
+    generatedMessage.innerText = originalText.replace(/\*\*/g, '').replace(/\*/g, '');
+
     const canvas = await html2canvas(card, {
         backgroundColor: null,
         scale: 2,
-        useCORS: true
+        useCORS: true,
+        allowTaint: true, // Allow cross-origin images (patterns)
+        logging: false,
+        onclone: (clonedDoc) => {
+            // Fix border scaling if needed (make them slightly thinner for export?)
+            const clonedCard = clonedDoc.getElementById('greetingCard');
+            if (clonedCard) {
+                // Ensure patterns are visible
+                clonedCard.style.overflow = 'hidden';
+            }
+        }
     });
+
+    // Restore text
+    generatedMessage.innerText = originalText;
 
     // Restore TTS button
     if (ttsBtn) ttsBtn.style.display = '';
