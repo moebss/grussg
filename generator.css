@@ -2229,3 +2229,122 @@ body {
         background-position: 0% 50%;
     }
 }
+
+/* ===========================
+   Background Watermark
+   =========================== */
+.bg-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.08);
+    letter-spacing: 2px;
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    text-transform: lowercase;
+}
+
+/* ===========================
+   Minimalist Mood Emoji Grid
+   =========================== */
+.mood-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+}
+
+.mood-emoji {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+.mood-emoji:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.mood-emoji.active {
+    transform: scale(1.15);
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+/* ===========================
+   Occasion-Based Mood Gradients
+   =========================== */
+.greeting-card[data-mood="default"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.greeting-card[data-mood="birthday"] {
+    background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
+    background-size: 300% 300%;
+    animation: moodShift 5s ease infinite;
+}
+
+.greeting-card[data-mood="wedding"] {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e, #ffecd2);
+    background-size: 200% 200%;
+    animation: moodShift 8s ease infinite;
+}
+
+.greeting-card[data-mood="christmas"] {
+    background: linear-gradient(135deg, #c41e3a, #1a472a, #c41e3a);
+    background-size: 200% 200%;
+    animation: moodShift 6s ease infinite;
+}
+
+.greeting-card[data-mood="newyear"] {
+    background: linear-gradient(135deg, #0c0c1e, #ffd700, #0c0c1e);
+    background-size: 200% 200%;
+    animation: moodShift 4s ease infinite;
+}
+
+.greeting-card[data-mood="baby"] {
+    background: linear-gradient(135deg, #a29bfe, #74b9ff, #ffeaa7, #a29bfe);
+    background-size: 300% 300%;
+    animation: moodShift 6s ease infinite;
+}
+
+.greeting-card[data-mood="love"] {
+    background: linear-gradient(135deg, #ff6b8a, #c44569, #ff6b8a);
+    background-size: 200% 200%;
+    animation: moodShift 4s ease infinite;
+}
+
+.greeting-card[data-mood="party"] {
+    background: linear-gradient(135deg, #7c3aed, #ec4899, #f59e0b, #7c3aed);
+    background-size: 300% 300%;
+    animation: moodShift 3s ease infinite;
+}
+
+/* Mobile responsive for mood grid */
+@media (max-width: 640px) {
+    .mood-grid-compact {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .mood-emoji {
+        font-size: 1.1rem;
+    }
+
+    .bg-watermark {
+        font-size: 1.8rem;
+    }
+}

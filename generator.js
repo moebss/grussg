@@ -382,17 +382,15 @@ function renderOccasionThemes(occasion) {
 }
 
 // ===========================
-// MOOD BUTTONS
+// MOOD EMOJI BUTTONS
 // ===========================
-document.querySelectorAll('.mood-btn').forEach(btn => {
+document.querySelectorAll('.mood-emoji').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.mood-btn').forEach(m => m.classList.remove('active'));
-        document.querySelectorAll('.theme-btn').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.mood-emoji').forEach(m => m.classList.remove('active'));
         btn.classList.add('active');
         greetingCard.setAttribute('data-mood', btn.dataset.mood);
         greetingCard.removeAttribute('data-card-theme');
         playSound(clickSound);
-        showToast(btn.title + ' aktiviert! ✨', 'success');
     });
 });
 
