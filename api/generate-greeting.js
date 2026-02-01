@@ -82,6 +82,9 @@ export default async (req, res) => {
     const toneStyle = toneDescriptions[tone] || toneDescriptions.warm;
 
     try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
         const response = await fetch('https://api.perplexity.ai/chat/completions', {
             method: 'POST',
             headers: {
@@ -112,8 +115,11 @@ IMPORTANT RULES:
                 ],
                 max_tokens: 600,
                 temperature: 0.8
-            })
+            }),
+            signal: controller.signal
         });
+
+        clearTimeout(timeout);
 
         const data = await response.json();
 
