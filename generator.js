@@ -623,10 +623,28 @@ document.getElementById('facebookBtn')?.addEventListener('click', () => {
     window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
 });
 
-// Text-to-Speech
+// Text-to-Speech with toggle
+let isSpeaking = false;
+
 document.getElementById('ttsBtn').addEventListener('click', () => {
     playSound(clickSound);
-    if ('speechSynthesis' in window) {
+
+    if (!('speechSynthesis' in window)) {
+        showToast('Vorlesen nicht unterstützt 😞', 'error');
+        return;
+    }
+
+    const ttsBtn = document.getElementById('ttsBtn');
+
+    if (isSpeaking) {
+        // Stop speaking
+        speechSynthesis.cancel();
+        isSpeaking = false;
+        ttsBtn.textContent = '🔊';
+        ttsBtn.title = 'Vorlesen';
+        showToast('Vorlesen gestoppt ⏹️', 'info');
+    } else {
+        // Start speaking
         const utterance = new SpeechSynthesisUtterance(generatedMessage.textContent);
         utterance.lang = currentLanguage === 'de' ? 'de-DE' :
             currentLanguage === 'en' ? 'en-US' :
@@ -634,10 +652,18 @@ document.getElementById('ttsBtn').addEventListener('click', () => {
                     currentLanguage === 'fr' ? 'fr-FR' :
                         currentLanguage === 'tr' ? 'tr-TR' :
                             currentLanguage === 'it' ? 'it-IT' : 'de-DE';
+
+        utterance.onend = () => {
+            isSpeaking = false;
+            ttsBtn.textContent = '🔊';
+            ttsBtn.title = 'Vorlesen';
+        };
+
         speechSynthesis.speak(utterance);
+        isSpeaking = true;
+        ttsBtn.textContent = '⏹️';
+        ttsBtn.title = 'Stoppen';
         showToast('Wird vorgelesen... 🔊', 'info');
-    } else {
-        showToast('Vorlesen nicht unterstützt 😞', 'error');
     }
 });
 
