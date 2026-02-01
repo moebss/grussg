@@ -2348,3 +2348,326 @@ body {
         font-size: 1.8rem;
     }
 }
+
+/* ===========================
+   3-Column Editor Layout
+   =========================== */
+.editor-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px;
+    gap: 16px;
+    align-items: start;
+    margin-top: 16px;
+}
+
+/* Sticker Panel (Left) */
+.sticker-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.sticker-panel h3 {
+    font-size: 1rem;
+    margin: 0 0 4px 0;
+    text-align: center;
+}
+
+.panel-subtitle {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0 0 12px 0;
+}
+
+.sticker-category {
+    margin-bottom: 12px;
+}
+
+.category-label {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.sticker {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticker:hover {
+    transform: scale(1.15);
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.btn-clear-stickers {
+    width: 100%;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    margin-top: 8px;
+}
+
+.btn-clear-stickers:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+
+/* Card Center */
+.card-center {
+    display: flex;
+    justify-content: center;
+}
+
+/* Design Panel (Right) */
+.design-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+}
+
+.design-panel h3 {
+    font-size: 1rem;
+    margin: 0 0 12px 0;
+    text-align: center;
+}
+
+.design-section {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.design-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.section-label {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Compact Mood Grid */
+.design-panel .mood-grid-compact {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+}
+
+.design-panel .mood-emoji {
+    font-size: 1rem;
+}
+
+/* Mini Controls */
+.mini-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.mini-color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mini-slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    appearance: none;
+    cursor: pointer;
+}
+
+.mini-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+}
+
+/* Font Row */
+.font-row {
+    display: flex;
+    gap: 4px;
+}
+
+.font-mini {
+    flex: 1;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.font-mini:hover,
+.font-mini.active {
+    background: rgba(99, 102, 241, 0.3);
+    border-color: var(--color-primary);
+}
+
+/* Frame Row */
+.frame-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.frame-mini {
+    flex: 1;
+    padding: 6px 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.frame-mini:hover,
+.frame-mini.active {
+    background: rgba(99, 102, 241, 0.3);
+    border-color: var(--color-primary);
+}
+
+/* Mini Upload */
+.upload-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.upload-mini:hover {
+    border-color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.btn-remove-mini {
+    width: 100%;
+    padding: 4px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* Placed Stickers */
+.placed-stickers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.placed-sticker {
+    position: absolute;
+    font-size: 2rem;
+    cursor: move;
+    pointer-events: auto;
+    user-select: none;
+    transition: transform 0.1s ease;
+}
+
+.placed-sticker:hover {
+    transform: scale(1.2);
+}
+
+.placed-sticker.dragging {
+    transform: scale(1.3);
+    z-index: 100;
+}
+
+/* Large Anti-Screenshot Watermark */
+.bg-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.12);
+    letter-spacing: 3px;
+    white-space: nowrap;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    text-transform: lowercase;
+}
+
+/* Mobile: Stack layout */
+@media (max-width: 900px) {
+    .editor-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .sticker-panel {
+        order: 2;
+        max-height: none;
+    }
+
+    .card-center {
+        order: 1;
+    }
+
+    .design-panel {
+        order: 3;
+    }
+
+    .sticker-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    .design-panel .mood-grid-compact {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}

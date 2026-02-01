@@ -394,6 +394,124 @@ document.querySelectorAll('.mood-emoji').forEach(btn => {
     });
 });
 
+// ===========================
+// STICKER SYSTEM
+// ===========================
+const placedStickers = document.getElementById('placedStickers');
+let stickerCount = 0;
+
+document.querySelectorAll('.sticker').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (stickerCount >= 10) {
+            showToast('Maximal 10 Sticker pro Karte!', 'warning');
+            return;
+        }
+
+        const emoji = btn.dataset.emoji;
+        const sticker = document.createElement('span');
+        sticker.className = 'placed-sticker';
+        sticker.textContent = emoji;
+        sticker.style.left = (20 + Math.random() * 60) + '%';
+        sticker.style.top = (20 + Math.random() * 60) + '%';
+
+        // Make sticker draggable
+        sticker.addEventListener('mousedown', startDrag);
+        sticker.addEventListener('touchstart', startDrag);
+
+        // Double-click to remove
+        sticker.addEventListener('dblclick', () => {
+            sticker.remove();
+            stickerCount--;
+            playSound(clickSound);
+        });
+
+        placedStickers?.appendChild(sticker);
+        stickerCount++;
+        playSound(clickSound);
+    });
+});
+
+// Drag functionality
+let currentDrag = null;
+let dragOffset = { x: 0, y: 0 };
+
+function startDrag(e) {
+    e.preventDefault();
+    currentDrag = e.target;
+    currentDrag.classList.add('dragging');
+
+    const rect = currentDrag.getBoundingClientRect();
+    const cardRect = greetingCard.getBoundingClientRect();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+
+    dragOffset.x = clientX - rect.left;
+    dragOffset.y = clientY - rect.top;
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', stopDrag);
+}
+
+function drag(e) {
+    if (!currentDrag) return;
+
+    const cardRect = greetingCard.getBoundingClientRect();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+
+    const x = ((clientX - cardRect.left - dragOffset.x) / cardRect.width) * 100;
+    const y = ((clientY - cardRect.top - dragOffset.y) / cardRect.height) * 100;
+
+    currentDrag.style.left = Math.max(0, Math.min(90, x)) + '%';
+    currentDrag.style.top = Math.max(0, Math.min(90, y)) + '%';
+}
+
+function stopDrag() {
+    if (currentDrag) {
+        currentDrag.classList.remove('dragging');
+        currentDrag = null;
+    }
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener('touchmove', drag);
+    document.removeEventListener('touchend', stopDrag);
+}
+
+// Clear all stickers
+document.getElementById('clearStickersBtn')?.addEventListener('click', () => {
+    if (placedStickers) {
+        placedStickers.innerHTML = '';
+        stickerCount = 0;
+        playSound(clickSound);
+    }
+});
+
+// ===========================
+// MINI FONT BUTTONS
+// ===========================
+document.querySelectorAll('.font-mini').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.font-mini').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        generatedMessage.style.fontFamily = btn.dataset.font;
+        playSound(clickSound);
+    });
+});
+
+// ===========================
+// MINI FRAME BUTTONS
+// ===========================
+document.querySelectorAll('.frame-mini').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.frame-mini').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        greetingCard.setAttribute('data-frame', btn.dataset.frame);
+        playSound(clickSound);
+    });
+});
+
 function updateFloatingEmojis(occasion) {
     const decorations = document.getElementById('cardDecorations');
     const emojis = occasionEmojis[occasion] || occasionEmojis.general;

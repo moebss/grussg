@@ -328,174 +328,164 @@
             <section class="card glass output-section hidden" id="outputSection">
                 <h2>🎉 Dein persönlicher Gruß</h2>
 
-                <!-- Card Style Options -->
-                <div class="card-style-section">
-                    <div class="style-header">
-                        <span>🎨 Karten-Design</span>
+                <!-- 3-Column Editor Layout -->
+                <div class="editor-layout">
+
+                    <!-- LEFT: Sticker Panel -->
+                    <div class="sticker-panel">
+                        <h3>🎨 Sticker</h3>
+                        <p class="panel-subtitle">Klicke zum Hinzufügen</p>
+
+                        <div class="sticker-category">
+                            <span class="category-label">Feiern</span>
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🎈">🎈</button>
+                                <button class="sticker" data-emoji="🎉">🎉</button>
+                                <button class="sticker" data-emoji="🎊">🎊</button>
+                                <button class="sticker" data-emoji="🎁">🎁</button>
+                                <button class="sticker" data-emoji="🎂">🎂</button>
+                                <button class="sticker" data-emoji="🎄">🎄</button>
+                                <button class="sticker" data-emoji="🎆">🎆</button>
+                                <button class="sticker" data-emoji="🎇">🎇</button>
+                            </div>
+                        </div>
+
+                        <div class="sticker-category">
+                            <span class="category-label">Herzen</span>
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="❤️">❤️</button>
+                                <button class="sticker" data-emoji="💕">💕</button>
+                                <button class="sticker" data-emoji="💖">💖</button>
+                                <button class="sticker" data-emoji="💗">💗</button>
+                                <button class="sticker" data-emoji="💘">💘</button>
+                                <button class="sticker" data-emoji="💝">💝</button>
+                            </div>
+                        </div>
+
+                        <div class="sticker-category">
+                            <span class="category-label">Natur</span>
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🌸">🌸</button>
+                                <button class="sticker" data-emoji="🌺">🌺</button>
+                                <button class="sticker" data-emoji="🌷">🌷</button>
+                                <button class="sticker" data-emoji="🌹">🌹</button>
+                                <button class="sticker" data-emoji="🌻">🌻</button>
+                                <button class="sticker" data-emoji="⭐">⭐</button>
+                                <button class="sticker" data-emoji="✨">✨</button>
+                                <button class="sticker" data-emoji="🌈">🌈</button>
+                            </div>
+                        </div>
+
+                        <div class="sticker-category">
+                            <span class="category-label">Symbole</span>
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="👶">👶</button>
+                                <button class="sticker" data-emoji="💒">💒</button>
+                                <button class="sticker" data-emoji="🎓">🎓</button>
+                                <button class="sticker" data-emoji="🏆">🏆</button>
+                                <button class="sticker" data-emoji="🍀">🍀</button>
+                                <button class="sticker" data-emoji="🦋">🦋</button>
+                            </div>
+                        </div>
+
+                        <button class="btn-clear-stickers" id="clearStickersBtn">🗑️ Alle entfernen</button>
                     </div>
 
-                    <!-- Style Tabs -->
-                    <div class="style-tabs">
-                        <button class="style-tab active" data-tab="themes">🖼️ Designs</button>
-                        <button class="style-tab" data-tab="text">✍️ Text</button>
-                        <button class="style-tab" data-tab="frame">🖼️ Rahmen</button>
-                        <button class="style-tab" data-tab="upload">📷 Bild</button>
-                    </div>
+                    <!-- CENTER: Greeting Card -->
+                    <div class="card-center">
+                        <div class="greeting-card-wrapper">
+                            <div class="greeting-card" id="greetingCard" data-mood="default">
+                                <!-- Large Anti-Screenshot Watermark -->
+                                <div class="bg-watermark">grussgenerator.de</div>
 
-                    <!-- Themes Panel -->
-                    <div class="style-panel" id="themesPanel">
-                        <div class="mood-grid-compact">
-                            <button class="mood-emoji active" data-mood="default" title="Standard">💌</button>
-                            <button class="mood-emoji" data-mood="sunset" title="Sonnenuntergang">🌅</button>
-                            <button class="mood-emoji" data-mood="ocean" title="Ozean">🌊</button>
-                            <button class="mood-emoji" data-mood="forest" title="Wald">🌲</button>
-                            <button class="mood-emoji" data-mood="lavender" title="Lavendel">💜</button>
-                            <button class="mood-emoji" data-mood="fire" title="Feuer">🔥</button>
-                            <button class="mood-emoji" data-mood="candy" title="Zuckerwatte">🍬</button>
-                            <button class="mood-emoji" data-mood="midnight" title="Mitternacht">�</button>
-                            <button class="mood-emoji" data-mood="aurora" title="Nordlicht">✨</button>
-                            <button class="mood-emoji" data-mood="tropical" title="Tropical">�</button>
-                            <button class="mood-emoji" data-mood="vintage" title="Vintage">📜</button>
-                            <button class="mood-emoji" data-mood="neon" title="Neon">�</button>
-                            <button class="mood-emoji" data-mood="rose" title="Rose">🌹</button>
-                            <button class="mood-emoji" data-mood="birthday" title="Geburtstag">�</button>
-                            <button class="mood-emoji" data-mood="wedding" title="Hochzeit">💒</button>
-                            <button class="mood-emoji" data-mood="christmas" title="Weihnachten">🎄</button>
-                            <button class="mood-emoji" data-mood="newyear" title="Neujahr">�</button>
-                            <button class="mood-emoji" data-mood="baby" title="Baby">�</button>
-                            <button class="mood-emoji" data-mood="love" title="Liebe">❤️</button>
-                            <button class="mood-emoji" data-mood="party" title="Party">�</button>
+                                <!-- Placed Stickers Container -->
+                                <div class="placed-stickers" id="placedStickers"></div>
+
+                                <!-- Card Overlay -->
+                                <div class="card-overlay"></div>
+
+                                <!-- Custom Background -->
+                                <div class="card-custom-bg" id="cardCustomBg"></div>
+
+                                <div class="message-header">
+                                    <button id="ttsBtn" class="tts-btn" title="Vorlesen">🔊</button>
+                                </div>
+                                <div id="generatedMessage" class="message-text"></div>
+
+                                <div class="card-footer">
+                                    <span class="card-watermark">💌 grussgenerator.de</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Text Customization Panel -->
-                    <div class="style-panel hidden" id="textPanel">
-                        <div class="customization-grid">
-                            <!-- Font Selection -->
-                            <div class="custom-option">
-                                <label>Schriftart</label>
-                                <div class="font-selector" id="fontSelector">
-                                    <button class="font-btn active" data-font="'Outfit', sans-serif">Aa</button>
-                                    <button class="font-btn" data-font="'Georgia', serif"
-                                        style="font-family: Georgia, serif">Aa</button>
-                                    <button class="font-btn" data-font="'Comic Sans MS', cursive"
-                                        style="font-family: 'Comic Sans MS', cursive">Aa</button>
-                                    <button class="font-btn" data-font="'Courier New', monospace"
-                                        style="font-family: 'Courier New', monospace">Aa</button>
-                                    <button class="font-btn" data-font="'Dancing Script', cursive"
-                                        style="font-family: cursive">𝓐𝓪</button>
-                                </div>
-                            </div>
+                    <!-- RIGHT: Design Panel -->
+                    <div class="design-panel">
+                        <h3>⚙️ Design</h3>
 
-                            <!-- Text Color -->
-                            <div class="custom-option">
-                                <label>Textfarbe</label>
-                                <div class="color-picker-row">
-                                    <input type="color" id="textColorPicker" value="#ffffff" class="color-picker">
-                                    <div class="preset-colors" id="textPresetColors">
-                                        <button class="color-preset active" data-color="#ffffff"
-                                            style="background: #ffffff"></button>
-                                        <button class="color-preset" data-color="#1a1a2e"
-                                            style="background: #1a1a2e"></button>
-                                        <button class="color-preset" data-color="#ffd700"
-                                            style="background: #ffd700"></button>
-                                        <button class="color-preset" data-color="#ff6b8a"
-                                            style="background: #ff6b8a"></button>
-                                        <button class="color-preset" data-color="#48dbfb"
-                                            style="background: #48dbfb"></button>
-                                    </div>
-                                </div>
+                        <!-- Mood Selection -->
+                        <div class="design-section">
+                            <span class="section-label">Stimmung</span>
+                            <div class="mood-grid-compact">
+                                <button class="mood-emoji active" data-mood="default" title="Standard">💌</button>
+                                <button class="mood-emoji" data-mood="sunset" title="Sonnenuntergang">🌅</button>
+                                <button class="mood-emoji" data-mood="ocean" title="Ozean">🌊</button>
+                                <button class="mood-emoji" data-mood="forest" title="Wald">🌲</button>
+                                <button class="mood-emoji" data-mood="lavender" title="Lavendel">💜</button>
+                                <button class="mood-emoji" data-mood="fire" title="Feuer">🔥</button>
+                                <button class="mood-emoji" data-mood="candy" title="Zuckerwatte">🍬</button>
+                                <button class="mood-emoji" data-mood="midnight" title="Mitternacht">🌙</button>
+                                <button class="mood-emoji" data-mood="aurora" title="Nordlicht">✨</button>
+                                <button class="mood-emoji" data-mood="neon" title="Neon">💫</button>
+                                <button class="mood-emoji" data-mood="rose" title="Rose">🌹</button>
+                                <button class="mood-emoji" data-mood="birthday" title="Geburtstag">🎂</button>
+                                <button class="mood-emoji" data-mood="wedding" title="Hochzeit">💒</button>
+                                <button class="mood-emoji" data-mood="christmas" title="Weihnachten">🎄</button>
+                                <button class="mood-emoji" data-mood="love" title="Liebe">❤️</button>
+                                <button class="mood-emoji" data-mood="party" title="Party">🎉</button>
                             </div>
+                        </div>
 
-                            <!-- Text Size -->
-                            <div class="custom-option">
-                                <label>Textgröße: <span id="textSizeValue">1.15rem</span></label>
+                        <!-- Text Options -->
+                        <div class="design-section">
+                            <span class="section-label">Text</span>
+                            <div class="mini-controls">
+                                <input type="color" id="textColorPicker" value="#ffffff" class="mini-color-picker"
+                                    title="Textfarbe">
                                 <input type="range" id="textSizeSlider" min="0.9" max="1.6" step="0.05" value="1.15"
-                                    class="custom-slider">
+                                    class="mini-slider" title="Textgröße">
                             </div>
-
-                            <!-- Text Alignment -->
-                            <div class="custom-option">
-                                <label>Ausrichtung</label>
-                                <div class="align-selector">
-                                    <button class="align-btn" data-align="left">⬅️</button>
-                                    <button class="align-btn active" data-align="center">➡️⬅️</button>
-                                    <button class="align-btn" data-align="right">➡️</button>
-                                </div>
+                            <div class="font-row">
+                                <button class="font-mini active" data-font="'Outfit', sans-serif">Aa</button>
+                                <button class="font-mini" data-font="'Georgia', serif"
+                                    style="font-family: Georgia">Aa</button>
+                                <button class="font-mini" data-font="'Courier New', monospace"
+                                    style="font-family: 'Courier New'">Aa</button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Frame Panel -->
-                    <div class="style-panel hidden" id="framePanel">
-                        <div class="frame-options">
-                            <button class="frame-btn active" data-frame="none">Kein Rahmen</button>
-                            <button class="frame-btn" data-frame="thin">Dünn</button>
-                            <button class="frame-btn" data-frame="thick">Dick</button>
-                            <button class="frame-btn" data-frame="double">Doppelt</button>
-                            <button class="frame-btn" data-frame="gold">✨ Gold</button>
-                            <button class="frame-btn" data-frame="rainbow">🌈 Regenbogen</button>
-                            <button class="frame-btn" data-frame="glow">💫 Leuchtend</button>
-                            <button class="frame-btn" data-frame="dashed">- - - Gestrichelt</button>
-                        </div>
-
-                        <!-- Border Radius -->
-                        <div class="custom-option" style="margin-top: 16px;">
-                            <label>Ecken-Rundung: <span id="radiusValue">16px</span></label>
+                        <!-- Frame Options -->
+                        <div class="design-section">
+                            <span class="section-label">Rahmen</span>
+                            <div class="frame-row">
+                                <button class="frame-mini active" data-frame="none" title="Kein Rahmen">○</button>
+                                <button class="frame-mini" data-frame="thin" title="Dünn">□</button>
+                                <button class="frame-mini" data-frame="gold" title="Gold">✨</button>
+                                <button class="frame-mini" data-frame="rainbow" title="Regenbogen">🌈</button>
+                                <button class="frame-mini" data-frame="glow" title="Leuchtend">💫</button>
+                            </div>
                             <input type="range" id="radiusSlider" min="0" max="40" step="2" value="16"
-                                class="custom-slider">
+                                class="mini-slider" title="Ecken-Rundung">
                         </div>
-                    </div>
 
-                    <!-- Upload Panel -->
-                    <div class="style-panel hidden" id="uploadPanel">
-                        <div class="upload-zone" id="uploadZone">
-                            <input type="file" id="imageUpload" accept="image/*" class="hidden">
-                            <div class="upload-content">
-                                <span class="upload-icon">📷</span>
-                                <span class="upload-text">Bild hochladen oder hierher ziehen</span>
-                                <span class="upload-hint">JPG, PNG, GIF (max. 5MB)</span>
+                        <!-- Upload -->
+                        <div class="design-section">
+                            <span class="section-label">Hintergrund</span>
+                            <div class="upload-mini" id="uploadZone">
+                                <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                                <span>📷 Bild</span>
                             </div>
-                        </div>
-                        <button class="btn-remove-bg hidden" id="removeBgBtn">❌ Bild entfernen</button>
-
-                        <!-- Overlay Intensity -->
-                        <div class="custom-option" style="margin-top: 16px;">
-                            <label>Abdunklung: <span id="overlayValue">30%</span></label>
-                            <input type="range" id="overlaySlider" min="0" max="80" step="5" value="30"
-                                class="custom-slider">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="greeting-card-wrapper">
-                    <div class="greeting-card" id="greetingCard" data-card-theme="birthday-balloons"
-                        data-occasion="birthday">
-                        <!-- Animated Decorations -->
-                        <div class="card-decorations" id="cardDecorations">
-                            <span class="floating-emoji">🎈</span>
-                            <span class="floating-emoji">🎉</span>
-                            <span class="floating-emoji">🎂</span>
-                            <span class="floating-emoji">✨</span>
-                            <span class="floating-emoji">🎁</span>
-                        </div>
-
-                        <!-- Custom Background -->
-                        <div class="card-custom-bg" id="cardCustomBg"></div>
-
-                        <!-- Card Overlay -->
-                        <div class="card-overlay"></div>
-
-                        <!-- Background Watermark -->
-                        <div class="bg-watermark">grussgenerator.de</div>
-
-                        <div class="message-header">
-                            <button id="ttsBtn" class="tts-btn" title="Vorlesen">🔊</button>
-                        </div>
-                        <div id="generatedMessage" class="message-text"></div>
-
-                        <div class="card-footer">
-                            <span class="card-watermark">💌 grussgenerator.de</span>
+                            <button class="btn-remove-mini hidden" id="removeBgBtn">❌</button>
                         </div>
                     </div>
                 </div>
