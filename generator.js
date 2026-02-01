@@ -1,15 +1,19 @@
 // ===========================
-// GRUSSGENERATOR - Main Script
+// GRUSSGENERATOR - VIRAL MODE 🚀
 // ===========================
 
 // --- Configuration ---
 const API_ENDPOINT = '/api/generate-greeting';
 const HISTORY_KEY = 'grussgenerator_history';
 const MAX_HISTORY = 5;
+const STATS_KEY = 'grussgenerator_stats';
 
 // --- State ---
 let currentLanguage = 'de';
 let currentOccasion = 'birthday';
+let currentCardTheme = 'gradient';
+let soundEnabled = true;
+let totalGreetings = 12847; // Starting number for social proof
 
 // --- DOM Elements ---
 const greetingForm = document.getElementById('greetingForm');
@@ -21,6 +25,54 @@ const historyToggle = document.getElementById('historyToggle');
 const historyContent = document.getElementById('historyContent');
 const historyList = document.getElementById('historyList');
 const historyBadge = document.getElementById('historyBadge');
+const greetingCard = document.getElementById('greetingCard');
+
+// --- Audio ---
+const clickSound = document.getElementById('clickSound');
+const successSound = document.getElementById('successSound');
+
+// ===========================
+// SOUND EFFECTS
+// ===========================
+function playSound(sound) {
+    if (!soundEnabled || !sound) return;
+    sound.currentTime = 0;
+    sound.volume = 0.3;
+    sound.play().catch(() => { });
+}
+
+// Sound Toggle
+document.getElementById('soundToggle')?.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    const btn = document.getElementById('soundToggle');
+    btn.textContent = soundEnabled ? '🔊' : '🔇';
+    playSound(clickSound);
+    showToast(soundEnabled ? 'Sound aktiviert 🔊' : 'Sound deaktiviert 🔇', 'info');
+});
+
+// ===========================
+// THEME TOGGLE (Dark/Light)
+// ===========================
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+
+    const btn = document.getElementById('themeToggle');
+    btn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+
+    playSound(clickSound);
+    localStorage.setItem('theme', newTheme);
+});
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+}
 
 // ===========================
 // ANIMATED BACKGROUND
@@ -31,7 +83,6 @@ function initBackground() {
 
     const ctx = canvas.getContext('2d');
     let particles = [];
-    let animationId;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -40,16 +91,16 @@ function initBackground() {
 
     function createParticles() {
         particles = [];
-        const count = Math.floor((canvas.width * canvas.height) / 15000);
+        const count = Math.floor((canvas.width * canvas.height) / 20000);
 
         for (let i = 0; i < count; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 2 + 0.5,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                alpha: Math.random() * 0.5 + 0.2,
+                radius: Math.random() * 2.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                alpha: Math.random() * 0.6 + 0.2,
                 color: Math.random() > 0.5 ? '#6366f1' : '#f472b6'
             });
         }
@@ -58,29 +109,29 @@ function initBackground() {
     function drawParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw gradient background
-        const gradient = ctx.createRadialGradient(
-            canvas.width / 2, 0, 0,
-            canvas.width / 2, canvas.height, canvas.height
-        );
-        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.08)');
-        gradient.addColorStop(0.5, 'rgba(10, 10, 18, 0)');
-        gradient.addColorStop(1, 'rgba(244, 114, 182, 0.05)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
-        // Draw particles
+        if (isDark) {
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, 0, 0,
+                canvas.width / 2, canvas.height, canvas.height
+            );
+            gradient.addColorStop(0, 'rgba(99, 102, 241, 0.1)');
+            gradient.addColorStop(0.5, 'rgba(10, 10, 18, 0)');
+            gradient.addColorStop(1, 'rgba(244, 114, 182, 0.08)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
         particles.forEach(p => {
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fillStyle = p.color.replace(')', `, ${p.alpha})`).replace('rgb', 'rgba');
             ctx.fill();
 
-            // Update position
             p.x += p.vx;
             p.y += p.vy;
 
-            // Wrap around edges
             if (p.x < 0) p.x = canvas.width;
             if (p.x > canvas.width) p.x = 0;
             if (p.y < 0) p.y = canvas.height;
@@ -94,18 +145,18 @@ function initBackground() {
                 const dy = p1.y - p2.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 100) {
+                if (dist < 120) {
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - dist / 100)})`;
-                    ctx.lineWidth = 0.5;
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${0.12 * (1 - dist / 120)})`;
+                    ctx.lineWidth = 0.6;
                     ctx.stroke();
                 }
             });
         });
 
-        animationId = requestAnimationFrame(drawParticles);
+        requestAnimationFrame(drawParticles);
     }
 
     window.addEventListener('resize', () => {
@@ -124,31 +175,64 @@ function initBackground() {
 function launchConfetti() {
     if (typeof confetti === 'undefined') return;
 
-    // First burst
+    const colors = ['#6366f1', '#f472b6', '#fbbf24', '#22c55e', '#ef4444'];
+
+    // Main burst
     confetti({
-        particleCount: 100,
-        spread: 70,
+        particleCount: 120,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ['#6366f1', '#f472b6', '#fbbf24', '#22c55e']
+        colors: colors
     });
 
     // Side cannons
     setTimeout(() => {
-        confetti({
-            particleCount: 50,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#6366f1', '#f472b6']
-        });
-        confetti({
-            particleCount: 50,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#6366f1', '#f472b6']
-        });
-    }, 200);
+        confetti({ particleCount: 60, angle: 60, spread: 60, origin: { x: 0, y: 0.7 }, colors: colors });
+        confetti({ particleCount: 60, angle: 120, spread: 60, origin: { x: 1, y: 0.7 }, colors: colors });
+    }, 150);
+
+    // Extra sparkle
+    setTimeout(() => {
+        confetti({ particleCount: 40, spread: 100, origin: { y: 0.5 }, colors: colors });
+    }, 300);
+}
+
+// ===========================
+// LIVE COUNTER SIMULATION
+// ===========================
+function updateLiveCounter() {
+    const liveCount = document.getElementById('liveCount');
+    if (!liveCount) return;
+
+    // Simulate "people creating greetings now"
+    setInterval(() => {
+        const current = parseInt(liveCount.textContent);
+        const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+        const newCount = Math.max(10, Math.min(99, current + change));
+        liveCount.textContent = newCount;
+    }, 3000);
+}
+
+// Total greetings counter
+function updateTotalCounter() {
+    const totalEl = document.getElementById('totalGreetings');
+    const footerEl = document.getElementById('footerCount');
+
+    // Load from localStorage or use default
+    const saved = localStorage.getItem(STATS_KEY);
+    if (saved) {
+        totalGreetings = parseInt(saved);
+    }
+
+    const formatted = totalGreetings.toLocaleString('de-DE');
+    if (totalEl) totalEl.textContent = formatted;
+    if (footerEl) footerEl.textContent = formatted;
+}
+
+function incrementTotalCounter() {
+    totalGreetings++;
+    localStorage.setItem(STATS_KEY, totalGreetings.toString());
+    updateTotalCounter();
 }
 
 // ===========================
@@ -165,7 +249,7 @@ function showToast(message, type = 'info') {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(20px)';
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 3500);
 }
 
 // ===========================
@@ -176,6 +260,20 @@ document.querySelectorAll('.occasion-btn').forEach(btn => {
         document.querySelectorAll('.occasion-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentOccasion = btn.dataset.occasion;
+        playSound(clickSound);
+    });
+});
+
+// ===========================
+// CARD THEME SELECTION
+// ===========================
+document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCardTheme = btn.dataset.theme;
+        greetingCard.setAttribute('data-card-theme', currentCardTheme);
+        playSound(clickSound);
     });
 });
 
@@ -187,6 +285,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentLanguage = btn.dataset.lang;
+        playSound(clickSound);
         if (typeof applyTranslations === 'function') {
             applyTranslations(currentLanguage);
         }
@@ -205,9 +304,11 @@ greetingForm.addEventListener('submit', async (e) => {
     const tone = document.getElementById('tone').value;
 
     if (!name || !relation) {
-        showToast('Bitte fülle alle Pflichtfelder aus.', 'error');
+        showToast('Bitte fülle alle Pflichtfelder aus! ⚠️', 'error');
         return;
     }
+
+    playSound(clickSound);
 
     // Loading state
     generateBtn.disabled = true;
@@ -248,14 +349,17 @@ greetingForm.addEventListener('submit', async (e) => {
             date: new Date().toISOString()
         });
 
-        showToast('Gruß erfolgreich generiert!', 'success');
+        // Increment counter
+        incrementTotalCounter();
 
-        // Launch confetti celebration!
+        // Success feedback
+        playSound(successSound);
+        showToast('Gruß erfolgreich generiert! 🎉', 'success');
         launchConfetti();
 
     } catch (err) {
         console.error('Generation error:', err);
-        showToast(`Fehler: ${err.message}`, 'error');
+        showToast(`Fehler: ${err.message} 😞`, 'error');
     } finally {
         generateBtn.disabled = false;
         generateBtn.querySelector('.btn-text').classList.remove('hidden');
@@ -286,7 +390,7 @@ function renderHistory(history) {
     historyBadge.textContent = history.length;
 
     if (history.length === 0) {
-        historyList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt.</p>';
+        historyList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt. Starte jetzt! 🚀</p>';
         return;
     }
 
@@ -298,9 +402,9 @@ function renderHistory(history) {
         easter: '🐰 Ostern',
         thanks: '💐 Danke',
         baby: '👶 Geburt',
-        getwell: '🏥 Gute Besserung',
-        mothersday: '👩 Muttertag',
-        fathersday: '👨 Vatertag',
+        getwell: '💊 Gute Besserung',
+        mothersday: '👩‍👧 Muttertag',
+        fathersday: '👨‍👦 Vatertag',
         graduation: '🎓 Abschluss',
         anniversary: '🥂 Jubiläum',
         general: '💌 Sonstiges'
@@ -312,11 +416,10 @@ function renderHistory(history) {
                 <span class="history-item-occasion">${occasionNames[item.occasion] || item.occasion}</span>
                 <span class="history-item-date">${new Date(item.date).toLocaleDateString('de-DE')}</span>
             </div>
-            <div class="history-item-preview">${item.text.substring(0, 60)}...</div>
+            <div class="history-item-preview">${item.text.substring(0, 50)}...</div>
         </div>
     `).join('');
 
-    // Add click handlers
     historyList.querySelectorAll('.history-item').forEach(item => {
         item.addEventListener('click', () => {
             const index = parseInt(item.dataset.index);
@@ -324,14 +427,27 @@ function renderHistory(history) {
             generatedMessage.textContent = entry.text;
             inputSection.classList.add('hidden');
             outputSection.classList.remove('hidden');
+            playSound(clickSound);
         });
     });
 }
 
-// History toggle
 historyToggle.addEventListener('click', () => {
     historyToggle.classList.toggle('open');
     historyContent.classList.toggle('hidden');
+    playSound(clickSound);
+});
+
+// ===========================
+// REACTION BUTTONS
+// ===========================
+document.querySelectorAll('.reaction-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        playSound(successSound);
+        showToast('Danke für dein Feedback! ❤️', 'success');
+    });
 });
 
 // ===========================
@@ -341,39 +457,72 @@ historyToggle.addEventListener('click', () => {
 // Copy to clipboard
 document.getElementById('copyBtn').addEventListener('click', () => {
     navigator.clipboard.writeText(generatedMessage.textContent)
-        .then(() => showToast('Text kopiert!', 'success'))
-        .catch(() => showToast('Kopieren fehlgeschlagen', 'error'));
+        .then(() => {
+            playSound(clickSound);
+            showToast('Text kopiert! 📋', 'success');
+        })
+        .catch(() => showToast('Kopieren fehlgeschlagen 😞', 'error'));
 });
 
 // WhatsApp share
 document.getElementById('whatsappBtn').addEventListener('click', () => {
-    const text = encodeURIComponent(generatedMessage.textContent);
+    playSound(clickSound);
+    const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
     window.open(`https://wa.me/?text=${text}`, '_blank');
 });
 
 // Email share
 document.getElementById('emailBtn').addEventListener('click', () => {
-    const subject = encodeURIComponent('Ein persönlicher Gruß für dich');
-    const body = encodeURIComponent(generatedMessage.textContent);
+    playSound(clickSound);
+    const subject = encodeURIComponent('Ein persönlicher Gruß für dich 💌');
+    const body = encodeURIComponent(generatedMessage.textContent + '\n\n---\nErstellt mit grussgenerator.de');
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
 });
 
 // Download as image
 document.getElementById('downloadBtn').addEventListener('click', async () => {
-    const canvas = await html2canvas(document.querySelector('.message-display'), {
-        backgroundColor: '#1a1a2e',
-        scale: 2
+    playSound(clickSound);
+    showToast('Bild wird erstellt... 📸', 'info');
+
+    const card = document.getElementById('greetingCard');
+    const canvas = await html2canvas(card, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true
     });
 
     const link = document.createElement('a');
-    link.download = 'gruss.png';
+    link.download = `gruss-${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
-    showToast('Bild heruntergeladen!', 'success');
+
+    playSound(successSound);
+    showToast('Bild heruntergeladen! 🎉', 'success');
+});
+
+// Twitter share
+document.getElementById('twitterBtn')?.addEventListener('click', () => {
+    playSound(clickSound);
+    const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌 Probiere es selbst: grussgenerator.de');
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+});
+
+// Telegram share
+document.getElementById('telegramBtn')?.addEventListener('click', () => {
+    playSound(clickSound);
+    const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
+    window.open(`https://t.me/share/url?url=https://grussgenerator.de&text=${text}`, '_blank');
+});
+
+// Facebook share
+document.getElementById('facebookBtn')?.addEventListener('click', () => {
+    playSound(clickSound);
+    window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
 });
 
 // Text-to-Speech
 document.getElementById('ttsBtn').addEventListener('click', () => {
+    playSound(clickSound);
     if ('speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(generatedMessage.textContent);
         utterance.lang = currentLanguage === 'de' ? 'de-DE' :
@@ -383,18 +532,18 @@ document.getElementById('ttsBtn').addEventListener('click', () => {
                         currentLanguage === 'tr' ? 'tr-TR' :
                             currentLanguage === 'it' ? 'it-IT' : 'de-DE';
         speechSynthesis.speak(utterance);
-        showToast('Wird vorgelesen...', 'info');
+        showToast('Wird vorgelesen... 🔊', 'info');
     } else {
-        showToast('Vorlesen nicht unterstützt', 'error');
+        showToast('Vorlesen nicht unterstützt 😞', 'error');
     }
 });
 
 // New greeting button
 document.getElementById('newGreetingBtn').addEventListener('click', () => {
+    playSound(clickSound);
     outputSection.classList.add('hidden');
     inputSection.classList.remove('hidden');
     greetingForm.reset();
-    // Reset to first occasion
     document.querySelectorAll('.occasion-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.occasion-btn[data-occasion="birthday"]').classList.add('active');
     currentOccasion = 'birthday';
@@ -406,9 +555,15 @@ document.getElementById('newGreetingBtn').addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     initBackground();
     loadHistory();
+    updateTotalCounter();
+    updateLiveCounter();
 
     // Apply initial language
     if (typeof applyTranslations === 'function') {
         applyTranslations(currentLanguage);
     }
+
+    // Preload sounds
+    if (clickSound) clickSound.load();
+    if (successSound) successSound.load();
 });
