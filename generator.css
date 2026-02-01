@@ -2097,3 +2097,135 @@ body {
 .greeting-card[data-frame="dashed"] {
     border: 3px dashed rgba(255, 255, 255, 0.5);
 }
+
+/* ===========================
+   Panel Hints
+   =========================== */
+.panel-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+/* ===========================
+   Mood Grid
+   =========================== */
+.mood-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.mood-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mood-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--color-primary);
+}
+
+.mood-btn.active {
+    border-color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+/* ===========================
+   Mood Gradients
+   =========================== */
+.greeting-card[data-mood="sunset"] {
+    background: linear-gradient(135deg, #ff6b35, #f7931e, #ffd23f, #ff6b35);
+    background-size: 200% 200%;
+    animation: moodShift 6s ease infinite;
+}
+
+.greeting-card[data-mood="ocean"] {
+    background: linear-gradient(135deg, #0077b6, #00b4d8, #90e0ef, #0077b6);
+    background-size: 200% 200%;
+    animation: moodShift 8s ease infinite;
+}
+
+.greeting-card[data-mood="forest"] {
+    background: linear-gradient(135deg, #2d6a4f, #40916c, #74c69d, #2d6a4f);
+    background-size: 200% 200%;
+    animation: moodShift 8s ease infinite;
+}
+
+.greeting-card[data-mood="lavender"] {
+    background: linear-gradient(135deg, #7b2cbf, #9d4edd, #c77dff, #7b2cbf);
+    background-size: 200% 200%;
+    animation: moodShift 6s ease infinite;
+}
+
+.greeting-card[data-mood="fire"] {
+    background: linear-gradient(135deg, #d00000, #e85d04, #faa307, #d00000);
+    background-size: 200% 200%;
+    animation: moodShift 4s ease infinite;
+}
+
+.greeting-card[data-mood="candy"] {
+    background: linear-gradient(135deg, #ff69b4, #ff85c1, #ffc8dd, #bde0fe, #ff69b4);
+    background-size: 300% 300%;
+    animation: moodShift 5s ease infinite;
+}
+
+.greeting-card[data-mood="midnight"] {
+    background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77, #0d1b2a);
+    background-size: 200% 200%;
+    animation: moodShift 10s ease infinite;
+}
+
+.greeting-card[data-mood="aurora"] {
+    background: linear-gradient(135deg, #00ff87, #60efff, #ff00e4, #00ff87);
+    background-size: 300% 300%;
+    animation: moodShift 4s ease infinite;
+}
+
+.greeting-card[data-mood="tropical"] {
+    background: linear-gradient(135deg, #f72585, #7209b7, #3a0ca3, #4cc9f0, #f72585);
+    background-size: 300% 300%;
+    animation: moodShift 5s ease infinite;
+}
+
+.greeting-card[data-mood="vintage"] {
+    background: linear-gradient(135deg, #a68a64, #c8b273, #d4c5a9, #a68a64);
+    background-size: 200% 200%;
+    animation: moodShift 8s ease infinite;
+}
+
+.greeting-card[data-mood="neon"] {
+    background: linear-gradient(135deg, #39ff14, #ff00ff, #00f0ff, #39ff14);
+    background-size: 300% 300%;
+    animation: moodShift 3s ease infinite;
+}
+
+.greeting-card[data-mood="rose"] {
+    background: linear-gradient(135deg, #b5179e, #f72585, #ff4d6d, #b5179e);
+    background-size: 200% 200%;
+    animation: moodShift 6s ease infinite;
+}
+
+@keyframes moodShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

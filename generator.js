@@ -361,9 +361,11 @@ function renderOccasionThemes(occasion) {
     container.querySelectorAll('.theme-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             container.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.mood-btn').forEach(m => m.classList.remove('active'));
             btn.classList.add('active');
             currentCardTheme = btn.dataset.theme;
             greetingCard.setAttribute('data-card-theme', currentCardTheme);
+            greetingCard.removeAttribute('data-mood');
             playSound(clickSound);
         });
     });
@@ -378,6 +380,21 @@ function renderOccasionThemes(occasion) {
     // Update floating emojis
     updateFloatingEmojis(occasion);
 }
+
+// ===========================
+// MOOD BUTTONS
+// ===========================
+document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.mood-btn').forEach(m => m.classList.remove('active'));
+        document.querySelectorAll('.theme-btn').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        greetingCard.setAttribute('data-mood', btn.dataset.mood);
+        greetingCard.removeAttribute('data-card-theme');
+        playSound(clickSound);
+        showToast(btn.title + ' aktiviert! ✨', 'success');
+    });
+});
 
 function updateFloatingEmojis(occasion) {
     const decorations = document.getElementById('cardDecorations');
@@ -711,8 +728,10 @@ greetingForm.addEventListener('submit', async (e) => {
         // Clean citation footnotes like [1], [2] from AI response
         function cleanCitations(text) {
             return text
-                .replace(/\[\d+\]/g, '')  // Remove [1], [2], etc.
-                .replace(/\s+/g, ' ')      // Clean up extra spaces
+                .replace(/\[\d+\]/g, '')           // Remove [1], [2], etc.
+                .replace(/  +/g, ' ')              // Clean multiple spaces (not newlines!)
+                .replace(/ +\n/g, '\n')            // Remove trailing spaces before newlines
+                .replace(/\n +/g, '\n')            // Remove leading spaces after newlines  
                 .trim();
         }
 
