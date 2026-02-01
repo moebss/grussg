@@ -1110,8 +1110,8 @@ document.getElementById('newGreetingBtn').addEventListener('click', () => {
 // ===========================
 const uploadBgZone = document.getElementById('uploadBgZone');
 const bgUpload = document.getElementById('bgUpload');
-const cardCustomBg = document.getElementById('cardCustomBg');
-const removeBgBtn = document.getElementById('removeBgBtn');
+// cardCustomBg and removeBgBtn are already declared above
+
 
 const uploadStickerZone = document.getElementById('uploadStickerZone');
 const stickerUpload = document.getElementById('stickerUpload');
@@ -1191,11 +1191,60 @@ stickerUpload?.addEventListener('change', (e) => {
 // ===========================
 // INIT
 // ===========================
+// ===========================
+// URL PARAMETER HANDLING
+// ===========================
+function initUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlParams.entries());
+
+    if (Object.keys(params).length === 0) return;
+
+    // Fill fields
+    if (params.recipientName) {
+        document.getElementById('recipientName').value = params.recipientName;
+    }
+
+    if (params.relationship) {
+        const select = document.getElementById('relationship');
+        if (select) select.value = params.relationship;
+    }
+
+    if (params.additionalInfo) {
+        document.getElementById('additionalInfo').value = params.additionalInfo;
+    }
+
+    if (params.tone) {
+        const select = document.getElementById('tone');
+        if (select) select.value = params.tone;
+    }
+
+    // Set Occasion
+    if (params.occasion) {
+        const occasionBtn = document.querySelector(`.occasion-btn[data-occasion="${params.occasion}"]`);
+        if (occasionBtn) {
+            document.querySelectorAll('.occasion-btn').forEach(b => b.classList.remove('active'));
+            occasionBtn.classList.add('active');
+            currentOccasion = params.occasion;
+        }
+    }
+
+    // Show Toast
+    showToast('Daten aus Link geladen! ✨', 'success');
+
+    // Optional: Auto-generate if all fields are present?
+    // for now, let the user click to be safe.
+}
+
+// ===========================
+// INIT
+// ===========================
 document.addEventListener('DOMContentLoaded', () => {
     initBackground();
     loadHistory();
     updateTotalCounter();
     updateLiveCounter();
+    initUrlParameters(); // Check for URL params
 
     // Apply initial language
     if (typeof applyTranslations === 'function') {
