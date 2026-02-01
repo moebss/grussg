@@ -265,16 +265,208 @@ document.querySelectorAll('.occasion-btn').forEach(btn => {
 });
 
 // ===========================
-// CARD THEME SELECTION
+// OCCASION-SPECIFIC THEMES
 // ===========================
-document.querySelectorAll('.theme-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCardTheme = btn.dataset.theme;
+const occasionThemes = {
+    birthday: [
+        { id: 'birthday-balloons', name: '🎈 Ballons', default: true },
+        { id: 'birthday-confetti', name: '🎊 Konfetti' },
+        { id: 'birthday-gold', name: '✨ Gold' }
+    ],
+    wedding: [
+        { id: 'wedding-elegant', name: '🌸 Elegant', default: true },
+        { id: 'wedding-romantic', name: '💕 Romantisch' },
+        { id: 'wedding-white', name: '⬜ Weiß' }
+    ],
+    christmas: [
+        { id: 'christmas-classic', name: '🎄 Klassisch', default: true },
+        { id: 'christmas-snow', name: '❄️ Schnee' },
+        { id: 'christmas-cozy', name: '🔥 Gemütlich' }
+    ],
+    newyear: [
+        { id: 'newyear-fireworks', name: '🎆 Feuerwerk', default: true },
+        { id: 'newyear-gold', name: '✨ Gold' },
+        { id: 'newyear-sparkle', name: '💫 Glitzer' }
+    ],
+    easter: [
+        { id: 'easter-spring', name: '🌱 Frühling', default: true },
+        { id: 'easter-pastel', name: '🎨 Pastell' }
+    ],
+    thanks: [
+        { id: 'thanks-floral', name: '🌸 Blumen', default: true },
+        { id: 'thanks-heartfelt', name: '❤️ Herzlich' },
+        { id: 'thanks-nature', name: '🌿 Natur' }
+    ],
+    baby: [
+        { id: 'baby-pink', name: '💗 Rosa', default: true },
+        { id: 'baby-blue', name: '💙 Blau' },
+        { id: 'baby-pastel', name: '🎨 Pastell' }
+    ],
+    getwell: [
+        { id: 'getwell-sunny', name: '☀️ Sonnig', default: true },
+        { id: 'getwell-calm', name: '💙 Beruhigend' },
+        { id: 'getwell-garden', name: '🌿 Garten' }
+    ],
+    mothersday: [
+        { id: 'parents-love', name: '❤️ Liebe', default: true },
+        { id: 'parents-elegant', name: '✨ Elegant' }
+    ],
+    fathersday: [
+        { id: 'parents-love', name: '❤️ Liebe', default: true },
+        { id: 'parents-elegant', name: '✨ Elegant' }
+    ],
+    graduation: [
+        { id: 'graduation-classic', name: '🎓 Klassisch', default: true },
+        { id: 'graduation-party', name: '🎉 Party' }
+    ],
+    anniversary: [
+        { id: 'anniversary-gold', name: '✨ Gold', default: true },
+        { id: 'anniversary-romantic', name: '💕 Romantisch' }
+    ],
+    general: [
+        { id: 'general-gradient', name: '🌈 Gradient', default: true },
+        { id: 'general-minimal', name: '⬜ Minimal' },
+        { id: 'general-dark', name: '🌙 Dunkel' }
+    ]
+};
+
+// Emojis per occasion for floating decorations
+const occasionEmojis = {
+    birthday: ['🎈', '🎉', '🎂', '✨', '🎁'],
+    wedding: ['💒', '💕', '💍', '🌸', '🕊️'],
+    christmas: ['🎄', '🎅', '❄️', '⭐', '🎁'],
+    newyear: ['🎆', '🥂', '✨', '🎊', '🌟'],
+    easter: ['🐰', '🥚', '🌷', '🐣', '🌸'],
+    thanks: ['💐', '🙏', '❤️', '🌻', '🦋'],
+    baby: ['👶', '🍼', '🧸', '💕', '⭐'],
+    getwell: ['🌷', '💊', '☀️', '🌈', '💪'],
+    mothersday: ['👩‍👧', '💐', '❤️', '🌹', '💕'],
+    fathersday: ['👨‍👦', '🏆', '❤️', '⭐', '💪'],
+    graduation: ['🎓', '📚', '🎉', '⭐', '🏆'],
+    anniversary: ['🥂', '💕', '💍', '🌹', '✨'],
+    general: ['💌', '✨', '❤️', '🌟', '🎉']
+};
+
+function renderOccasionThemes(occasion) {
+    const container = document.getElementById('occasionThemes');
+    const themes = occasionThemes[occasion] || occasionThemes.general;
+
+    container.innerHTML = themes.map(theme => `
+        <button class="theme-btn ${theme.default ? 'active' : ''}" data-theme="${theme.id}">
+            ${theme.name}
+        </button>
+    `).join('');
+
+    // Bind click events
+    container.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            container.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCardTheme = btn.dataset.theme;
+            greetingCard.setAttribute('data-card-theme', currentCardTheme);
+            playSound(clickSound);
+        });
+    });
+
+    // Set default theme
+    const defaultTheme = themes.find(t => t.default);
+    if (defaultTheme) {
+        currentCardTheme = defaultTheme.id;
         greetingCard.setAttribute('data-card-theme', currentCardTheme);
+    }
+
+    // Update floating emojis
+    updateFloatingEmojis(occasion);
+}
+
+function updateFloatingEmojis(occasion) {
+    const decorations = document.getElementById('cardDecorations');
+    const emojis = occasionEmojis[occasion] || occasionEmojis.general;
+
+    decorations.innerHTML = emojis.map(emoji =>
+        `<span class="floating-emoji">${emoji}</span>`
+    ).join('');
+
+    greetingCard.setAttribute('data-occasion', occasion);
+}
+
+// ===========================
+// STYLE TABS
+// ===========================
+document.querySelectorAll('.style-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.style-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const panel = tab.dataset.tab;
+        document.getElementById('themesPanel').classList.toggle('hidden', panel !== 'themes');
+        document.getElementById('uploadPanel').classList.toggle('hidden', panel !== 'upload');
+
         playSound(clickSound);
     });
+});
+
+// ===========================
+// IMAGE UPLOAD
+// ===========================
+const uploadZone = document.getElementById('uploadZone');
+const imageUpload = document.getElementById('imageUpload');
+const cardCustomBg = document.getElementById('cardCustomBg');
+const removeBgBtn = document.getElementById('removeBgBtn');
+
+uploadZone?.addEventListener('click', () => imageUpload?.click());
+
+uploadZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('dragover');
+});
+
+uploadZone?.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('dragover');
+});
+
+uploadZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+
+    const file = e.dataTransfer.files[0];
+    if (file) handleImageUpload(file);
+});
+
+imageUpload?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) handleImageUpload(file);
+});
+
+function handleImageUpload(file) {
+    if (!file.type.startsWith('image/')) {
+        showToast('Bitte nur Bilder hochladen! 🖼️', 'error');
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Bild zu groß! Max. 5MB 📁', 'error');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        cardCustomBg.style.backgroundImage = `url(${e.target.result})`;
+        greetingCard.classList.add('has-custom-bg');
+        removeBgBtn?.classList.remove('hidden');
+        playSound(successSound);
+        showToast('Bild hochgeladen! 🎨', 'success');
+    };
+    reader.readAsDataURL(file);
+}
+
+removeBgBtn?.addEventListener('click', () => {
+    cardCustomBg.style.backgroundImage = '';
+    greetingCard.classList.remove('has-custom-bg');
+    removeBgBtn.classList.add('hidden');
+    imageUpload.value = '';
+    playSound(clickSound);
+    showToast('Bild entfernt', 'info');
 });
 
 // ===========================
@@ -377,6 +569,9 @@ document.querySelectorAll('.template-card').forEach(card => {
             inputSection.classList.add('hidden');
             outputSection.classList.remove('hidden');
 
+            // Update card themes for this occasion
+            renderOccasionThemes(template.occasion);
+
             // Visual feedback
             document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
@@ -431,6 +626,9 @@ greetingForm.addEventListener('submit', async (e) => {
         generatedMessage.textContent = data.text;
         inputSection.classList.add('hidden');
         outputSection.classList.remove('hidden');
+
+        // Update card themes for this occasion
+        renderOccasionThemes(currentOccasion);
 
         // Save to history
         saveToHistory({

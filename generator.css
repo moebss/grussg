@@ -1430,3 +1430,416 @@ body {
         border-color: transparent;
     }
 }
+
+/* ===========================
+   Card Style Section
+   =========================== */
+.card-style-section {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+}
+
+.style-header {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--color-text);
+}
+
+.style-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.style-tab {
+    flex: 1;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.style-tab:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+}
+
+.style-tab.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.style-panel {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Upload Zone */
+.upload-zone {
+    border: 2px dashed var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+    border-color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+}
+
+.upload-text {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.upload-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.btn-remove-bg {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
+    color: var(--color-error);
+    cursor: pointer;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.btn-remove-bg:hover {
+    background: var(--color-error);
+    color: white;
+}
+
+/* ===========================
+   Floating Emoji Decorations
+   =========================== */
+.card-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-emoji {
+    position: absolute;
+    font-size: 1.8rem;
+    opacity: 0.6;
+    animation: floatEmoji 6s ease-in-out infinite;
+}
+
+.floating-emoji:nth-child(1) {
+    top: 8%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.floating-emoji:nth-child(2) {
+    top: 15%;
+    right: 8%;
+    animation-delay: 1s;
+}
+
+.floating-emoji:nth-child(3) {
+    bottom: 20%;
+    left: 10%;
+    animation-delay: 2s;
+}
+
+.floating-emoji:nth-child(4) {
+    bottom: 10%;
+    right: 5%;
+    animation-delay: 3s;
+}
+
+.floating-emoji:nth-child(5) {
+    top: 50%;
+    left: 2%;
+    animation-delay: 4s;
+}
+
+@keyframes floatEmoji {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translateY(-15px) rotate(10deg);
+        opacity: 0.8;
+    }
+}
+
+/* Custom Background */
+.card-custom-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: inherit;
+    z-index: 0;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: inherit;
+    z-index: 1;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.greeting-card.has-custom-bg .card-overlay {
+    opacity: 1;
+}
+
+.greeting-card .message-text,
+.greeting-card .card-footer {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===========================
+   Occasion-Specific Themes
+   =========================== */
+
+/* Birthday Themes */
+.greeting-card[data-card-theme="birthday-balloons"] {
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%);
+}
+
+.greeting-card[data-card-theme="birthday-confetti"] {
+    background: linear-gradient(135deg, #a55eea, #8854d0);
+    background-image:
+        radial-gradient(circle at 20% 80%, #feca57 2px, transparent 2px),
+        radial-gradient(circle at 80% 20%, #ff6b6b 3px, transparent 3px),
+        radial-gradient(circle at 40% 40%, #48dbfb 2px, transparent 2px),
+        radial-gradient(circle at 60% 70%, #26de81 2px, transparent 2px);
+    background-size: 100px 100px;
+}
+
+.greeting-card[data-card-theme="birthday-gold"] {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    box-shadow: inset 0 0 60px rgba(255, 215, 0, 0.1);
+}
+
+/* Wedding Themes */
+.greeting-card[data-card-theme="wedding-elegant"] {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    color: #2d3436;
+}
+
+.greeting-card[data-card-theme="wedding-elegant"] .message-text {
+    color: #2d3436;
+}
+
+.greeting-card[data-card-theme="wedding-elegant"] .card-watermark {
+    color: #636e72;
+}
+
+.greeting-card[data-card-theme="wedding-romantic"] {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+}
+
+.greeting-card[data-card-theme="wedding-white"] {
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
+    color: #1a1a2e;
+}
+
+.greeting-card[data-card-theme="wedding-white"] .message-text {
+    color: #1a1a2e;
+}
+
+/* Christmas Themes */
+.greeting-card[data-card-theme="christmas-classic"] {
+    background: linear-gradient(135deg, #c0392b 0%, #27ae60 100%);
+}
+
+.greeting-card[data-card-theme="christmas-snow"] {
+    background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.greeting-card[data-card-theme="christmas-cozy"] {
+    background: linear-gradient(135deg, #6c3428, #4a2419);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+/* New Year Themes */
+.greeting-card[data-card-theme="newyear-fireworks"] {
+    background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 100%);
+}
+
+.greeting-card[data-card-theme="newyear-gold"] {
+    background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+    background-image:
+        linear-gradient(45deg, transparent 45%, rgba(255, 215, 0, 0.1) 50%, transparent 55%);
+    background-size: 20px 20px;
+}
+
+.greeting-card[data-card-theme="newyear-sparkle"] {
+    background: radial-gradient(ellipse at center, #2d1b4e 0%, #0a0a12 100%);
+}
+
+/* Thanks Themes */
+.greeting-card[data-card-theme="thanks-floral"] {
+    background: linear-gradient(135deg, #ffeaa7, #dfe6e9);
+}
+
+.greeting-card[data-card-theme="thanks-floral"] .message-text {
+    color: #2d3436;
+}
+
+.greeting-card[data-card-theme="thanks-heartfelt"] {
+    background: linear-gradient(135deg, #e17055, #d63031);
+}
+
+.greeting-card[data-card-theme="thanks-nature"] {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+}
+
+/* Get Well Themes */
+.greeting-card[data-card-theme="getwell-sunny"] {
+    background: linear-gradient(135deg, #fdcb6e, #f39c12);
+}
+
+.greeting-card[data-card-theme="getwell-calm"] {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.greeting-card[data-card-theme="getwell-garden"] {
+    background: linear-gradient(135deg, #55efc4, #00b894);
+}
+
+/* Baby Themes */
+.greeting-card[data-card-theme="baby-pink"] {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.greeting-card[data-card-theme="baby-blue"] {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.greeting-card[data-card-theme="baby-pastel"] {
+    background: linear-gradient(135deg, #a29bfe, #74b9ff, #81ecec, #ffeaa7);
+    background-size: 200% 200%;
+    animation: pastelShift 6s ease infinite;
+}
+
+@keyframes pastelShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Easter Themes */
+.greeting-card[data-card-theme="easter-spring"] {
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+}
+
+.greeting-card[data-card-theme="easter-pastel"] {
+    background: linear-gradient(135deg, #ffeaa7, #dfe6e9, #a29bfe, #fd79a8);
+    background-size: 200% 200%;
+    animation: pastelShift 8s ease infinite;
+}
+
+/* Mother's/Father's Day */
+.greeting-card[data-card-theme="parents-love"] {
+    background: linear-gradient(135deg, #e17055, #f8b739);
+}
+
+.greeting-card[data-card-theme="parents-elegant"] {
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+}
+
+/* Graduation */
+.greeting-card[data-card-theme="graduation-classic"] {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.greeting-card[data-card-theme="graduation-party"] {
+    background: linear-gradient(135deg, #6c5ce7, #a55eea);
+}
+
+/* Anniversary */
+.greeting-card[data-card-theme="anniversary-gold"] {
+    background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    box-shadow: inset 0 0 80px rgba(255, 215, 0, 0.15);
+}
+
+.greeting-card[data-card-theme="anniversary-romantic"] {
+    background: linear-gradient(135deg, #c44569, #ff6b8a);
+}
+
+/* General */
+.greeting-card[data-card-theme="general-gradient"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.greeting-card[data-card-theme="general-minimal"] {
+    background: #ffffff;
+    color: #1a1a2e;
+    border: 2px solid #e5e7eb;
+}
+
+.greeting-card[data-card-theme="general-minimal"] .message-text {
+    color: #1a1a2e;
+}
+
+.greeting-card[data-card-theme="general-minimal"] .card-watermark {
+    color: #9ca3af;
+}
+
+.greeting-card[data-card-theme="general-dark"] {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
