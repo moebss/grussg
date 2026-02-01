@@ -107,7 +107,7 @@ IMPORTANT RULES:
 - Do NOT include any intro like "Here is your greeting:"
 - Do NOT include placeholders like "[Your Name]" at the end
 - Keep the message visually balanced for a 1:1 square card
-- Maximum 3-5 concise sentences. Avoid long paragraphs.`
+- Write a medium-length message (approx. 6-8 sentences or 2 short paragraphs). Balance depth with brevity.`
                     },
                     {
                         role: 'user',
