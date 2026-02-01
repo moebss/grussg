@@ -293,8 +293,100 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 });
 
 // ===========================
-// FORM SUBMISSION / GENERATE
+// TEMPLATES GALLERY
 // ===========================
+const templatesToggle = document.getElementById('templatesToggle');
+const templatesGallery = document.getElementById('templatesGallery');
+
+// Predefined templates
+const templates = {
+    'birthday-classic': {
+        occasion: 'birthday',
+        tone: 'warm',
+        text: 'Alles Gute zum Geburtstag! 🎂\n\nMöge dieser besondere Tag voller Freude, Lachen und unvergesslicher Momente sein. Du verdienst nur das Beste im Leben!\n\nMit herzlichen Glückwünschen'
+    },
+    'birthday-funny': {
+        occasion: 'birthday',
+        tone: 'funny',
+        text: 'Happy Birthday! 🎉\n\nNoch ein Jahr älter, aber keine Sorge – du wirst nicht alt, du wirst vintage! Und Vintage ist bekanntlich unbezahlbar.\n\nFeier schön und lass es krachen!'
+    },
+    'christmas-family': {
+        occasion: 'christmas',
+        tone: 'warm',
+        text: 'Frohe Weihnachten! 🎄\n\nIn dieser besinnlichen Zeit wünsche ich dir und deiner Familie Frieden, Liebe und viele glückliche Momente unter dem Weihnachtsbaum.\n\nMöge das neue Jahr dir alles bringen, was dein Herz begehrt.'
+    },
+    'wedding-elegant': {
+        occasion: 'wedding',
+        tone: 'poetic',
+        text: 'Zur Hochzeit die herzlichsten Glückwünsche! 💒\n\nZwei Herzen, die sich gefunden haben, vereinen sich heute zu einem gemeinsamen Weg. Möge eure Liebe immer stärker werden und jeder Tag euch näher zusammenbringen.\n\nMit den besten Wünschen für eure gemeinsame Zukunft'
+    },
+    'thanks-heartfelt': {
+        occasion: 'thanks',
+        tone: 'warm',
+        text: 'Von Herzen Danke! 💐\n\nManchmal reichen Worte nicht aus, um auszudrücken, wie dankbar ich bin. Aber ich möchte, dass du weißt, wie viel mir deine Unterstützung bedeutet.\n\nDu bist ein wahrer Schatz!'
+    },
+    'newyear-wishes': {
+        occasion: 'newyear',
+        tone: 'warm',
+        text: 'Frohes Neues Jahr! 🎆\n\nMöge das neue Jahr dir 365 Tage voller Glück, 52 Wochen voller Erfolg, 12 Monate voller Gesundheit und jeden Tag einen Grund zum Lächeln bringen!\n\nAuf ein wundervolles Jahr!'
+    },
+    'getwell-caring': {
+        occasion: 'getwell',
+        tone: 'warm',
+        text: 'Gute Besserung! 🌷\n\nIch hoffe, du erholst dich schnell und bist bald wieder auf den Beinen. Ruhe dich aus, lass dich verwöhnen und vergiss nicht – ich denke an dich!\n\nWerde schnell wieder gesund!'
+    },
+    'graduation-proud': {
+        occasion: 'graduation',
+        tone: 'warm',
+        text: 'Herzlichen Glückwunsch zum Abschluss! 🎓\n\nDu hast es geschafft! Dein Fleiß und deine Ausdauer haben sich ausgezahlt. Ich bin unglaublich stolz auf dich und gespannt, welche Abenteuer dich erwarten.\n\nDie Welt liegt dir zu Füßen!'
+    }
+};
+
+templatesToggle?.addEventListener('click', () => {
+    templatesToggle.classList.toggle('open');
+    templatesGallery?.classList.toggle('hidden');
+
+    const toggleText = templatesToggle.querySelector('span:first-child');
+    if (toggleText) {
+        toggleText.textContent = templatesGallery?.classList.contains('hidden') ? 'Anzeigen' : 'Verbergen';
+    }
+
+    playSound(clickSound);
+});
+
+document.querySelectorAll('.template-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const templateId = card.dataset.template;
+        const template = templates[templateId];
+
+        if (template) {
+            // Set occasion
+            document.querySelectorAll('.occasion-btn').forEach(b => b.classList.remove('active'));
+            const occasionBtn = document.querySelector(`.occasion-btn[data-occasion="${template.occasion}"]`);
+            if (occasionBtn) {
+                occasionBtn.classList.add('active');
+                currentOccasion = template.occasion;
+            }
+
+            // Set tone
+            const toneSelect = document.getElementById('tone');
+            if (toneSelect) toneSelect.value = template.tone;
+
+            // Display greeting directly
+            generatedMessage.textContent = template.text;
+            inputSection.classList.add('hidden');
+            outputSection.classList.remove('hidden');
+
+            // Visual feedback
+            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+
+            playSound(successSound);
+            showToast('Vorlage geladen! ✨ Passe sie nach Belieben an.', 'success');
+            launchConfetti();
+        }
+    });
+});
 greetingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 

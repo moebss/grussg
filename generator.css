@@ -1127,4 +1127,306 @@ body {
         font-size: 1rem;
         padding-right: 40px;
     }
+
+    .templates-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===========================
+   Templates Gallery
+   =========================== */
+.templates-section {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+}
+
+.templates-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.templates-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.templates-toggle:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+}
+
+.templates-toggle.open .toggle-arrow {
+    transform: rotate(180deg);
+}
+
+.templates-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.template-card {
+    position: relative;
+    padding: 16px 10px;
+    background: var(--glass-bg);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.template-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.25);
+}
+
+.template-card.selected {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(244, 114, 182, 0.1));
+    border-color: var(--color-primary);
+}
+
+.template-preview {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.template-icon {
+    font-size: 2.2rem;
+    display: block;
+    transition: var(--transition);
+}
+
+.template-card:hover .template-icon {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.template-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, var(--color-accent), #f59e0b);
+    color: #1a1a2e;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+}
+
+.template-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.template-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.template-desc {
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+}
+
+/* ===========================
+   Animated Card Decorations
+   =========================== */
+.greeting-card[data-card-theme="animated"] {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #1a1a2e 100%);
+    overflow: hidden;
+}
+
+.greeting-card[data-card-theme="animated"]::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    animation: rotateGlow 10s linear infinite;
+}
+
+@keyframes rotateGlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Floating Sparkles */
+.card-sparkle {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0;
+    animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+.card-sparkle:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.card-sparkle:nth-child(2) {
+    top: 20%;
+    right: 15%;
+    animation-delay: 0.5s;
+}
+
+.card-sparkle:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.card-sparkle:nth-child(4) {
+    bottom: 15%;
+    right: 10%;
+    animation-delay: 1.5s;
+}
+
+.card-sparkle:nth-child(5) {
+    top: 50%;
+    left: 5%;
+    animation-delay: 2s;
+}
+
+@keyframes sparkleFloat {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0.5) translateY(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1) translateY(-10px);
+    }
+}
+
+/* Hearts Animation for romantic themes */
+.greeting-card[data-card-theme="romantic"] {
+    background: linear-gradient(135deg, #ff6b8a, #c44569, #ff6b8a);
+    background-size: 200% 200%;
+    animation: heartGradient 4s ease infinite;
+}
+
+@keyframes heartGradient {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Snow effect for winter themes */
+.greeting-card[data-card-theme="winter"] {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    position: relative;
+}
+
+.greeting-card[data-card-theme="winter"]::after {
+    content: '❄️ ❅ ✳️ ❄️ ❅ ✳️ ❄️ ❅';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    animation: snowFall 8s linear infinite;
+    white-space: nowrap;
+    letter-spacing: 20px;
+}
+
+@keyframes snowFall {
+    0% {
+        transform: translateY(-100%) translateX(0);
+    }
+
+    100% {
+        transform: translateY(300%) translateX(-20px);
+    }
+}
+
+/* Party confetti effect */
+.greeting-card[data-card-theme="party"] {
+    background: linear-gradient(135deg, #7c3aed, #ec4899, #f59e0b);
+    background-size: 300% 300%;
+    animation: partyGradient 3s ease infinite;
+}
+
+@keyframes partyGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Typing effect for message */
+.message-text.typing {
+    border-right: 3px solid var(--color-primary);
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        border-color: var(--color-primary);
+    }
+
+    50% {
+        border-color: transparent;
+    }
 }
