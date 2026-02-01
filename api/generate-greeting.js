@@ -47,8 +47,11 @@ export default async (req, res) => {
         newyear: `You are writing a New Year's greeting for ${new Date().getFullYear() + 1}. Be hopeful and forward-looking.`,
         thanks: `You are writing a thank-you message. Be sincere and express genuine gratitude.`,
         baby: `You are writing a congratulations message for a new baby. Be joyful and warm.`,
-        condolence: `You are writing a condolence message. Be respectful, empathetic, and comforting.`,
         getwell: `You are writing a get-well-soon message. Be encouraging and supportive.`,
+        mothersday: `You are writing a Mother's Day greeting. Express love, appreciation and gratitude for a mother.`,
+        fathersday: `You are writing a Father's Day greeting. Express love, appreciation and gratitude for a father.`,
+        graduation: `You are writing a graduation or exam congratulations message. Celebrate the achievement and wish success for the future.`,
+        anniversary: `You are writing an anniversary message (wedding, work, or other). Celebrate the milestone and memories.`,
         general: `You are writing a general greeting message. Be warm and friendly.`
     };
 

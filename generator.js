@@ -169,7 +169,10 @@ function renderHistory(history) {
         thanks: '💐 Danke',
         baby: '👶 Geburt',
         getwell: '🏥 Gute Besserung',
-        condolence: '🕯️ Beileid',
+        mothersday: '👩 Muttertag',
+        fathersday: '👨 Vatertag',
+        graduation: '🎓 Abschluss',
+        anniversary: '🥂 Jubiläum',
         general: '💌 Sonstiges'
     };
 
