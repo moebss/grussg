@@ -336,14 +336,95 @@
 
                     <!-- Style Tabs -->
                     <div class="style-tabs">
-                        <button class="style-tab active" data-tab="themes">Designs</button>
-                        <button class="style-tab" data-tab="upload">Eigenes Bild</button>
+                        <button class="style-tab active" data-tab="themes">🖼️ Designs</button>
+                        <button class="style-tab" data-tab="text">✍️ Text</button>
+                        <button class="style-tab" data-tab="frame">🖼️ Rahmen</button>
+                        <button class="style-tab" data-tab="upload">📷 Bild</button>
                     </div>
 
                     <!-- Themes Panel -->
                     <div class="style-panel" id="themesPanel">
                         <div class="card-theme-selector" id="occasionThemes">
                             <!-- Themes will be dynamically populated based on occasion -->
+                        </div>
+                    </div>
+
+                    <!-- Text Customization Panel -->
+                    <div class="style-panel hidden" id="textPanel">
+                        <div class="customization-grid">
+                            <!-- Font Selection -->
+                            <div class="custom-option">
+                                <label>Schriftart</label>
+                                <div class="font-selector" id="fontSelector">
+                                    <button class="font-btn active" data-font="'Outfit', sans-serif">Aa</button>
+                                    <button class="font-btn" data-font="'Georgia', serif"
+                                        style="font-family: Georgia, serif">Aa</button>
+                                    <button class="font-btn" data-font="'Comic Sans MS', cursive"
+                                        style="font-family: 'Comic Sans MS', cursive">Aa</button>
+                                    <button class="font-btn" data-font="'Courier New', monospace"
+                                        style="font-family: 'Courier New', monospace">Aa</button>
+                                    <button class="font-btn" data-font="'Dancing Script', cursive"
+                                        style="font-family: cursive">𝓐𝓪</button>
+                                </div>
+                            </div>
+
+                            <!-- Text Color -->
+                            <div class="custom-option">
+                                <label>Textfarbe</label>
+                                <div class="color-picker-row">
+                                    <input type="color" id="textColorPicker" value="#ffffff" class="color-picker">
+                                    <div class="preset-colors" id="textPresetColors">
+                                        <button class="color-preset active" data-color="#ffffff"
+                                            style="background: #ffffff"></button>
+                                        <button class="color-preset" data-color="#1a1a2e"
+                                            style="background: #1a1a2e"></button>
+                                        <button class="color-preset" data-color="#ffd700"
+                                            style="background: #ffd700"></button>
+                                        <button class="color-preset" data-color="#ff6b8a"
+                                            style="background: #ff6b8a"></button>
+                                        <button class="color-preset" data-color="#48dbfb"
+                                            style="background: #48dbfb"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text Size -->
+                            <div class="custom-option">
+                                <label>Textgröße: <span id="textSizeValue">1.15rem</span></label>
+                                <input type="range" id="textSizeSlider" min="0.9" max="1.6" step="0.05" value="1.15"
+                                    class="custom-slider">
+                            </div>
+
+                            <!-- Text Alignment -->
+                            <div class="custom-option">
+                                <label>Ausrichtung</label>
+                                <div class="align-selector">
+                                    <button class="align-btn" data-align="left">⬅️</button>
+                                    <button class="align-btn active" data-align="center">➡️⬅️</button>
+                                    <button class="align-btn" data-align="right">➡️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frame Panel -->
+                    <div class="style-panel hidden" id="framePanel">
+                        <div class="frame-options">
+                            <button class="frame-btn active" data-frame="none">Kein Rahmen</button>
+                            <button class="frame-btn" data-frame="thin">Dünn</button>
+                            <button class="frame-btn" data-frame="thick">Dick</button>
+                            <button class="frame-btn" data-frame="double">Doppelt</button>
+                            <button class="frame-btn" data-frame="gold">✨ Gold</button>
+                            <button class="frame-btn" data-frame="rainbow">🌈 Regenbogen</button>
+                            <button class="frame-btn" data-frame="glow">💫 Leuchtend</button>
+                            <button class="frame-btn" data-frame="dashed">- - - Gestrichelt</button>
+                        </div>
+
+                        <!-- Border Radius -->
+                        <div class="custom-option" style="margin-top: 16px;">
+                            <label>Ecken-Rundung: <span id="radiusValue">16px</span></label>
+                            <input type="range" id="radiusSlider" min="0" max="40" step="2" value="16"
+                                class="custom-slider">
                         </div>
                     </div>
 
@@ -358,6 +439,13 @@
                             </div>
                         </div>
                         <button class="btn-remove-bg hidden" id="removeBgBtn">❌ Bild entfernen</button>
+
+                        <!-- Overlay Intensity -->
+                        <div class="custom-option" style="margin-top: 16px;">
+                            <label>Abdunklung: <span id="overlayValue">30%</span></label>
+                            <input type="range" id="overlaySlider" min="0" max="80" step="5" value="30"
+                                class="custom-slider">
+                        </div>
                     </div>
                 </div>
 

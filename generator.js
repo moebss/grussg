@@ -399,11 +399,97 @@ document.querySelectorAll('.style-tab').forEach(tab => {
         tab.classList.add('active');
 
         const panel = tab.dataset.tab;
-        document.getElementById('themesPanel').classList.toggle('hidden', panel !== 'themes');
-        document.getElementById('uploadPanel').classList.toggle('hidden', panel !== 'upload');
+        document.getElementById('themesPanel')?.classList.toggle('hidden', panel !== 'themes');
+        document.getElementById('textPanel')?.classList.toggle('hidden', panel !== 'text');
+        document.getElementById('framePanel')?.classList.toggle('hidden', panel !== 'frame');
+        document.getElementById('uploadPanel')?.classList.toggle('hidden', panel !== 'upload');
 
         playSound(clickSound);
     });
+});
+
+// ===========================
+// TEXT CUSTOMIZATION
+// ===========================
+
+// Font Selection
+document.querySelectorAll('.font-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        generatedMessage.style.fontFamily = btn.dataset.font;
+        playSound(clickSound);
+    });
+});
+
+// Text Color
+const textColorPicker = document.getElementById('textColorPicker');
+textColorPicker?.addEventListener('input', (e) => {
+    generatedMessage.style.color = e.target.value;
+    document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+});
+
+document.querySelectorAll('.color-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const color = btn.dataset.color;
+        generatedMessage.style.color = color;
+        textColorPicker.value = color;
+        playSound(clickSound);
+    });
+});
+
+// Text Size
+const textSizeSlider = document.getElementById('textSizeSlider');
+const textSizeValue = document.getElementById('textSizeValue');
+textSizeSlider?.addEventListener('input', (e) => {
+    const size = e.target.value + 'rem';
+    generatedMessage.style.fontSize = size;
+    if (textSizeValue) textSizeValue.textContent = size;
+});
+
+// Text Alignment
+document.querySelectorAll('.align-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.align-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        generatedMessage.style.textAlign = btn.dataset.align;
+        playSound(clickSound);
+    });
+});
+
+// ===========================
+// FRAME CUSTOMIZATION
+// ===========================
+document.querySelectorAll('.frame-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.frame-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        greetingCard.setAttribute('data-frame', btn.dataset.frame);
+        playSound(clickSound);
+    });
+});
+
+// Border Radius
+const radiusSlider = document.getElementById('radiusSlider');
+const radiusValue = document.getElementById('radiusValue');
+radiusSlider?.addEventListener('input', (e) => {
+    const radius = e.target.value + 'px';
+    greetingCard.style.borderRadius = radius;
+    if (radiusValue) radiusValue.textContent = radius;
+});
+
+// Overlay Intensity
+const overlaySlider = document.getElementById('overlaySlider');
+const overlayValue = document.getElementById('overlayValue');
+const cardOverlay = document.querySelector('.card-overlay');
+overlaySlider?.addEventListener('input', (e) => {
+    const intensity = e.target.value;
+    if (cardOverlay) {
+        cardOverlay.style.background = `rgba(0, 0, 0, ${intensity / 100})`;
+    }
+    if (overlayValue) overlayValue.textContent = intensity + '%';
 });
 
 // ===========================
@@ -622,8 +708,16 @@ greetingForm.addEventListener('submit', async (e) => {
             throw new Error(data.error || 'API-Fehler');
         }
 
+        // Clean citation footnotes like [1], [2] from AI response
+        function cleanCitations(text) {
+            return text
+                .replace(/\[\d+\]/g, '')  // Remove [1], [2], etc.
+                .replace(/\s+/g, ' ')      // Clean up extra spaces
+                .trim();
+        }
+
         // Display result
-        generatedMessage.textContent = data.text;
+        generatedMessage.textContent = cleanCitations(data.text);
         inputSection.classList.add('hidden');
         outputSection.classList.remove('hidden');
 
