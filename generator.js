@@ -577,11 +577,22 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     showToast('Bild wird erstellt... 📸', 'info');
 
     const card = document.getElementById('greetingCard');
+    const ttsBtn = document.getElementById('ttsBtn');
+    const messageHeader = card.querySelector('.message-header');
+
+    // Hide TTS button for screenshot
+    if (ttsBtn) ttsBtn.style.display = 'none';
+    if (messageHeader) messageHeader.style.display = 'none';
+
     const canvas = await html2canvas(card, {
         backgroundColor: null,
         scale: 2,
         useCORS: true
     });
+
+    // Restore TTS button
+    if (ttsBtn) ttsBtn.style.display = '';
+    if (messageHeader) messageHeader.style.display = '';
 
     const link = document.createElement('a');
     link.download = `gruss-${Date.now()}.png`;
