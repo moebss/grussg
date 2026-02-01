@@ -76,7 +76,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
@@ -672,7 +672,7 @@ body {
     border-radius: var(--radius-lg);
     padding: 24px;
     width: 100%;
-    max-width: 380px;
+    max-width: 100%;
     min-height: 280px;
     height: auto;
     overflow: hidden;
@@ -2360,7 +2360,7 @@ body {
    =========================== */
 .editor-layout {
     display: grid;
-    grid-template-columns: 200px minmax(320px, 400px) 200px;
+    grid-template-columns: 250px minmax(400px, 1fr) 250px;
     gap: 20px;
     align-items: start;
     justify-content: center;
