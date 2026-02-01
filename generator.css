@@ -674,7 +674,7 @@ body {
     width: 100%;
     max-width: 380px;
     min-height: 280px;
-    max-height: 400px;
+    height: auto;
     overflow: hidden;
     transition: var(--transition);
     display: flex;
