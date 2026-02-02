@@ -3066,14 +3066,14 @@ body {
 /* Mood 1 */
 .greeting-card[data-mood="mood-1"] {
     background-image: url('assets/templates/mood1.jpg') !important;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
 }
 
 /* Mood 2 */
 .greeting-card[data-mood="mood-2"] {
     background-image: url('assets/templates/mood2.jpg') !important;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
 }
 
