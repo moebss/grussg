@@ -2,33 +2,60 @@
    CSS Variables & Themes
    =========================== */
 :root {
-    /* "Emotional/Viral" Palette */
-    --color-primary: #8b5cf6;
-    /* Soft Violet - Creative, Magic */
-    --color-primary-dark: #7c3aed;
-    --color-primary-light: #a78bfa;
-    --color-secondary: #ec4899;
-    /* Soft Pink - Love, Warmth */
-    --color-accent: #f59e0b;
-    /* Amber - Optimism */
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
+    /* 1. Background Gradient Colors */
+    --bg-gradient-1: #B9A6FF;
+    /* Soft Lavender (Top Left) */
+    --bg-gradient-2: #F2D6E8;
+    /* Milky Blush (Center) */
+    --bg-gradient-3: #F7F4EF;
+    /* Warm Sand (Bottom Right) */
 
-    /* UI & Layout - "Scandi Calm" */
+    /* 3. Accent Color (Brand) - Soft Royal Purple */
+    --color-primary: #8B6CFF;
+    --color-primary-hover: #7A5AF8;
+    /* Slightly darker */
+    --color-primary-light: #a78bfa;
+
+    /* 4. Secondary Accent - Warm Peach Glow */
+    --color-secondary: #FF9E8A;
+    --color-secondary-hover: #ff8a75;
+
+    /* 5. CTA Colors */
+    --color-cta-bg: #8B6CFF;
+    --color-cta-text: #FFFFFF;
+    --color-cta-secondary-text: #6B5DD3;
+
+    /* 6. Text Colors */
+    --color-text-main: #2E2E38;
+    /* Soft Charcoal */
+    --color-text-ui: #5F5F6E;
+    /* UI Texts */
+    --color-text-placeholder: #9A9AA8;
+
+    /* 2. Main Container */
+    --color-container-bg: #FAF9FC;
+    /* Off-White */
+    --container-radius: 28px;
+    --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+
+    /* UI Basics */
     --radius-sm: 12px;
-    /* Friendlier, softer corners */
     --radius-md: 20px;
     --radius-lg: 28px;
     --radius-full: 999px;
 
     --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Bouncy/Alive feel */
     --transition-fast: all 0.2s ease;
     --font-family: 'Outfit', sans-serif;
+
+    /* Compat mapping for existing classes */
+    --color-bg: var(--bg-gradient-3);
+    --color-text: var(--color-text-main);
+    --color-surface: var(--color-container-bg);
+    --color-accent: var(--color-secondary);
 }
 
-/* Modern Typography Tweak */
+/* Typography Tweaks */
 h1,
 h2,
 h3,
@@ -36,50 +63,30 @@ h4,
 .btn-generate,
 .section-label {
     letter-spacing: -0.03em;
-    /* Tighter, more modern */
+    color: var(--color-primary);
+    /* Headline Brand Color */
 }
 
-body,
-p,
-input,
-textarea,
-button {
+body {
+    color: var(--color-text-main);
     letter-spacing: -0.01em;
 }
 
-/* Dark Theme (Deep, "Quiet Luxury" Dark) */
-[data-theme="dark"] {
-    --color-bg: #0f0f12;
-    /* Deep almost-black */
-    --color-surface: #18181b;
-    /* Zinc-900 */
-    --color-surface-elevated: #27272a;
-    --color-text: #f3f4f6;
-    /* Off-white, easier on eyes */
-    --color-text-muted: #9ca3af;
-    --color-border: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(20, 20, 25, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-    --glass-tactile-highlight: rgba(255, 255, 255, 0.1);
-    --glass-tactile-shadow: rgba(0, 0, 0, 0.4);
+/* Light Theme as Default (Enforce Viral specs) */
+[data-theme="light"],
+:root {
+    --color-bg: #F7F4EF;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.6);
 }
 
-/* Light Theme (Clean, "Instagram Aesthetic") */
-[data-theme="light"] {
-    --color-bg: #fafaf9;
-    /* Warm Stone-50 */
-    --color-surface: #ffffff;
-    --color-surface-elevated: #ffffff;
-    --color-text: #374151;
-    /* Gray-700 - Soft Black */
-    --color-text-muted: #6b7280;
-    --color-border: rgba(0, 0, 0, 0.06);
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    /* Milky Glass */
-    --glass-border: rgba(255, 255, 255, 0.6);
-    --glass-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08);
-    /* Soft, diffused */
+/* Container Overrides for "Object" look */
+.container {
+    background: var(--color-container-bg);
+    border-radius: var(--container-radius);
+    box-shadow: var(--container-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Subtle highlight */
 }
 
 /* ===========================
@@ -550,15 +557,16 @@ body {
 .btn-generate {
     width: 100%;
     padding: 16px 24px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    color: white;
+    background: var(--color-cta-bg);
+    /* Royal Purple */
+    color: var(--color-cta-text);
     font-size: 1.15rem;
     font-weight: 700;
     border: none;
     border-radius: var(--radius-full);
     cursor: pointer;
-    box-shadow: 0 8px 24px -6px rgba(139, 92, 246, 0.5);
-    /* Soft Violet Shadow */
+    box-shadow: 0 10px 25px -5px rgba(139, 108, 255, 0.4);
+    /* Matching shadow */
     transition: var(--transition);
     position: relative;
     overflow: hidden;
@@ -567,9 +575,12 @@ body {
 }
 
 .btn-generate:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 30px -8px rgba(139, 92, 246, 0.6);
-    filter: brightness(1.05);
+    background: var(--color-primary-hover);
+    /* #7A5AF8 */
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 15px 35px -8px rgba(139, 108, 255, 0.5);
+    filter: none;
+    /* remove brightness filter, use pure color */
 }
 
 .btn-generate:active {
