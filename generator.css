@@ -3050,17 +3050,40 @@ body {
    =========================== */
 .greeting-card {
     background: #ffffff !important;
-    aspect-ratio: 1/1 !important;
     width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1 !important;
     /* Remove any glass effects if inherited */
     backdrop-filter: none !important;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+    border: none !important;
+    /* Remove border to act as full canvas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    padding: 0 !important;
+    /* Remove padding to let bg fill edge-to-edge */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically */
+    position: relative;
+    overflow: hidden;
+    /* Ensure content doesn't spill */
+}
+
+/* Ensure text sits on top correctly with new padding */
+.greeting-card .message-text {
+    position: relative;
+    z-index: 2;
+    padding: 15% !important;
+    /* Keep the requested text padding */
 }
 
 /* Ensure placeholder moods don't break layout */
 .greeting-card[data-mood^="mood-"] {
-    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    /* Force stretch to fill 1:1 container */
 }
 
 /* Mood 1 */
