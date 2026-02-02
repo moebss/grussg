@@ -971,8 +971,8 @@ body {
     line-height: 1.9;
     white-space: pre-wrap;
     padding-right: 50px;
-    color: white;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: #000000;
+    text-shadow: none;
 }
 
 .card-footer {
@@ -2997,40 +2997,7 @@ body {
 /* ===========================
    Signature Feature
    =========================== */
-.sticker-special {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border: none;
-    border-radius: 8px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
-    width: 100%;
-    aspect-ratio: 1;
-}
-
-.sticker-special:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 15px rgba(255, 165, 0, 0.4);
-}
-
-.placed-sticker.signature {
-    font-family: 'Caveat', cursive;
-    font-size: 2.5rem;
-    color: var(--color-text);
-    /* Fallback */
-    color: #ffffff;
-    /* Default white for readability */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    font-weight: 700;
-    transform: rotate(-5deg);
-    z-index: 10;
-    white-space: nowrap;
-}
-
+/* Signature Styles Removed */
 /* ===========================
    Generated Message Layout
    =========================== */
@@ -3103,20 +3070,55 @@ body {
 /* Mood 3 */
 .greeting-card[data-mood="mood-3"] {
     background-image: url('assets/templates/mood3.jpg') !important;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
 }
 
 /* Mood 4 */
 .greeting-card[data-mood="mood-4"] {
     background-image: url('assets/templates/mood4.jpg') !important;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
 }
 
 /* Mood 5 */
 .greeting-card[data-mood="mood-5"] {
     background-image: url('assets/templates/mood5.jpg') !important;
-    background-size: cover;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 6 */
+.greeting-card[data-mood="mood-6"] {
+    background-image: url('assets/templates/mood6.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 7 */
+.greeting-card[data-mood="mood-7"] {
+    background-image: url('assets/templates/mood7.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 8 */
+.greeting-card[data-mood="mood-8"] {
+    background-image: url('assets/templates/mood8.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 9 */
+.greeting-card[data-mood="mood-9"] {
+    background-image: url('assets/templates/mood9.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 10 */
+.greeting-card[data-mood="mood-10"] {
+    background-image: url('assets/templates/mood10.jpg') !important;
+    background-size: 100% 100%;
     background-position: center;
 }
