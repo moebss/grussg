@@ -3048,15 +3048,12 @@ body {
    Generated Message Layout
    =========================== */
 .message-text {
-    padding: 15% 20% 0 20% !important;
-    /* 15% top, 20% left/right */
+    padding: 15% !important;
+    /* 15% uniform padding */
     text-align: left;
-    /* Linksbündig */
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     display: block;
-    /* Standard flow for paragraphs */
     text-wrap: balance;
-    /* Improves visual balance */
 }
