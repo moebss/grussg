@@ -108,7 +108,7 @@ IMPORTANT RULES:
 - Do NOT include placeholders like "[Your Name]" at the end
 - Do NOT use markdown (no **bold**, no *italics*). Plain text only.
 - Keep the message visually balanced for a 1:1 square card
-- Write a medium-length message (approx. 6-8 sentences or 2 short paragraphs). Balance depth with brevity.`
+- Write a concise message (max 5-6 sentences). It must be short enough to fit comfortably on the card with large margins.`
                     },
                     {
                         role: 'user',
