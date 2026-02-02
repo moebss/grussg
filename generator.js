@@ -400,36 +400,83 @@ document.querySelectorAll('.mood-emoji').forEach(btn => {
 const placedStickers = document.getElementById('placedStickers');
 let stickerCount = 0;
 
+// Enable Drag & Drop for new stickers
 document.querySelectorAll('.sticker').forEach(btn => {
+    // 1. Click fallback (keep existing or remove? User said "instead", but click is good for a11y. Let's keep specific "Drag interaction" focused)
+    // We will keep click as a quick-add fallback, but enabling native drag is key.
+
+    // Enable HTML5 Drag
+    btn.setAttribute('draggable', 'true');
+
+    btn.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', btn.dataset.emoji);
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.dropEffect = 'copy';
+    });
+
+    // Keep click for accessibility/mobile (tap to add to random center)
     btn.addEventListener('click', () => {
-        if (stickerCount >= 10) {
-            showToast('Maximal 10 Sticker pro Karte!', 'warning');
-            return;
-        }
-
-        const emoji = btn.dataset.emoji;
-        const sticker = document.createElement('span');
-        sticker.className = 'placed-sticker';
-        sticker.textContent = emoji;
-        sticker.style.left = (20 + Math.random() * 60) + '%';
-        sticker.style.top = (20 + Math.random() * 60) + '%';
-
-        // Make sticker draggable
-        sticker.addEventListener('mousedown', startDrag);
-        sticker.addEventListener('touchstart', startDrag);
-
-        // Double-click to remove
-        sticker.addEventListener('dblclick', () => {
-            sticker.remove();
-            stickerCount--;
-            playSound(clickSound);
-        });
-
-        placedStickers?.appendChild(sticker);
-        stickerCount++;
-        playSound(clickSound);
+        addStickerToCard(btn.dataset.emoji);
     });
 });
+
+// Helper to add sticker (factored out for reuse)
+function addStickerToCard(emoji, xPos = null, yPos = null) {
+    if (stickerCount >= 10) {
+        showToast('Maximal 10 Sticker pro Karte!', 'warning');
+        return;
+    }
+
+    const sticker = document.createElement('span');
+    sticker.className = 'placed-sticker';
+    sticker.textContent = emoji;
+
+    // Use provided coordinates or random center
+    if (xPos !== null && yPos !== null) {
+        sticker.style.left = xPos + '%';
+        sticker.style.top = yPos + '%';
+    } else {
+        sticker.style.left = (20 + Math.random() * 60) + '%';
+        sticker.style.top = (20 + Math.random() * 60) + '%';
+    }
+
+    // Make placed sticker draggable (for moving found in startDrag)
+    sticker.addEventListener('mousedown', startDrag);
+    sticker.addEventListener('touchstart', startDrag);
+
+    // Double-click to remove
+    sticker.addEventListener('dblclick', () => {
+        sticker.remove();
+        stickerCount--;
+        playSound(clickSound);
+    });
+
+    placedStickers?.appendChild(sticker);
+    stickerCount++;
+    playSound(clickSound);
+}
+
+// Handle Drop on Card
+if (greetingCard) {
+    greetingCard.addEventListener('dragover', (e) => {
+        e.preventDefault(); // Allow drop
+        e.dataTransfer.dropEffect = 'copy';
+    });
+
+    greetingCard.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const emoji = e.dataTransfer.getData('text/plain');
+        if (emoji) {
+            const rect = greetingCard.getBoundingClientRect();
+            // Calculate % position relative to card
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            // Constrain to 0-100% (roughly, allowing some edge overlap)
+            addStickerToCard(emoji, x, y);
+        }
+    });
+}
 
 // Drag functionality
 let currentDrag = null;
@@ -544,6 +591,25 @@ document.querySelectorAll('.style-tab').forEach(tab => {
         document.getElementById('textPanel')?.classList.toggle('hidden', panel !== 'text');
         document.getElementById('framePanel')?.classList.toggle('hidden', panel !== 'frame');
         document.getElementById('uploadPanel')?.classList.toggle('hidden', panel !== 'upload');
+
+        playSound(clickSound);
+    });
+});
+
+// ===========================
+// MOOD SELECTION (New Compact Grid)
+// ===========================
+document.querySelectorAll('.mood-emoji').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Visual feedback
+        document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Apply mood
+        const mood = btn.dataset.mood;
+        if (greetingCard) {
+            greetingCard.setAttribute('data-mood', mood);
+        }
 
         playSound(clickSound);
     });
