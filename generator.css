@@ -494,6 +494,16 @@ body {
 /* ===========================
    Form Elements
    =========================== */
+.form-row-2colh2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    text-align: center;
+    color: var(--color-primary);
+    /* Brand Color (Royal Purple) */
+    /* Removed Gradient Text to ensure readability and branded look */
+}
+
 .form-row-2col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -514,26 +524,42 @@ body {
     font-size: 0.95rem;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.section-label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--color-text-main);
+    /* Soft Charcoal for labels */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+input[type="text"],
+textarea,
+select {
     width: 100%;
-    padding: 14px 18px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--glass-border);
-    border-radius: var(--radius-md);
-    color: var(--color-text);
+    padding: 14px 16px;
+    background: #F3F4F6;
+    /* Lighter Gray for inputs */
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-main);
     font-family: inherit;
     font-size: 1rem;
     transition: var(--transition);
+    resize: none;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    background: white;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 4px rgba(139, 108, 255, 0.15);
+    /* Soft Purple Focus Ring */
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2), 0 0 30px rgba(99, 102, 241, 0.15);
 }
 
 .form-group textarea {
