@@ -189,15 +189,22 @@ body {
     }
 }
 
+/* ===========================
+   Container & Layout
+   =========================== */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    width: 95%;
+    max-width: 800px;
+    /* Reduced from wide desktop to "Card Object" width */
+    margin: 80px auto 40px;
+    /* Center horizontally, add top margin */
+    padding: 30px;
+    background: var(--color-container-bg);
+    border-radius: var(--container-radius);
+    box-shadow: var(--container-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 /* ===========================
@@ -2809,6 +2816,23 @@ select:focus {
     align-items: start;
     justify-content: center;
     margin-top: 16px;
+}
+
+/* Columns */
+.editor-column,
+.preview-column {
+    width: 100%;
+    /* Full width in stacked/narrow layout */
+}
+
+/* Reverse order on mobile if needed, but for now stack naturally */
+@media (min-width: 1100px) {
+    /* If we want side-by-side on VERY large screens, we can add it back here, 
+       but for the "focused object" look, a central stack is often better or a wider container.
+       Let's keep it stacked/max-800px as requested for the "White Block" fix. 
+       If the user wants side-by-side, we'll revert to 1200px and transparent container.
+       BUT the user specifically asked for "Main Container (White Box)". 
+       So reduced width is the correct interpretation. */
 }
 
 /* Sticker Panel (Left) */
