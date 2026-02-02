@@ -975,15 +975,29 @@ body {
     text-shadow: none;
 }
 
+/* Watermark container */
 .card-footer {
-    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    margin-top: 0;
     text-align: right;
 }
 
-.card-watermark {
-    font-size: 0.8rem;
-    opacity: 0.6;
-    color: white;
+/* Styled Watermark (White Box, Black Text) - High Specificity */
+.greeting-card .card-footer .card-watermark {
+    font-size: 0.95rem !important;
+    color: #000000 !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    background: #ffffff !important;
+    padding: 6px 14px !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    display: inline-block !important;
+    text-shadow: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* ===========================
@@ -3119,6 +3133,34 @@ body {
 /* Mood 10 */
 .greeting-card[data-mood="mood-10"] {
     background-image: url('assets/templates/mood10.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 11 */
+.greeting-card[data-mood="mood-11"] {
+    background-image: url('assets/templates/mood11.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 12 */
+.greeting-card[data-mood="mood-12"] {
+    background-image: url('assets/templates/mood12.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 13 */
+.greeting-card[data-mood="mood-13"] {
+    background-image: url('assets/templates/mood13.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 14 */
+.greeting-card[data-mood="mood-14"] {
+    background-image: url('assets/templates/mood14.jpg') !important;
     background-size: 100% 100%;
     background-position: center;
 }
