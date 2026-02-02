@@ -555,17 +555,7 @@ document.querySelectorAll('.font-mini').forEach(btn => {
     });
 });
 
-// ===========================
-// MINI FRAME BUTTONS
-// ===========================
-document.querySelectorAll('.frame-mini').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.frame-mini').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        greetingCard.setAttribute('data-frame', btn.dataset.frame);
-        playSound(clickSound);
-    });
-});
+/* Frame Logic Removed */
 
 function updateFloatingEmojis(occasion) {
     const decorations = document.getElementById('cardDecorations');

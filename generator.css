@@ -2,22 +2,29 @@
    CSS Variables & Themes
    =========================== */
 :root {
-    --color-primary: #6366f1;
-    --color-primary-dark: #4f46e5;
-    --color-primary-light: #818cf8;
-    --color-secondary: #f472b6;
-    --color-accent: #fbbf24;
-    --color-success: #22c55e;
+    /* "Emotional/Viral" Palette */
+    --color-primary: #8b5cf6;
+    /* Soft Violet - Creative, Magic */
+    --color-primary-dark: #7c3aed;
+    --color-primary-light: #a78bfa;
+    --color-secondary: #ec4899;
+    /* Soft Pink - Love, Warmth */
+    --color-accent: #f59e0b;
+    /* Amber - Optimism */
+    --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-error: #ef4444;
 
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --radius-full: 50px;
+    /* UI & Layout - "Scandi Calm" */
+    --radius-sm: 12px;
+    /* Friendlier, softer corners */
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --radius-full: 999px;
 
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.15s ease;
+    --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy/Alive feel */
+    --transition-fast: all 0.2s ease;
     --font-family: 'Outfit', sans-serif;
 }
 
@@ -28,7 +35,8 @@ h3,
 h4,
 .btn-generate,
 .section-label {
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    /* Tighter, more modern */
 }
 
 body,
@@ -39,32 +47,39 @@ button {
     letter-spacing: -0.01em;
 }
 
-/* Dark Theme (default) */
+/* Dark Theme (Deep, "Quiet Luxury" Dark) */
 [data-theme="dark"] {
-    --color-bg: #0a0a12;
-    --color-surface: rgba(26, 26, 46, 0.9);
-    --color-surface-elevated: rgba(37, 37, 66, 0.7);
-    --color-text: #ffffff;
+    --color-bg: #0f0f12;
+    /* Deep almost-black */
+    --color-surface: #18181b;
+    /* Zinc-900 */
+    --color-surface-elevated: #27272a;
+    --color-text: #f3f4f6;
+    /* Off-white, easier on eyes */
     --color-text-muted: #9ca3af;
     --color-border: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --glass-tactile-highlight: rgba(255, 255, 255, 0.15);
-    --glass-tactile-shadow: rgba(0, 0, 0, 0.5);
+    --glass-bg: rgba(20, 20, 25, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    --glass-tactile-highlight: rgba(255, 255, 255, 0.1);
+    --glass-tactile-shadow: rgba(0, 0, 0, 0.4);
 }
 
-/* Light Theme */
+/* Light Theme (Clean, "Instagram Aesthetic") */
 [data-theme="light"] {
-    --color-bg: #f8fafc;
-    --color-surface: rgba(255, 255, 255, 0.9);
-    --color-surface-elevated: rgba(255, 255, 255, 0.95);
-    --color-text: #1e293b;
-    --color-text-muted: #64748b;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    --color-bg: #fafaf9;
+    /* Warm Stone-50 */
+    --color-surface: #ffffff;
+    --color-surface-elevated: #ffffff;
+    --color-text: #374151;
+    /* Gray-700 - Soft Black */
+    --color-text-muted: #6b7280;
+    --color-border: rgba(0, 0, 0, 0.06);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    /* Milky Glass */
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08);
+    /* Soft, diffused */
 }
 
 /* ===========================
@@ -511,24 +526,35 @@ body {
 
 /* ===========================
    Generate Button
-   =========================== */
+   ===========================*/
+/* Main Generate Button - "Call to Action" */
 .btn-generate {
     width: 100%;
-    padding: 20px 32px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
     border: none;
     border-radius: var(--radius-full);
-    color: white;
-    font-family: inherit;
-    font-size: 1.2rem;
-    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 8px 24px -6px rgba(139, 92, 246, 0.5);
+    /* Soft Violet Shadow */
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    /* Inner Light */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+}
+
+.btn-generate:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px -8px rgba(139, 92, 246, 0.6);
+    filter: brightness(1.05);
+}
+
+.btn-generate:active {
+    transform: translateY(-1px);
 }
 
 .btn-generate::before {

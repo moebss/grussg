@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Caveat:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&display=swap"
         rel="stylesheet">
 
     <!-- Favicon -->
@@ -443,7 +443,7 @@
                         <div class="design-tabs-nav">
                             <button class="design-tab-btn active" data-tab="mood" title="Stimmung">🎨</button>
                             <button class="design-tab-btn" data-tab="text" title="Text">Aa</button>
-                            <button class="design-tab-btn" data-tab="frame" title="Rahmen">🖼️</button>
+                            <!-- Frame Tab Removed -->
                             <button class="design-tab-btn" data-tab="image" title="Bild">📷</button>
                         </div>
 
@@ -480,31 +480,34 @@
                                     <input type="range" id="textSizeSlider" min="0.9" max="1.6" step="0.05" value="1.15"
                                         class="mini-slider" title="Textgröße">
                                 </div>
-                                <div class="font-row">
-                                    <button class="font-mini active" data-font="'Outfit', sans-serif">Aa</button>
-                                    <button class="font-mini" data-font="'Georgia', serif"
-                                        style="font-family: Georgia">Aa</button>
+                                <div class="font-grid-mini">
+                                    <button class="font-mini active" data-font="'Outfit', sans-serif"
+                                        title="Outfit">Aa</button>
+                                    <button class="font-mini" data-font="'Playfair Display', serif"
+                                        style="font-family: 'Playfair Display', serif;" title="Playfair">Aa</button>
+                                    <button class="font-mini" data-font="'Caveat', cursive"
+                                        style="font-family: 'Caveat', cursive;" title="Caveat">Aa</button>
+                                    <button class="font-mini" data-font="'Pacifico', cursive"
+                                        style="font-family: 'Pacifico', cursive;" title="Pacifico">Aa</button>
+                                    <button class="font-mini" data-font="'Dancing Script', cursive"
+                                        style="font-family: 'Dancing Script', cursive;" title="Dancing">Aa</button>
+                                    <button class="font-mini" data-font="'Great Vibes', cursive"
+                                        style="font-family: 'Great Vibes', cursive;" title="Vibes">Aa</button>
+                                    <button class="font-mini" data-font="'Satisfy', cursive"
+                                        style="font-family: 'Satisfy', cursive;" title="Satisfy">Aa</button>
+                                    <button class="font-mini" data-font="'Amatic SC', cursive"
+                                        style="font-family: 'Amatic SC', cursive; font-weight: 700;"
+                                        title="Amatic">Aa</button>
+                                    <button class="font-mini" data-font="'Permanent Marker', cursive"
+                                        style="font-family: 'Permanent Marker', cursive;" title="Marker">Aa</button>
                                     <button class="font-mini" data-font="'Courier New', monospace"
-                                        style="font-family: 'Courier New'">Aa</button>
+                                        style="font-family: 'Courier New', monospace;" title="Retro">Aa</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Frame Tab -->
-                        <div class="design-tab-content hidden" id="design-tab-frame">
-                            <div class="design-section">
-                                <span class="section-label">Rahmen</span>
-                                <div class="frame-row">
-                                    <button class="frame-mini active" data-frame="design1" title="Design 1">🌿</button>
-                                    <button class="frame-mini" data-frame="design2" title="Design 2">🌸</button>
-                                    <button class="frame-mini" data-frame="design3" title="Design 3">🎨</button>
-                                    <button class="frame-mini" data-frame="design4" title="Design 4">✨</button>
-                                    <button class="frame-mini" data-frame="design5" title="Design 5">🧸</button>
-                                </div>
-                                <input type="range" id="radiusSlider" min="0" max="40" step="2" value="16"
-                                    class="mini-slider" title="Ecken-Rundung">
-                            </div>
-                        </div>
+
 
                         <!-- Image Tab -->
                         <div class="design-tab-content hidden" id="design-tab-image">
