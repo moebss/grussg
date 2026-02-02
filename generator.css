@@ -21,6 +21,24 @@
     --font-family: 'Outfit', sans-serif;
 }
 
+/* Modern Typography Tweak */
+h1,
+h2,
+h3,
+h4,
+.btn-generate,
+.section-label {
+    letter-spacing: -0.02em;
+}
+
+body,
+p,
+input,
+textarea,
+button {
+    letter-spacing: -0.01em;
+}
+
 /* Dark Theme (default) */
 [data-theme="dark"] {
     --color-bg: #0a0a12;
@@ -32,6 +50,8 @@
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-tactile-highlight: rgba(255, 255, 255, 0.15);
+    --glass-tactile-shadow: rgba(0, 0, 0, 0.5);
 }
 
 /* Light Theme */
@@ -65,14 +85,67 @@ body {
     overflow-x: hidden;
 }
 
-#bgCanvas {
+/* ===========================
+   Aurora Background
+   =========================== */
+.aurora-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    pointer-events: none;
+    overflow: hidden;
+    background: #0f172a;
+    /* Deep base color */
+}
+
+.aurora-blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: auroraFloat 20s infinite alternate;
+    border-radius: 50%;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: #4f46e5;
+    animation-duration: 25s;
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: #ec4899;
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 40vw;
+    height: 40vw;
+    background: #6366f1;
+    animation-duration: 22s;
+    animation-delay: -10s;
+    opacity: 0.4;
+}
+
+@keyframes auroraFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 50px) scale(1.1);
+    }
 }
 
 .container {
@@ -293,7 +366,14 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    border-top: 1px solid var(--glass-tactile-highlight);
+    /* Tactile Highlight */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    /* Tactile Shadow */
+    box-shadow:
+        var(--glass-shadow),
+        0 20px 40px rgba(0, 0, 0, 0.3);
+    /* Deep shadow */
 }
 
 .card h2 {
@@ -446,6 +526,9 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Inner Light */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-generate::before {
@@ -700,7 +783,11 @@ body {
     background: var(--color-primary);
     border-color: var(--color-primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow:
+        0 4px 12px rgba(99, 102, 241, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Inner Glow */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .sticker-tab-content,
