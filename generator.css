@@ -645,7 +645,16 @@ body {
     padding-bottom: 8px;
     border-bottom: 1px solid var(--glass-border);
     overflow-x: auto;
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+.sticker-tabs-nav::-webkit-scrollbar,
+.design-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
 
 .sticker-tab-btn,
 .design-tab-btn {
@@ -663,6 +672,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Hide scrollbars for panels but keep ability to scroll */
+.sticker-panel,
+.sticker-grid,
+.design-panel {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sticker-panel::-webkit-scrollbar,
+.sticker-grid::-webkit-scrollbar,
+.design-panel::-webkit-scrollbar {
+    display: none;
 }
 
 .sticker-tab-btn:hover,
