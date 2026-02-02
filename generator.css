@@ -2994,3 +2994,16 @@ body {
     z-index: 10;
     white-space: nowrap;
 }
+
+/* ===========================
+   Generated Message Layout
+   =========================== */
+.message-text {
+    padding: 0 20% !important;
+    /* 20% distance from left/right edges */
+    text-align: center;
+    width: 100%;
+    /* Ensure it doesn't overflow */
+    max-width: 100%;
+    box-sizing: border-box;
+}
