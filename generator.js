@@ -1386,3 +1386,49 @@ function addSignatureSticker(text) {
 
     playSound(clickSound);
 }
+
+// ===========================
+// LAYOUT CLEANUP: TAB SYSTEM
+// ===========================
+
+// Sticker Tabs
+document.querySelectorAll('.sticker-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Visual feedback
+        document.querySelectorAll('.sticker-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show/Hide Content
+        document.querySelectorAll('.sticker-tab-content').forEach(c => c.classList.add('hidden'));
+        const tabId = btn.dataset.tab;
+        const target = document.getElementById(`tab-${tabId}`);
+        if (target) {
+            target.classList.remove('hidden');
+        }
+
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
+            playSound(clickSound);
+        }
+    });
+});
+
+// Design Tabs
+document.querySelectorAll('.design-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Visual feedback
+        document.querySelectorAll('.design-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show/Hide Content
+        document.querySelectorAll('.design-tab-content').forEach(c => c.classList.add('hidden'));
+        const tabId = btn.dataset.tab;
+        const target = document.getElementById(`design-tab-${tabId}`);
+        if (target) {
+            target.classList.remove('hidden');
+        }
+
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
+            playSound(clickSound);
+        }
+    });
+});

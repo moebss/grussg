@@ -328,67 +328,84 @@
                     <!-- LEFT: Sticker Panel -->
                     <div class="sticker-panel">
                         <h3>🎨 Sticker</h3>
-                        <p class="panel-subtitle">Klicke zum Hinzufügen</p>
 
-                        <div class="sticker-category">
-                            <span class="category-label">Feiern</span>
-                            <div class="sticker-grid">
-                                <button class="sticker" data-emoji="🎈">🎈</button>
-                                <button class="sticker" data-emoji="🎉">🎉</button>
-                                <button class="sticker" data-emoji="🎊">🎊</button>
-                                <button class="sticker" data-emoji="🎁">🎁</button>
-                                <button class="sticker" data-emoji="🎂">🎂</button>
-                                <button class="sticker" data-emoji="🎄">🎄</button>
-                                <button class="sticker" data-emoji="🎆">🎆</button>
-                                <button class="sticker" data-emoji="🎇">🎇</button>
+                        <!-- Tabs Navigation -->
+                        <div class="sticker-tabs-nav">
+                            <button class="sticker-tab-btn active" data-tab="feiern" title="Feiern">🎉</button>
+                            <button class="sticker-tab-btn" data-tab="herzen" title="Herzen">❤️</button>
+                            <button class="sticker-tab-btn" data-tab="natur" title="Natur">🌸</button>
+                            <button class="sticker-tab-btn" data-tab="symbole" title="Symbole">🍀</button>
+                            <button class="sticker-tab-btn" data-tab="extras" title="Extras">✍️</button>
+                        </div>
+
+                        <div class="sticker-tab-content active" id="tab-feiern">
+                            <div class="sticker-category">
+                                <span class="category-label">Feiern</span>
+                                <div class="sticker-grid">
+                                    <button class="sticker" data-emoji="🎈">🎈</button>
+                                    <button class="sticker" data-emoji="🎉">🎉</button>
+                                    <button class="sticker" data-emoji="🎊">🎊</button>
+                                    <button class="sticker" data-emoji="🎁">🎁</button>
+                                    <button class="sticker" data-emoji="🎂">🎂</button>
+                                    <button class="sticker" data-emoji="🎄">🎄</button>
+                                    <button class="sticker" data-emoji="🎆">🎆</button>
+                                    <button class="sticker" data-emoji="🎇">🎇</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="sticker-category">
-                            <span class="category-label">Herzen</span>
-                            <div class="sticker-grid">
-                                <button class="sticker" data-emoji="❤️">❤️</button>
-                                <button class="sticker" data-emoji="💕">💕</button>
-                                <button class="sticker" data-emoji="💖">💖</button>
-                                <button class="sticker" data-emoji="💗">💗</button>
-                                <button class="sticker" data-emoji="💘">💘</button>
-                                <button class="sticker" data-emoji="💝">💝</button>
+                        <div class="sticker-tab-content hidden" id="tab-herzen">
+                            <div class="sticker-category">
+                                <span class="category-label">Herzen</span>
+                                <div class="sticker-grid">
+                                    <button class="sticker" data-emoji="❤️">❤️</button>
+                                    <button class="sticker" data-emoji="💕">💕</button>
+                                    <button class="sticker" data-emoji="💖">💖</button>
+                                    <button class="sticker" data-emoji="💗">💗</button>
+                                    <button class="sticker" data-emoji="💘">💘</button>
+                                    <button class="sticker" data-emoji="💝">💝</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="sticker-category">
-                            <span class="category-label">Natur</span>
-                            <div class="sticker-grid">
-                                <button class="sticker" data-emoji="🌸">🌸</button>
-                                <button class="sticker" data-emoji="🌺">🌺</button>
-                                <button class="sticker" data-emoji="🌷">🌷</button>
-                                <button class="sticker" data-emoji="🌹">🌹</button>
-                                <button class="sticker" data-emoji="🌻">🌻</button>
-                                <button class="sticker" data-emoji="⭐">⭐</button>
-                                <button class="sticker" data-emoji="✨">✨</button>
-                                <button class="sticker" data-emoji="🌈">🌈</button>
+                        <div class="sticker-tab-content hidden" id="tab-natur">
+                            <div class="sticker-category">
+                                <span class="category-label">Natur</span>
+                                <div class="sticker-grid">
+                                    <button class="sticker" data-emoji="🌸">🌸</button>
+                                    <button class="sticker" data-emoji="🌺">🌺</button>
+                                    <button class="sticker" data-emoji="🌷">🌷</button>
+                                    <button class="sticker" data-emoji="🌹">🌹</button>
+                                    <button class="sticker" data-emoji="🌻">🌻</button>
+                                    <button class="sticker" data-emoji="⭐">⭐</button>
+                                    <button class="sticker" data-emoji="✨">✨</button>
+                                    <button class="sticker" data-emoji="🌈">🌈</button>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Special: Signature -->
-                        <div class="sticker-category">
-                            <span class="category-label">Extras</span>
-                            <div class="sticker-grid">
-                                <button class="sticker-special" id="signBtn" title="Unterschreiben">
-                                    ✍️
-                                </button>
+                        <div class="sticker-tab-content hidden" id="tab-symbole">
+                            <div class="sticker-category">
+                                <span class="category-label">Symbole</span>
+                                <div class="sticker-grid">
+                                    <button class="sticker" data-emoji="👶">👶</button>
+                                    <button class="sticker" data-emoji="💒">💒</button>
+                                    <button class="sticker" data-emoji="🎓">🎓</button>
+                                    <button class="sticker" data-emoji="🏆">🏆</button>
+                                    <button class="sticker" data-emoji="🍀">🍀</button>
+                                    <button class="sticker" data-emoji="🦋">🦋</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="sticker-category">
-                            <span class="category-label">Symbole</span>
-                            <div class="sticker-grid">
-                                <button class="sticker" data-emoji="👶">👶</button>
-                                <button class="sticker" data-emoji="💒">💒</button>
-                                <button class="sticker" data-emoji="🎓">🎓</button>
-                                <button class="sticker" data-emoji="🏆">🏆</button>
-                                <button class="sticker" data-emoji="🍀">🍀</button>
-                                <button class="sticker" data-emoji="🦋">🦋</button>
+                        <div class="sticker-tab-content hidden" id="tab-extras">
+                            <div class="sticker-category">
+                                <span class="category-label">Extras</span>
+                                <div class="sticker-grid">
+                                    <button class="sticker-special" id="signBtn" title="Unterschreiben">
+                                        ✍️
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -427,75 +444,92 @@
                     <div class="design-panel">
                         <h3>⚙️ Design</h3>
 
-                        <!-- Mood Selection -->
-                        <div class="design-section">
-                            <span class="section-label">Stimmung</span>
-                            <div class="mood-grid-compact">
-                                <button class="mood-emoji active" data-mood="default" title="Standard">💌</button>
-                                <button class="mood-emoji" data-mood="sunset" title="Sonnenuntergang">🌅</button>
-                                <button class="mood-emoji" data-mood="ocean" title="Ozean">🌊</button>
-                                <button class="mood-emoji" data-mood="forest" title="Wald">🌲</button>
-                                <button class="mood-emoji" data-mood="lavender" title="Lavendel">💜</button>
-                                <button class="mood-emoji" data-mood="fire" title="Feuer">🔥</button>
-                                <button class="mood-emoji" data-mood="candy" title="Zuckerwatte">🍬</button>
-                                <button class="mood-emoji" data-mood="midnight" title="Mitternacht">🌙</button>
-                                <button class="mood-emoji" data-mood="aurora" title="Nordlicht">✨</button>
-                                <button class="mood-emoji" data-mood="neon" title="Neon">💫</button>
-                                <button class="mood-emoji" data-mood="rose" title="Rose">🌹</button>
-                                <button class="mood-emoji" data-mood="birthday" title="Geburtstag">🎂</button>
-                                <button class="mood-emoji" data-mood="wedding" title="Hochzeit">💒</button>
-                                <button class="mood-emoji" data-mood="christmas" title="Weihnachten">🎄</button>
-                                <button class="mood-emoji" data-mood="love" title="Liebe">❤️</button>
-                                <button class="mood-emoji" data-mood="party" title="Party">🎉</button>
-                            </div>
+                        <!-- Design Tabs Nav -->
+                        <div class="design-tabs-nav">
+                            <button class="design-tab-btn active" data-tab="mood" title="Stimmung">🎨</button>
+                            <button class="design-tab-btn" data-tab="text" title="Text">Aa</button>
+                            <button class="design-tab-btn" data-tab="frame" title="Rahmen">🖼️</button>
+                            <button class="design-tab-btn" data-tab="image" title="Bild">📷</button>
                         </div>
 
-                        <!-- Text Options -->
-                        <div class="design-section">
-                            <span class="section-label">Text</span>
-                            <div class="mini-controls">
-                                <input type="color" id="textColorPicker" value="#ffffff" class="mini-color-picker"
-                                    title="Textfarbe">
-                                <input type="range" id="textSizeSlider" min="0.9" max="1.6" step="0.05" value="1.15"
-                                    class="mini-slider" title="Textgröße">
-                            </div>
-                            <div class="font-row">
-                                <button class="font-mini active" data-font="'Outfit', sans-serif">Aa</button>
-                                <button class="font-mini" data-font="'Georgia', serif"
-                                    style="font-family: Georgia">Aa</button>
-                                <button class="font-mini" data-font="'Courier New', monospace"
-                                    style="font-family: 'Courier New'">Aa</button>
-                            </div>
-                        </div>
-
-                        <!-- Frame Options -->
-                        <div class="design-section">
-                            <span class="section-label">Rahmen</span>
-                            <div class="frame-row">
-                                <button class="frame-mini active" data-frame="none" title="Kein Rahmen">○</button>
-                                <button class="frame-mini" data-frame="thin" title="Dünn">□</button>
-                                <button class="frame-mini" data-frame="gold" title="Gold">✨</button>
-                                <button class="frame-mini" data-frame="rainbow" title="Regenbogen">🌈</button>
-                                <button class="frame-mini" data-frame="glow" title="Leuchtend">💫</button>
-                            </div>
-                            <input type="range" id="radiusSlider" min="0" max="40" step="2" value="16"
-                                class="mini-slider" title="Ecken-Rundung">
-                        </div>
-
-                        <!-- Upload -->
-                        <div class="design-section">
-                            <span class="section-label">Bild hinzufügen</span>
-                            <div class="upload-controls-row" style="display: flex; gap: 8px;">
-                                <div class="upload-mini" id="uploadBgZone" title="Als Hintergrund" style="flex: 1;">
-                                    <input type="file" id="bgUpload" accept="image/*" class="hidden">
-                                    <span>🖼️ H'grund</span>
-                                </div>
-                                <div class="upload-mini" id="uploadStickerZone" title="Als Sticker" style="flex: 1;">
-                                    <input type="file" id="stickerUpload" accept="image/*" class="hidden">
-                                    <span>🧩 Sticker</span>
+                        <!-- Mood Tab -->
+                        <div class="design-tab-content active" id="design-tab-mood">
+                            <div class="design-section">
+                                <span class="section-label">Stimmung</span>
+                                <div class="mood-grid-compact">
+                                    <button class="mood-emoji active" data-mood="default" title="Standard">💌</button>
+                                    <button class="mood-emoji" data-mood="sunset" title="Sonnenuntergang">🌅</button>
+                                    <button class="mood-emoji" data-mood="ocean" title="Ozean">🌊</button>
+                                    <button class="mood-emoji" data-mood="forest" title="Wald">🌲</button>
+                                    <button class="mood-emoji" data-mood="lavender" title="Lavendel">💜</button>
+                                    <button class="mood-emoji" data-mood="fire" title="Feuer">🔥</button>
+                                    <button class="mood-emoji" data-mood="candy" title="Zuckerwatte">🍬</button>
+                                    <button class="mood-emoji" data-mood="midnight" title="Mitternacht">🌙</button>
+                                    <button class="mood-emoji" data-mood="aurora" title="Nordlicht">✨</button>
+                                    <button class="mood-emoji" data-mood="neon" title="Neon">💫</button>
+                                    <button class="mood-emoji" data-mood="rose" title="Rose">🌹</button>
+                                    <button class="mood-emoji" data-mood="birthday" title="Geburtstag">🎂</button>
+                                    <button class="mood-emoji" data-mood="wedding" title="Hochzeit">💒</button>
+                                    <button class="mood-emoji" data-mood="christmas" title="Weihnachten">🎄</button>
+                                    <button class="mood-emoji" data-mood="love" title="Liebe">❤️</button>
+                                    <button class="mood-emoji" data-mood="party" title="Party">🎉</button>
                                 </div>
                             </div>
-                            <button class="btn-remove-mini hidden" id="removeBgBtn">❌ H'grund entfernen</button>
+                        </div>
+
+                        <!-- Text Tab -->
+                        <div class="design-tab-content hidden" id="design-tab-text">
+                            <div class="design-section">
+                                <span class="section-label">Text</span>
+                                <div class="mini-controls">
+                                    <input type="color" id="textColorPicker" value="#ffffff" class="mini-color-picker"
+                                        title="Textfarbe">
+                                    <input type="range" id="textSizeSlider" min="0.9" max="1.6" step="0.05" value="1.15"
+                                        class="mini-slider" title="Textgröße">
+                                </div>
+                                <div class="font-row">
+                                    <button class="font-mini active" data-font="'Outfit', sans-serif">Aa</button>
+                                    <button class="font-mini" data-font="'Georgia', serif"
+                                        style="font-family: Georgia">Aa</button>
+                                    <button class="font-mini" data-font="'Courier New', monospace"
+                                        style="font-family: 'Courier New'">Aa</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Frame Tab -->
+                        <div class="design-tab-content hidden" id="design-tab-frame">
+                            <div class="design-section">
+                                <span class="section-label">Rahmen</span>
+                                <div class="frame-row">
+                                    <button class="frame-mini active" data-frame="none" title="Kein Rahmen">○</button>
+                                    <button class="frame-mini" data-frame="thin" title="Dünn">□</button>
+                                    <button class="frame-mini" data-frame="gold" title="Gold">✨</button>
+                                    <button class="frame-mini" data-frame="rainbow" title="Regenbogen">🌈</button>
+                                    <button class="frame-mini" data-frame="glow" title="Leuchtend">💫</button>
+                                </div>
+                                <input type="range" id="radiusSlider" min="0" max="40" step="2" value="16"
+                                    class="mini-slider" title="Ecken-Rundung">
+                            </div>
+                        </div>
+
+                        <!-- Image Tab -->
+                        <div class="design-tab-content hidden" id="design-tab-image">
+                            <div class="design-section">
+                                <span class="section-label">Bild hinzufügen</span>
+                                <div class="upload-controls-row" style="display: flex; gap: 8px;">
+                                    <div class="upload-mini" id="uploadBgZone" title="Als Hintergrund" style="flex: 1;">
+                                        <input type="file" id="bgUpload" accept="image/*" class="hidden">
+                                        <span>🖼️ H'grund</span>
+                                    </div>
+                                    <div class="upload-mini" id="uploadStickerZone" title="Als Sticker"
+                                        style="flex: 1;">
+                                        <input type="file" id="stickerUpload" accept="image/*" class="hidden">
+                                        <span>🧩 Sticker</span>
+                                    </div>
+                                </div>
+                                <button class="btn-remove-mini hidden" id="removeBgBtn">❌ H'grund entfernen</button>
+                            </div>
                         </div>
                     </div>
                 </div>
