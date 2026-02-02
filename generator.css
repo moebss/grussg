@@ -1397,16 +1397,65 @@ body {
     }
 }
 
-.template-card {
-    position: relative;
-    padding: 16px 10px;
-    background: var(--glass-bg);
-    border: 2px solid transparent;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: center;
+/* ===========================
+   Screenshot Design Frames
+   =========================== */
+.greeting-card[data-frame="design1"] {
+    background-image: url('assets/templates/design1.jpg');
+    background-size: cover;
+    background-position: center;
+    border: none;
 }
+
+.greeting-card[data-frame="design1"] .card-overlay {
+    background: rgba(255, 255, 255, 0.85);
+    /* Light overlay for readability */
+}
+
+.greeting-card[data-frame="design2"] {
+    background-image: url('assets/templates/design2.jpg');
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.greeting-card[data-frame="design2"] .card-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.greeting-card[data-frame="design3"] {
+    background-image: url('assets/templates/design3.jpg');
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.greeting-card[data-frame="design3"] .card-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.greeting-card[data-frame="design4"] {
+    background-image: url('assets/templates/design4.jpg');
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.greeting-card[data-frame="design4"] .card-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.greeting-card[data-frame="design5"] {
+    background-image: url('assets/templates/design5.jpg');
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.greeting-card[data-frame="design5"] .card-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
 
 .template-card:hover {
     border-color: var(--color-primary);
