@@ -2999,11 +2999,15 @@ body {
    Generated Message Layout
    =========================== */
 .message-text {
-    padding: 0 20% !important;
-    /* 20% distance from left/right edges */
-    text-align: center;
+    padding: 15% 20% 0 20% !important;
+    /* 15% top, 20% left/right */
+    text-align: right;
+    /* Rechtsbündig */
     width: 100%;
     /* Ensure it doesn't overflow */
     max-width: 100%;
     box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
