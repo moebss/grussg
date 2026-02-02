@@ -1012,11 +1012,9 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     showToast('Bild wird erstellt... 📸', 'info');
 
     const card = document.getElementById('greetingCard');
-    const ttsBtn = document.getElementById('ttsBtn');
     const messageHeader = card.querySelector('.message-header');
 
-    // Hide TTS button for screenshot
-    if (ttsBtn) ttsBtn.style.display = 'none';
+    // Hide TTS button for screenshot (Removed)
     if (messageHeader) messageHeader.style.display = 'none';
 
     // Clean text (remove accidental markdown)
@@ -1049,7 +1047,6 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     generatedMessage.innerText = originalText;
 
     // Restore UI elements
-    if (ttsBtn) ttsBtn.style.display = '';
     if (messageHeader) messageHeader.style.display = '';
 });
 
@@ -1073,49 +1070,7 @@ document.getElementById('facebookBtn')?.addEventListener('click', () => {
     window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
 });
 
-// Text-to-Speech with toggle
-let isSpeaking = false;
-
-document.getElementById('ttsBtn').addEventListener('click', () => {
-    playSound(clickSound);
-
-    if (!('speechSynthesis' in window)) {
-        showToast('Vorlesen nicht unterstützt 😞', 'error');
-        return;
-    }
-
-    const ttsBtn = document.getElementById('ttsBtn');
-
-    if (isSpeaking) {
-        // Stop speaking
-        speechSynthesis.cancel();
-        isSpeaking = false;
-        ttsBtn.textContent = '🔊';
-        ttsBtn.title = 'Vorlesen';
-        showToast('Vorlesen gestoppt ⏹️', 'info');
-    } else {
-        // Start speaking
-        const utterance = new SpeechSynthesisUtterance(generatedMessage.textContent);
-        utterance.lang = currentLanguage === 'de' ? 'de-DE' :
-            currentLanguage === 'en' ? 'en-US' :
-                currentLanguage === 'es' ? 'es-ES' :
-                    currentLanguage === 'fr' ? 'fr-FR' :
-                        currentLanguage === 'tr' ? 'tr-TR' :
-                            currentLanguage === 'it' ? 'it-IT' : 'de-DE';
-
-        utterance.onend = () => {
-            isSpeaking = false;
-            ttsBtn.textContent = '🔊';
-            ttsBtn.title = 'Vorlesen';
-        };
-
-        speechSynthesis.speak(utterance);
-        isSpeaking = true;
-        ttsBtn.textContent = '⏹️';
-        ttsBtn.title = 'Stoppen';
-        showToast('Wird vorgelesen... 🔊', 'info');
-    }
-});
+/* TTS Logic Removed */
 
 // New greeting button
 document.getElementById('newGreetingBtn').addEventListener('click', () => {
