@@ -234,30 +234,33 @@
                         </div>
                     </div>
 
-                    <!-- Name -->
-                    <div class="form-group">
-                        <label for="recipientName">
-                            <span>👤 Name der Person</span>
-                        </label>
-                        <input type="text" id="recipientName" name="recipientName"
-                            placeholder="z.B. Anna, Michael, Familie Schmidt..." required>
-                    </div>
+                    <!-- Compact Row: Name & Relationship -->
+                    <div class="form-row-2col">
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="recipientName">
+                                <span>👤 Name der Person</span>
+                            </label>
+                            <input type="text" id="recipientName" name="recipientName" placeholder="z.B. Anna..."
+                                required>
+                        </div>
 
-                    <!-- Relationship -->
-                    <div class="form-group">
-                        <label for="relationship">
-                            <span>💝 Beziehung</span>
-                        </label>
-                        <select id="relationship" name="relationship" required>
-                            <option value="">Bitte wählen...</option>
-                            <option value="none">Keine Angabe</option>
-                            <option value="friend">Freund/in</option>
-                            <option value="romantic">Partner/in 💕</option>
-                            <option value="family">Familie</option>
-                            <option value="colleague">Kollege/in</option>
-                            <option value="boss">Chef/in</option>
-                            <option value="acquaintance">Bekannte/r</option>
-                        </select>
+                        <!-- Relationship -->
+                        <div class="form-group">
+                            <label for="relationship">
+                                <span>💝 Beziehung</span>
+                            </label>
+                            <select id="relationship" name="relationship" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="none">Keine Angabe</option>
+                                <option value="friend">Freund/in</option>
+                                <option value="romantic">Partner/in 💕</option>
+                                <option value="family">Familie</option>
+                                <option value="colleague">Kollege/in</option>
+                                <option value="boss">Chef/in</option>
+                                <option value="acquaintance">Bekannte/r</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Additional Info -->
