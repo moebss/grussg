@@ -3057,3 +3057,56 @@ body {
     display: block;
     text-wrap: balance;
 }
+
+/* ===========================
+   Base Design Reset (White 1080x1080)
+   =========================== */
+.greeting-card {
+    background: #ffffff !important;
+    aspect-ratio: 1/1 !important;
+    width: 100%;
+    /* Remove any glass effects if inherited */
+    backdrop-filter: none !important;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure placeholder moods don't break layout */
+.greeting-card[data-mood^="mood-"] {
+    background: #ffffff !important;
+}
+
+/* Mood 1 */
+.greeting-card[data-mood="mood-1"] {
+    background-image: url('assets/templates/mood1.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Mood 2 */
+.greeting-card[data-mood="mood-2"] {
+    background-image: url('assets/templates/mood2.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Mood 3 */
+.greeting-card[data-mood="mood-3"] {
+    background-image: url('assets/templates/mood3.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Mood 4 */
+.greeting-card[data-mood="mood-4"] {
+    background-image: url('assets/templates/mood4.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Mood 5 */
+.greeting-card[data-mood="mood-5"] {
+    background-image: url('assets/templates/mood5.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
