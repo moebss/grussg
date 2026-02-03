@@ -728,9 +728,12 @@ async function doRemix() {
 
         // Apply the generated gradient to the card
         if (greetingCard && data.css) {
-            // Clear existing mood
+            // Aggressively clear existing themes/moods to ensure gradient is visible
             greetingCard.removeAttribute('data-mood');
+            greetingCard.removeAttribute('data-card-theme'); // This was likely causing the white background
+
             document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active')); // Also clear theme buttons
 
             // Clear any custom uploaded background or overlay
             const customBg = document.getElementById('cardCustomBg');
