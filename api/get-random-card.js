@@ -37,9 +37,9 @@ export default async (req, res) => {
     }
 
     try {
-        // List all files in the remix-cards bucket
+        // Try to list files with service role approach
+        // First attempt: Direct REST API to storage
         const listUrl = `${supabaseUrl}/storage/v1/object/list/remix-cards`;
-        console.log('Fetching from:', listUrl);
 
         const listResponse = await fetch(listUrl, {
             method: 'POST',
@@ -51,30 +51,40 @@ export default async (req, res) => {
             body: JSON.stringify({
                 prefix: '',
                 limit: 100,
-                offset: 0
+                offset: 0,
+                search: ''
             })
         });
 
-        if (!listResponse.ok) {
-            const errorText = await listResponse.text();
-            console.error('Supabase Storage Error:', listResponse.status, errorText);
-            return res.status(500).json({
-                error: 'Fehler beim Laden der Bilder',
-                debug: { status: listResponse.status, errorText }
+        let files = [];
+
+        if (listResponse.ok) {
+            files = await listResponse.json();
+        } else {
+            console.log('Storage list failed, trying alternative approach');
+
+            // Alternative: Try to get public bucket info
+            const publicListUrl = `${supabaseUrl}/storage/v1/bucket/remix-cards`;
+            const bucketResponse = await fetch(publicListUrl, {
+                headers: {
+                    'Authorization': `Bearer ${supabaseKey}`,
+                    'apikey': supabaseKey
+                }
             });
+
+            if (bucketResponse.ok) {
+                const bucketInfo = await bucketResponse.json();
+                console.log('Bucket info:', bucketInfo);
+            }
         }
 
-        const files = await listResponse.json();
-        console.log('Supabase returned files:', JSON.stringify(files));
-
-        // Filter only image files
-        const imageFiles = files.filter(file =>
-            file.name &&
-            !file.name.endsWith('/') &&
-            /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
-        );
-
-        console.log('Filtered image files:', imageFiles.length);
+        // Filter only image files (check both name and id fields)
+        const imageFiles = files.filter(file => {
+            const fileName = file.name || file.id || '';
+            return fileName &&
+                !fileName.endsWith('/') &&
+                /\.(jpg|jpeg|png|webp|gif)$/i.test(fileName);
+        });
 
         if (imageFiles.length === 0) {
             // Fallback: return a gradient instead
@@ -82,7 +92,11 @@ export default async (req, res) => {
                 type: 'gradient',
                 css: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #fff5f3 50%, #a8edea 75%, #fed6e3 100%)',
                 message: 'Keine Bilder gefunden, Fallback-Gradient verwendet',
-                debug: { rawFiles: files, supabaseUrl }
+                debug: {
+                    rawFiles: files,
+                    supabaseUrl,
+                    hint: 'Bitte füge eine SELECT RLS-Policy zum remix-cards Bucket hinzu. In Supabase: Storage -> Policies -> New policy -> For full customization -> SELECT -> "true" als Policy'
+                }
             });
         }
 
@@ -93,8 +107,8 @@ export default async (req, res) => {
 
         // Generate public URLs
         const images = selectedFiles.map(file => ({
-            name: file.name,
-            url: `${supabaseUrl}/storage/v1/object/public/remix-cards/${encodeURIComponent(file.name)}`,
+            name: file.name || file.id,
+            url: `${supabaseUrl}/storage/v1/object/public/remix-cards/${encodeURIComponent(file.name || file.id)}`,
             size: file.metadata?.size || 0
         }));
 
