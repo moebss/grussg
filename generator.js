@@ -680,9 +680,9 @@ document.querySelectorAll('.mood-emoji').forEach(btn => {
 });
 
 // ===========================
-// REMIX FEATURE
+// REMIX FEATURE (Supabase Storage)
 // ===========================
-const REMIX_API_ENDPOINT = '/api/generate-remix';
+const REMIX_API_ENDPOINT = '/api/get-random-card';
 const TOTAL_MOODS = 14;
 
 const remixBtn = document.getElementById('remixBtn');
@@ -694,7 +694,6 @@ const remixInput2 = document.getElementById('remixInput2');
 function getRandomMoods() {
     const mood1 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
     let mood2 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
-    // Ensure different moods
     while (mood2 === mood1) {
         mood2 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
     }
@@ -704,7 +703,7 @@ function getRandomMoods() {
 async function doRemix() {
     const [mood1, mood2] = getRandomMoods();
 
-    // Update preview images
+    // Update preview images (visual feedback while loading)
     remixInput1.src = `assets/templates/mood${mood1.split('-')[1]}.jpg`;
     remixInput2.src = `assets/templates/mood${mood2.split('-')[1]}.jpg`;
     remixPreview.classList.remove('hidden');
@@ -717,7 +716,7 @@ async function doRemix() {
         const response = await fetch(REMIX_API_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mood1, mood2 })
+            body: JSON.stringify({ count: 1 })
         });
 
         const data = await response.json();
@@ -726,41 +725,40 @@ async function doRemix() {
             throw new Error(data.error || 'Remix fehlgeschlagen');
         }
 
-        // Apply the generated gradient to the card
-        if (greetingCard && data.css) {
-            // Aggressively clear existing themes/moods to ensure gradient is visible
-            greetingCard.removeAttribute('data-mood');
-            greetingCard.removeAttribute('data-card-theme'); // This was likely causing the white background
+        // Clear existing themes/moods
+        greetingCard.removeAttribute('data-mood');
+        greetingCard.removeAttribute('data-card-theme');
+        document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
 
-            document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active')); // Also clear theme buttons
+        // Clear any custom uploaded background
+        const customBg = document.getElementById('cardCustomBg');
+        if (customBg) {
+            customBg.style.backgroundImage = '';
+            customBg.innerHTML = '';
+        }
 
-            // Clear any custom uploaded background or overlay
-            const customBg = document.getElementById('cardCustomBg');
-            if (customBg) {
-                customBg.style.backgroundImage = '';
-                customBg.innerHTML = '';
-            }
+        if (data.type === 'image' && data.images && data.images.length > 0) {
+            // Apply random image from Supabase as background
+            const randomImage = data.images[0];
+            greetingCard.style.backgroundImage = `url('${randomImage.url}')`;
+            greetingCard.style.backgroundSize = 'cover';
+            greetingCard.style.backgroundPosition = 'center';
 
-            // Apply remix gradient directly
-            // Ensure we clean any quotes that might have been included
-            let cleanCss = data.css.replace(/['"]+/g, '').replace(/;$/, '');
-            // Re-add necessary internal quotes for URLs if any (though unlikely for gradients)
-            // Ideally we just trust the string if it looks like a gradient.
-
-            // Actually, simpler is better: just strict set.
-            // If the API sends "linear-gradient(...)", browser handles it.
-            // If API sends quotes around it like "linear-gradient(...)", we remove them.
+            playSound(successSound);
+            showToast(`Remix geladen! 🎨 (${data.totalAvailable} Karten verfügbar)`, 'success');
+        } else if (data.type === 'gradient' && data.css) {
+            // Fallback: use gradient if no images available
+            let cleanCss = data.css.replace(/['\"]+/g, '').replace(/;$/, '');
             if (cleanCss.startsWith('linear-gradient')) {
                 greetingCard.style.backgroundImage = cleanCss;
             } else {
-                greetingCard.style.backgroundImage = data.css.replace(/^["']|["']$/g, '');
+                greetingCard.style.backgroundImage = data.css.replace(/^[\"']|[\"']$/g, '');
             }
-
             greetingCard.style.backgroundSize = '100% 100%';
 
             playSound(successSound);
-            showToast('Remix erstellt! ✨', 'success');
+            showToast('Remix erstellt! ✨ (Fallback-Modus)', 'success');
         }
 
     } catch (err) {
