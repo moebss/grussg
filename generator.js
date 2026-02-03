@@ -75,6 +75,16 @@ if (savedTheme) {
 }
 
 // ===========================
+// BACK TO GENERATOR BUTTON
+// ===========================
+document.getElementById('backToGenerator')?.addEventListener('click', () => {
+    outputSection?.classList.add('hidden');
+    inputSection?.classList.remove('hidden');
+    playSound(clickSound);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ===========================
 // ANIMATED BACKGROUND
 // ===========================
 function initBackground() {
