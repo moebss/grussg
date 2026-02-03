@@ -1194,13 +1194,13 @@ body {
     border-color: var(--color-accent);
 }
 
-/* More Share Options */
-.more-share-options {
+/* Unified Share Buttons Row */
+.share-buttons-row {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .share-btn {
