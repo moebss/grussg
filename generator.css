@@ -54,17 +54,21 @@ button {
     --glass-tactile-shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* Light Theme */
+/* Light Theme (Clean Modern) */
 [data-theme="light"] {
-    --color-bg: #f8fafc;
-    --color-surface: rgba(255, 255, 255, 0.9);
-    --color-surface-elevated: rgba(255, 255, 255, 0.95);
+    --color-bg: #faf8f5;
+    /* Warm white */
+    --color-surface: rgba(255, 255, 255, 0.95);
+    --color-surface-elevated: #ffffff;
     --color-text: #1e293b;
+    /* Dark slate for high contrast */
     --color-text-muted: #64748b;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    --color-border: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
+    --glass-tactile-highlight: rgba(255, 255, 255, 1);
+    --glass-tactile-shadow: rgba(0, 0, 0, 0.15);
 }
 
 /* ===========================
@@ -86,7 +90,7 @@ body {
 }
 
 /* ===========================
-   Mesh Gradient Background
+   Aurora Background
    =========================== */
 .aurora-background {
     position: fixed;
@@ -96,11 +100,81 @@ body {
     height: 100%;
     z-index: -1;
     overflow: hidden;
+    background: #0f172a;
+    /* Deep base color */
 }
 
-100% {
-    transform: translate(30px, 50px) scale(1.1);
+.aurora-blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: auroraFloat 20s infinite alternate;
+    border-radius: 50%;
 }
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: #4f46e5;
+    animation-duration: 25s;
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: #ec4899;
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 40vw;
+    height: 40vw;
+    background: #6366f1;
+    animation-duration: 22s;
+    animation-delay: -10s;
+    opacity: 0.4;
+}
+
+@keyframes auroraFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 50px) scale(1.1);
+    }
+}
+
+/* Light Theme Background Override */
+[data-theme="light"] .aurora-background {
+    background: linear-gradient(135deg, #faf8f5 0%, #f0e6d8 50%, #fce7f3 100%);
+}
+
+[data-theme="light"] .aurora-blob {
+    opacity: 0.15;
+}
+
+[data-theme="light"] .blob-1 {
+    background: #c7d2fe;
+    /* Soft indigo */
+}
+
+[data-theme="light"] .blob-2 {
+    background: #fce7f3;
+    /* Soft pink */
+}
+
+[data-theme="light"] .blob-3 {
+    background: #ddd6fe;
+    /* Soft violet */
+    opacity: 0.1;
 }
 
 .container {
@@ -329,6 +403,17 @@ body {
         var(--glass-shadow),
         0 20px 40px rgba(0, 0, 0, 0.3);
     /* Deep shadow */
+}
+
+/* Light Theme - Cleaner Glass */
+[data-theme="light"] .card.glass {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .card h2 {
@@ -830,6 +915,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+/* Light Theme - Prominent Card Shadow */
+[data-theme="light"] .greeting-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .greeting-card:hover {
@@ -2782,9 +2873,9 @@ body {
 /* Font Grid */
 .font-grid-mini {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-top: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 6px;
+    margin-top: 8px;
 }
 
 .font-mini {
@@ -2793,14 +2884,16 @@ body {
     border-radius: var(--radius-sm);
     color: var(--color-text);
     cursor: pointer;
-    font-size: 1.1rem;
-    padding: 8px;
+    font-size: 0.9rem;
+    padding: 6px 4px;
     transition: var(--transition);
-    aspect-ratio: 1;
-    /* Square buttons */
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 0;
+    /* Prevent overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .font-mini:hover {
