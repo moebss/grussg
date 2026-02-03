@@ -342,12 +342,26 @@
                     <div class="sticker-panel">
                         <h3>🎨 Sticker</h3>
 
-                        <!-- Tabs Navigation -->
-                        <div class="sticker-tabs-nav">
-                            <button class="sticker-tab-btn active" data-tab="feiern" title="Feiern">🎉</button>
-                            <button class="sticker-tab-btn" data-tab="herzen" title="Herzen">❤️</button>
-                            <button class="sticker-tab-btn" data-tab="natur" title="Natur">🌸</button>
-                            <button class="sticker-tab-btn" data-tab="symbole" title="Symbole">🍀</button>
+                        <!-- Tabs Navigation with Arrows -->
+                        <div class="sticker-tabs-wrapper">
+                            <button class="sticker-nav-arrow sticker-nav-left" id="stickerNavLeft" title="Vorherige">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <div class="sticker-tabs-nav" id="stickerTabsNav">
+                                <button class="sticker-tab-btn active" data-tab="feiern" title="Feiern">🎉</button>
+                                <button class="sticker-tab-btn" data-tab="herzen" title="Herzen">❤️</button>
+                                <button class="sticker-tab-btn" data-tab="natur" title="Natur">🌸</button>
+                                <button class="sticker-tab-btn" data-tab="symbole" title="Symbole">🍀</button>
+                            </div>
+                            <button class="sticker-nav-arrow sticker-nav-right" id="stickerNavRight" title="Nächste">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
                         </div>
 
                         <div class="sticker-tab-content active" id="tab-feiern">
@@ -615,9 +629,16 @@
                     </div>
                 </div>
 
-                <button class="btn-new" id="newGreetingBtn">
-                    ➕ Neuen Gruß erstellen
-                </button>
+                <!-- History Section in Output -->
+                <div class="output-history">
+                    <h4>📜 Deine Gruß-Historie</h4>
+                    <div class="output-history-list" id="outputHistoryList">
+                        <p class="empty-history">Noch keine Grüße erstellt.</p>
+                    </div>
+                    <button class="btn-new-small" id="newGreetingBtn">
+                        ➕ Neuen Gruß erstellen
+                    </button>
+                </div>
             </section>
         </main>
 

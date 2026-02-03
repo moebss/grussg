@@ -554,6 +554,40 @@ document.getElementById('clearStickersBtn')?.addEventListener('click', () => {
 });
 
 // ===========================
+// STICKER TAB ARROW NAVIGATION
+// ===========================
+const stickerTabs = document.querySelectorAll('.sticker-tab-btn');
+let currentStickerTabIndex = 0;
+
+function switchStickerTab(index) {
+    if (stickerTabs.length === 0) return;
+
+    // Wrap around
+    if (index < 0) index = stickerTabs.length - 1;
+    if (index >= stickerTabs.length) index = 0;
+
+    currentStickerTabIndex = index;
+    stickerTabs[index].click();
+}
+
+document.getElementById('stickerNavLeft')?.addEventListener('click', () => {
+    switchStickerTab(currentStickerTabIndex - 1);
+    playSound(clickSound);
+});
+
+document.getElementById('stickerNavRight')?.addEventListener('click', () => {
+    switchStickerTab(currentStickerTabIndex + 1);
+    playSound(clickSound);
+});
+
+// Update current index when tabs are clicked directly
+stickerTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+        currentStickerTabIndex = index;
+    });
+});
+
+// ===========================
 // MINI FONT BUTTONS
 // ===========================
 document.querySelectorAll('.font-mini').forEach(btn => {
@@ -980,12 +1014,7 @@ function saveToHistory(entry) {
 }
 
 function renderHistory(history) {
-    historyBadge.textContent = history.length;
-
-    if (history.length === 0) {
-        historyList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt. Starte jetzt! 🚀</p>';
-        return;
-    }
+    if (historyBadge) historyBadge.textContent = history.length;
 
     const occasionNames = {
         birthday: '🎂 Geburtstag',
@@ -1003,26 +1032,58 @@ function renderHistory(history) {
         general: '💌 Sonstiges'
     };
 
-    historyList.innerHTML = history.map((item, index) => `
-        <div class="history-item" data-index="${index}">
-            <div class="history-item-header">
-                <span class="history-item-occasion">${occasionNames[item.occasion] || item.occasion}</span>
-                <span class="history-item-date">${new Date(item.date).toLocaleDateString('de-DE')}</span>
-            </div>
-            <div class="history-item-preview">${item.text.substring(0, 50)}...</div>
-        </div>
-    `).join('');
+    // Render input section history sidebar
+    if (historyList) {
+        if (history.length === 0) {
+            historyList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt. Starte jetzt! 🚀</p>';
+        } else {
+            historyList.innerHTML = history.map((item, index) => `
+                <div class="history-item" data-index="${index}">
+                    <div class="history-item-header">
+                        <span class="history-item-occasion">${occasionNames[item.occasion] || item.occasion}</span>
+                        <span class="history-item-date">${new Date(item.date).toLocaleDateString('de-DE')}</span>
+                    </div>
+                    <div class="history-item-preview">${item.text.substring(0, 50)}...</div>
+                </div>
+            `).join('');
 
-    historyList.querySelectorAll('.history-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const index = parseInt(item.dataset.index);
-            const entry = history[index];
-            generatedMessage.textContent = entry.text;
-            inputSection.classList.add('hidden');
-            outputSection.classList.remove('hidden');
-            playSound(clickSound);
-        });
-    });
+            historyList.querySelectorAll('.history-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const index = parseInt(item.dataset.index);
+                    const entry = history[index];
+                    generatedMessage.textContent = entry.text;
+                    inputSection.classList.add('hidden');
+                    outputSection.classList.remove('hidden');
+                    playSound(clickSound);
+                });
+            });
+        }
+    }
+
+    // Render output section history list
+    const outputHistoryList = document.getElementById('outputHistoryList');
+    if (outputHistoryList) {
+        if (history.length === 0) {
+            outputHistoryList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt.</p>';
+        } else {
+            outputHistoryList.innerHTML = history.map((item, index) => `
+                <div class="output-history-item" data-index="${index}">
+                    <div class="history-occasion">${occasionNames[item.occasion] || item.occasion}</div>
+                    <div class="history-preview">${item.text.substring(0, 40)}...</div>
+                </div>
+            `).join('');
+
+            outputHistoryList.querySelectorAll('.output-history-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const index = parseInt(item.dataset.index);
+                    const entry = history[index];
+                    generatedMessage.textContent = entry.text;
+                    playSound(clickSound);
+                    showToast('Gruß aus Historie geladen 📜', 'info');
+                });
+            });
+        }
+    }
 }
 
 historyToggle.addEventListener('click', () => {
