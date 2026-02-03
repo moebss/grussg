@@ -2205,10 +2205,14 @@ body {
 }
 
 .greeting-card .message-text {
-    position: relative;
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    width: 90%;
     z-index: 2;
-    pointer-events: none;
-    /* Allow clicks to pass through to stickers */
+    pointer-events: auto;
+    cursor: grab;
+    user-select: none;
 }
 
 .greeting-card .card-footer {

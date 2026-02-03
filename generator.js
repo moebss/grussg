@@ -568,6 +568,62 @@ document.getElementById('clearStickersBtn')?.addEventListener('click', () => {
 });
 
 // ===========================
+// DRAGGABLE MESSAGE TEXT
+// ===========================
+const messageText = document.getElementById('generatedMessage');
+let textDrag = null;
+let textDragOffset = { x: 0, y: 0 };
+
+if (messageText && greetingCard) {
+    messageText.addEventListener('mousedown', startTextDrag);
+    messageText.addEventListener('touchstart', startTextDrag, { passive: false });
+}
+
+function startTextDrag(e) {
+    e.preventDefault();
+    textDrag = messageText;
+    textDrag.style.cursor = 'grabbing';
+
+    const rect = textDrag.getBoundingClientRect();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+
+    textDragOffset.x = clientX - rect.left;
+    textDragOffset.y = clientY - rect.top;
+
+    document.addEventListener('mousemove', dragText);
+    document.addEventListener('mouseup', stopTextDrag);
+    document.addEventListener('touchmove', dragText, { passive: false });
+    document.addEventListener('touchend', stopTextDrag);
+}
+
+function dragText(e) {
+    if (!textDrag) return;
+    e.preventDefault();
+
+    const cardRect = greetingCard.getBoundingClientRect();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+
+    const x = ((clientX - cardRect.left - textDragOffset.x) / cardRect.width) * 100;
+    const y = ((clientY - cardRect.top - textDragOffset.y) / cardRect.height) * 100;
+
+    textDrag.style.left = Math.max(0, Math.min(70, x)) + '%';
+    textDrag.style.top = Math.max(0, Math.min(70, y)) + '%';
+}
+
+function stopTextDrag() {
+    if (textDrag) {
+        textDrag.style.cursor = 'grab';
+        textDrag = null;
+    }
+    document.removeEventListener('mousemove', dragText);
+    document.removeEventListener('mouseup', stopTextDrag);
+    document.removeEventListener('touchmove', dragText);
+    document.removeEventListener('touchend', stopTextDrag);
+}
+
+// ===========================
 // STICKER TAB ARROW NAVIGATION
 // ===========================
 const stickerTabs = document.querySelectorAll('.sticker-tab-btn');
@@ -763,7 +819,7 @@ async function doRemix() {
             greetingCard.style.backgroundImage = `url('${randomImage.url}')`;
             greetingCard.style.backgroundSize = 'cover';
             greetingCard.style.backgroundPosition = 'center';
-            greetingCard.classList.add('has-custom-bg');
+            // Don't add has-custom-bg class - it causes a gray overlay
 
             playSound(successSound);
             showToast(`Remix geladen! 🎨 (${data.totalAvailable} Karten verfügbar)`, 'success');
