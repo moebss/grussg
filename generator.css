@@ -86,7 +86,7 @@ body {
 }
 
 /* ===========================
-   Aurora Background
+   Mesh Gradient Background
    =========================== */
 .aurora-background {
     position: fixed;
@@ -96,56 +96,11 @@ body {
     height: 100%;
     z-index: -1;
     overflow: hidden;
-    background: #0f172a;
-    /* Deep base color */
 }
 
-.aurora-blob {
-    position: absolute;
-    filter: blur(80px);
-    opacity: 0.6;
-    animation: auroraFloat 20s infinite alternate;
-    border-radius: 50%;
+100% {
+    transform: translate(30px, 50px) scale(1.1);
 }
-
-.blob-1 {
-    top: -10%;
-    left: -10%;
-    width: 50vw;
-    height: 50vw;
-    background: #4f46e5;
-    animation-duration: 25s;
-}
-
-.blob-2 {
-    bottom: -10%;
-    right: -10%;
-    width: 60vw;
-    height: 60vw;
-    background: #ec4899;
-    animation-duration: 30s;
-    animation-delay: -5s;
-}
-
-.blob-3 {
-    top: 40%;
-    left: 40%;
-    width: 40vw;
-    height: 40vw;
-    background: #6366f1;
-    animation-duration: 22s;
-    animation-delay: -10s;
-    opacity: 0.4;
-}
-
-@keyframes auroraFloat {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(30px, 50px) scale(1.1);
-    }
 }
 
 .container {
