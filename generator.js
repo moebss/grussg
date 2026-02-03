@@ -795,16 +795,9 @@ function getRandomMoods() {
 }
 
 async function doRemix() {
-    const [mood1, mood2] = getRandomMoods();
-
-    // Update preview images (visual feedback while loading)
-    remixInput1.src = `assets/templates/mood${mood1.split('-')[1]}.jpg`;
-    remixInput2.src = `assets/templates/mood${mood2.split('-')[1]}.jpg`;
-    remixPreview.classList.remove('hidden');
-
     // Show loading state
     remixBtn.classList.add('loading');
-    remixBtn.textContent = '⏳ Remixing...';
+    remixBtn.textContent = '⏳ Laden...';
 
     try {
         const response = await fetch(REMIX_API_ENDPOINT, {
@@ -846,7 +839,6 @@ async function doRemix() {
             // Don't add has-custom-bg class - it causes a gray overlay
 
             playSound(successSound);
-            showToast(`Remix geladen! 🎨 (${data.totalAvailable} Karten verfügbar)`, 'success');
         } else if (data.type === 'gradient' && data.css) {
             // Fallback: use gradient if no images available
             // Clear custom bg first
@@ -864,15 +856,13 @@ async function doRemix() {
             greetingCard.classList.remove('has-custom-bg');
 
             playSound(successSound);
-            showToast('Remix erstellt! ✨ (Fallback-Modus)', 'success');
         }
 
     } catch (err) {
-        console.error('Remix error:', err);
-        showToast(`Remix fehlgeschlagen: ${err.message}`, 'error');
+        console.error('Zufall error:', err);
     } finally {
         remixBtn.classList.remove('loading');
-        remixBtn.textContent = '🎲 REMIX';
+        remixBtn.textContent = '🎲 Zufall';
     }
 }
 
