@@ -115,9 +115,22 @@ The gradient should harmoniously combine both color palettes. Keep the center ar
         let cssGradient = data.choices[0].message.content.trim();
 
         // Clean up response - extract just the gradient
-        const gradientMatch = cssGradient.match(/linear-gradient\([^)]+\)/);
-        if (gradientMatch) {
-            cssGradient = gradientMatch[0];
+        // Loose match: find "linear-gradient" and take everything until the end of the string.
+        const startIndex = cssGradient.indexOf('linear-gradient');
+        if (startIndex !== -1) {
+            cssGradient = cssGradient.substring(startIndex);
+
+            // Remove markdown code block end markers ` ``` ` if present
+            cssGradient = cssGradient.replace(/```/g, '').trim();
+
+            // Ensure valid ending
+            // Basic heuristic: if it doesn't end with ), try to truncate at the last )
+            if (!cssGradient.endsWith(')')) {
+                const lastParen = cssGradient.lastIndexOf(')');
+                if (lastParen !== -1) {
+                    cssGradient = cssGradient.substring(0, lastParen + 1);
+                }
+            }
         } else {
             // Fallback gradient if AI response is malformed
             cssGradient = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #fff5f3 50%, #a8edea 75%, #fed6e3 100%)';

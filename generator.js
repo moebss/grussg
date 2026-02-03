@@ -732,8 +732,28 @@ async function doRemix() {
             greetingCard.removeAttribute('data-mood');
             document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
 
-            // Apply remix gradient
-            greetingCard.style.backgroundImage = data.css;
+            // Clear any custom uploaded background or overlay
+            const customBg = document.getElementById('cardCustomBg');
+            if (customBg) {
+                customBg.style.backgroundImage = '';
+                customBg.innerHTML = '';
+            }
+
+            // Apply remix gradient directly
+            // Ensure we clean any quotes that might have been included
+            let cleanCss = data.css.replace(/['"]+/g, '').replace(/;$/, '');
+            // Re-add necessary internal quotes for URLs if any (though unlikely for gradients)
+            // Ideally we just trust the string if it looks like a gradient.
+
+            // Actually, simpler is better: just strict set.
+            // If the API sends "linear-gradient(...)", browser handles it.
+            // If API sends quotes around it like "linear-gradient(...)", we remove them.
+            if (cleanCss.startsWith('linear-gradient')) {
+                greetingCard.style.backgroundImage = cleanCss;
+            } else {
+                greetingCard.style.backgroundImage = data.css.replace(/^["']|["']$/g, '');
+            }
+
             greetingCard.style.backgroundSize = '100% 100%';
 
             playSound(successSound);
