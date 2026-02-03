@@ -2828,12 +2828,38 @@ body {
 
 /* Compact Mood Grid */
 .design-panel .mood-grid-compact {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 3px;
+    gap: 4px;
 }
 
 .design-panel .mood-emoji {
-    font-size: 1rem;
+    padding: 2px;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.design-panel .mood-emoji:hover {
+    border-color: var(--color-primary-light);
+    transform: scale(1.05);
+}
+
+.design-panel .mood-emoji.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.design-panel .mood-emoji img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
 }
 
 /* Mini Controls */
