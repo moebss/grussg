@@ -567,6 +567,7 @@ function switchStickerTab(index) {
     if (index >= stickerTabs.length) index = 0;
 
     currentStickerTabIndex = index;
+    // Trigger click on the tab to handle UI updates
     stickerTabs[index].click();
 }
 
@@ -580,10 +581,28 @@ document.getElementById('stickerNavRight')?.addEventListener('click', () => {
     playSound(clickSound);
 });
 
-// Update current index when tabs are clicked directly
+// Update tabs and content visibility
 stickerTabs.forEach((tab, index) => {
     tab.addEventListener('click', () => {
         currentStickerTabIndex = index;
+
+        // Update active tab styling
+        stickerTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Update content visibility
+        const category = tab.dataset.tab;
+        document.querySelectorAll('.sticker-tab-content').forEach(content => {
+            if (content.id === `tab-${category}`) {
+                content.classList.remove('hidden');
+                content.classList.add('active');
+            } else {
+                content.classList.add('hidden');
+                content.classList.remove('active');
+            }
+        });
+
+        playSound(clickSound);
     });
 });
 
@@ -613,18 +632,27 @@ function updateFloatingEmojis(occasion) {
 }
 
 // ===========================
-// STYLE TABS
+// DESIGN TABS (Updated Selectors)
 // ===========================
-document.querySelectorAll('.style-tab').forEach(tab => {
+document.querySelectorAll('.design-tab-btn').forEach(tab => {
     tab.addEventListener('click', () => {
-        document.querySelectorAll('.style-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.design-tab-btn').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
-        const panel = tab.dataset.tab;
-        document.getElementById('themesPanel')?.classList.toggle('hidden', panel !== 'themes');
-        document.getElementById('textPanel')?.classList.toggle('hidden', panel !== 'text');
-        document.getElementById('framePanel')?.classList.toggle('hidden', panel !== 'frame');
-        document.getElementById('uploadPanel')?.classList.toggle('hidden', panel !== 'upload');
+        const panel = tab.dataset.tab; // 'mood', 'text', 'image'
+
+        // Hide all panels first
+        document.querySelectorAll('.design-tab-content').forEach(content => {
+            content.classList.add('hidden');
+            content.classList.remove('active');
+        });
+
+        // Show selected panel
+        const selectedPanel = document.getElementById(`design-tab-${panel}`);
+        if (selectedPanel) {
+            selectedPanel.classList.remove('hidden');
+            selectedPanel.classList.add('active');
+        }
 
         playSound(clickSound);
     });
