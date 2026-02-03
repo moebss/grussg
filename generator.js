@@ -661,6 +661,14 @@ function switchStickerTab(index) {
     if (index >= stickerTabs.length) index = 0;
 
     currentStickerTabIndex = index;
+
+    // Scroll the tab into view (centered)
+    stickerTabs[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+    });
+
     // Trigger click on the tab to handle UI updates
     stickerTabs[index].click();
 }
