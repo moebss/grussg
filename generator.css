@@ -1098,6 +1098,10 @@ body {
     border-color: var(--color-primary);
 }
 
+.btn-whatsapp {
+    color: #25d366;
+}
+
 .btn-whatsapp:hover {
     background: rgba(37, 211, 102, 0.2);
     border-color: #25d366;
@@ -1142,14 +1146,26 @@ body {
     transform: translateY(-2px);
 }
 
+.share-twitter {
+    color: #000000;
+}
+
 .share-twitter:hover {
     background: rgba(29, 161, 242, 0.2);
-    border-color: #1da1f2;
+    border-color: #000000;
+}
+
+.share-telegram {
+    color: #0088cc;
 }
 
 .share-telegram:hover {
     background: rgba(0, 136, 204, 0.2);
     border-color: #0088cc;
+}
+
+.share-facebook {
+    color: #1877f2;
 }
 
 .share-facebook:hover {
