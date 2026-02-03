@@ -731,24 +731,35 @@ async function doRemix() {
         document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
 
-        // Clear any custom uploaded background
+        // Get the custom background element (this is where backgrounds should be applied!)
         const customBg = document.getElementById('cardCustomBg');
-        if (customBg) {
-            customBg.style.backgroundImage = '';
-            customBg.innerHTML = '';
-        }
 
         if (data.type === 'image' && data.images && data.images.length > 0) {
-            // Apply random image from Supabase as background
+            // Apply random image from Supabase as background to the correct element
             const randomImage = data.images[0];
+
+            // Use cardCustomBg for the image (it has proper z-index)
+            if (customBg) {
+                customBg.style.backgroundImage = `url('${randomImage.url}')`;
+                customBg.style.backgroundSize = 'cover';
+                customBg.style.backgroundPosition = 'center';
+            }
+
+            // Also set on greetingCard as fallback
             greetingCard.style.backgroundImage = `url('${randomImage.url}')`;
             greetingCard.style.backgroundSize = 'cover';
             greetingCard.style.backgroundPosition = 'center';
+            greetingCard.classList.add('has-custom-bg');
 
             playSound(successSound);
             showToast(`Remix geladen! 🎨 (${data.totalAvailable} Karten verfügbar)`, 'success');
         } else if (data.type === 'gradient' && data.css) {
             // Fallback: use gradient if no images available
+            // Clear custom bg first
+            if (customBg) {
+                customBg.style.backgroundImage = '';
+            }
+
             let cleanCss = data.css.replace(/['\"]+/g, '').replace(/;$/, '');
             if (cleanCss.startsWith('linear-gradient')) {
                 greetingCard.style.backgroundImage = cleanCss;
@@ -756,6 +767,7 @@ async function doRemix() {
                 greetingCard.style.backgroundImage = data.css.replace(/^[\"']|[\"']$/g, '');
             }
             greetingCard.style.backgroundSize = '100% 100%';
+            greetingCard.classList.remove('has-custom-bg');
 
             playSound(successSound);
             showToast('Remix erstellt! ✨ (Fallback-Modus)', 'success');
