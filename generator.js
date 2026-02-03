@@ -643,10 +643,92 @@ document.querySelectorAll('.mood-emoji').forEach(btn => {
         const mood = btn.dataset.mood;
         if (greetingCard) {
             greetingCard.setAttribute('data-mood', mood);
+            // Clear any remix gradient when selecting a regular mood
+            greetingCard.style.backgroundImage = '';
         }
 
         playSound(clickSound);
     });
+});
+
+// ===========================
+// REMIX FEATURE
+// ===========================
+const REMIX_API_ENDPOINT = '/api/generate-remix';
+const TOTAL_MOODS = 14;
+
+const remixBtn = document.getElementById('remixBtn');
+const remixAgainBtn = document.getElementById('remixAgainBtn');
+const remixPreview = document.getElementById('remixPreview');
+const remixInput1 = document.getElementById('remixInput1');
+const remixInput2 = document.getElementById('remixInput2');
+
+function getRandomMoods() {
+    const mood1 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
+    let mood2 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
+    // Ensure different moods
+    while (mood2 === mood1) {
+        mood2 = Math.floor(Math.random() * TOTAL_MOODS) + 1;
+    }
+    return [`mood-${mood1}`, `mood-${mood2}`];
+}
+
+async function doRemix() {
+    const [mood1, mood2] = getRandomMoods();
+
+    // Update preview images
+    remixInput1.src = `assets/templates/mood${mood1.split('-')[1]}.jpg`;
+    remixInput2.src = `assets/templates/mood${mood2.split('-')[1]}.jpg`;
+    remixPreview.classList.remove('hidden');
+
+    // Show loading state
+    remixBtn.classList.add('loading');
+    remixBtn.textContent = '⏳ Remixing...';
+
+    try {
+        const response = await fetch(REMIX_API_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mood1, mood2 })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Remix fehlgeschlagen');
+        }
+
+        // Apply the generated gradient to the card
+        if (greetingCard && data.css) {
+            // Clear existing mood
+            greetingCard.removeAttribute('data-mood');
+            document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+
+            // Apply remix gradient
+            greetingCard.style.backgroundImage = data.css;
+            greetingCard.style.backgroundSize = '100% 100%';
+
+            playSound(successSound);
+            showToast('Remix erstellt! ✨', 'success');
+        }
+
+    } catch (err) {
+        console.error('Remix error:', err);
+        showToast(`Remix fehlgeschlagen: ${err.message}`, 'error');
+    } finally {
+        remixBtn.classList.remove('loading');
+        remixBtn.textContent = '🎲 REMIX';
+    }
+}
+
+remixBtn?.addEventListener('click', () => {
+    playSound(clickSound);
+    doRemix();
+});
+
+remixAgainBtn?.addEventListener('click', () => {
+    playSound(clickSound);
+    doRemix();
 });
 
 // ===========================
