@@ -2,91 +2,69 @@
    CSS Variables & Themes
    =========================== */
 :root {
-    /* 1. Background Gradient Colors */
-    --bg-gradient-1: #B9A6FF;
-    /* Soft Lavender (Top Left) */
-    --bg-gradient-2: #F2D6E8;
-    /* Milky Blush (Center) */
-    --bg-gradient-3: #F7F4EF;
-    /* Warm Sand (Bottom Right) */
+    --color-primary: #6366f1;
+    --color-primary-dark: #4f46e5;
+    --color-primary-light: #818cf8;
+    --color-secondary: #f472b6;
+    --color-accent: #fbbf24;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
 
-    /* 3. Accent Color (Brand) - Soft Royal Purple */
-    --color-primary: #8B6CFF;
-    --color-primary-hover: #7A5AF8;
-    /* Slightly darker */
-    --color-primary-light: #a78bfa;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 50px;
 
-    /* 4. Secondary Accent - Warm Peach Glow */
-    --color-secondary: #FF9E8A;
-    --color-secondary-hover: #ff8a75;
-
-    /* 5. CTA Colors */
-    --color-cta-bg: #8B6CFF;
-    --color-cta-text: #FFFFFF;
-    --color-cta-secondary-text: #6B5DD3;
-
-    /* 6. Text Colors */
-    --color-text-main: #2E2E38;
-    /* Soft Charcoal */
-    --color-text-ui: #5F5F6E;
-    /* UI Texts */
-    --color-text-placeholder: #9A9AA8;
-
-    /* 2. Main Container */
-    --color-container-bg: #FAF9FC;
-    /* Off-White */
-    --container-radius: 28px;
-    --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-
-    /* UI Basics */
-    --radius-sm: 12px;
-    --radius-md: 20px;
-    --radius-lg: 28px;
-    --radius-full: 999px;
-
-    --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --transition-fast: all 0.2s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
     --font-family: 'Outfit', sans-serif;
-
-    /* Compat mapping for existing classes */
-    --color-bg: var(--bg-gradient-3);
-    --color-text: var(--color-text-main);
-    --color-surface: var(--color-container-bg);
-    --color-accent: var(--color-secondary);
 }
 
-/* Typography Tweaks */
+/* Modern Typography Tweak */
 h1,
 h2,
 h3,
 h4,
 .btn-generate,
 .section-label {
-    letter-spacing: -0.03em;
-    color: var(--color-primary);
-    /* Headline Brand Color */
+    letter-spacing: -0.02em;
 }
 
-body {
-    color: var(--color-text-main);
+body,
+p,
+input,
+textarea,
+button {
     letter-spacing: -0.01em;
 }
 
-/* Light Theme as Default (Enforce Viral specs) */
-[data-theme="light"],
-:root {
-    --color-bg: #F7F4EF;
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.6);
+/* Dark Theme (default) */
+[data-theme="dark"] {
+    --color-bg: #0a0a12;
+    --color-surface: rgba(26, 26, 46, 0.9);
+    --color-surface-elevated: rgba(37, 37, 66, 0.7);
+    --color-text: #ffffff;
+    --color-text-muted: #9ca3af;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-tactile-highlight: rgba(255, 255, 255, 0.15);
+    --glass-tactile-shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* Container Overrides for "Object" look */
-.container {
-    background: var(--color-container-bg);
-    border-radius: var(--container-radius);
-    box-shadow: var(--container-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    /* Subtle highlight */
+/* Light Theme */
+[data-theme="light"] {
+    --color-bg: #f8fafc;
+    --color-surface: rgba(255, 255, 255, 0.9);
+    --color-surface-elevated: rgba(255, 255, 255, 0.95);
+    --color-text: #1e293b;
+    --color-text-muted: #64748b;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* ===========================
@@ -110,9 +88,6 @@ body {
 /* ===========================
    Aurora Background
    =========================== */
-/* ===========================
-   Background (Modern Soft Gradient)
-   =========================== */
 .aurora-background {
     position: fixed;
     top: 0;
@@ -120,52 +95,36 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: var(--color-bg);
     overflow: hidden;
+    background: #0f172a;
+    /* Deep base color */
 }
 
-.aurora-background::before,
-.aurora-background::after {
-    content: '';
+.aurora-blob {
     position: absolute;
-    width: 140vw;
-    height: 140vw;
-    border-radius: 50%;
-    /* Soft circular blobs */
     filter: blur(80px);
-    /* Heavy blur for soft fusion */
-    opacity: 0.15;
-    /* Subtle */
-    animation: float 20s infinite alternate ease-in-out;
-    z-index: -1;
+    opacity: 0.6;
+    animation: auroraFloat 20s infinite alternate;
+    border-radius: 50%;
 }
 
-.aurora-background::before {
-    top: -40%;
-    left: -20%;
-    background: var(--color-primary);
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: #4f46e5;
+    animation-duration: 25s;
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: #ec4899;
+    animation-duration: 30s;
     animation-delay: -5s;
-}
-
-.aurora-background::after {
-    bottom: -40%;
-    right: -20%;
-    background: var(--color-secondary);
-    animation-delay: -10s;
-}
-
-@keyframes float {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(30px, 50px) scale(1.1);
-    }
-
-    100% {
-        transform: translate(-20px, -30px) scale(0.95);
-    }
 }
 
 .blob-3 {
@@ -189,22 +148,15 @@ body {
     }
 }
 
-/* ===========================
-   Container & Layout
-   =========================== */
 .container {
-    width: 95%;
-    max-width: 800px;
-    /* Reduced from wide desktop to "Card Object" width */
-    margin: 80px auto 40px;
-    /* Center horizontally, add top margin */
-    padding: 30px;
-    background: var(--color-container-bg);
-    border-radius: var(--container-radius);
-    box-shadow: var(--container-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    z-index: 10;
+    z-index: 1;
 }
 
 /* ===========================
@@ -501,16 +453,6 @@ body {
 /* ===========================
    Form Elements
    =========================== */
-.form-row-2colh2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin-bottom: 24px;
-    text-align: center;
-    color: var(--color-primary) !important;
-    /* Force Brand Color */
-    /* Removed Gradient Text to ensure readability and branded look */
-}
-
 .form-row-2col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -531,42 +473,26 @@ body {
     font-size: 0.95rem;
 }
 
-.section-label {
-    display: block;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--color-text-main);
-    /* Soft Charcoal for labels */
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-input[type="text"],
-textarea,
-select {
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
-    padding: 14px 16px;
-    background: #F3F4F6;
-    /* Lighter Gray for inputs */
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    color: var(--color-text-main);
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
     font-family: inherit;
     font-size: 1rem;
     transition: var(--transition);
-    resize: none;
 }
 
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
-    background: white;
-    border-color: var(--color-primary-light);
-    box-shadow: 0 0 0 4px rgba(139, 108, 255, 0.15);
-    /* Soft Purple Focus Ring */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2), 0 0 30px rgba(99, 102, 241, 0.15);
 }
 
 .form-group textarea {
@@ -585,39 +511,24 @@ select:focus {
 
 /* ===========================
    Generate Button
-   ===========================*/
-/* Main Generate Button - "Call to Action" */
+   =========================== */
 .btn-generate {
     width: 100%;
-    padding: 16px 24px;
-    background: var(--color-cta-bg);
-    /* Royal Purple */
-    color: var(--color-cta-text);
-    font-size: 1.15rem;
-    font-weight: 700;
+    padding: 20px 32px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     border: none;
     border-radius: var(--radius-full);
+    color: white;
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 10px 25px -5px rgba(139, 108, 255, 0.4);
-    /* Matching shadow */
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    margin-top: 10px;
-    letter-spacing: 0.02em;
-}
-
-.btn-generate:hover {
-    background: var(--color-primary-hover);
-    /* #7A5AF8 */
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 15px 35px -8px rgba(139, 108, 255, 0.5);
-    filter: none;
-    /* remove brightness filter, use pure color */
-}
-
-.btn-generate:active {
-    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Inner Light */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-generate::before {
@@ -1604,60 +1515,31 @@ select:focus {
 }
 
 /* ===========================
-   Background (Modern Soft Gradient)
+   Animated Card Decorations
    =========================== */
-.aurora-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: var(--color-bg);
+.greeting-card[data-card-theme="animated"] {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #1a1a2e 100%);
     overflow: hidden;
 }
 
-.aurora-background::before,
-.aurora-background::after {
+.greeting-card[data-card-theme="animated"]::before {
     content: '';
     position: absolute;
-    width: 140vw;
-    height: 140vw;
-    border-radius: 50%;
-    /* Soft circular blobs */
-    filter: blur(80px);
-    /* Heavy blur for soft fusion */
-    opacity: 0.15;
-    /* Subtle */
-    animation: float 20s infinite alternate ease-in-out;
-    z-index: -1;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    animation: rotateGlow 10s linear infinite;
 }
 
-.aurora-background::before {
-    top: -40%;
-    left: -20%;
-    background: var(--color-primary);
-    animation-delay: -5s;
-}
-
-.aurora-background::after {
-    bottom: -40%;
-    right: -20%;
-    background: var(--color-secondary);
-    animation-delay: -10s;
-}
-
-@keyframes float {
-    0% {
-        transform: translate(0, 0) scale(1);
+@keyframes rotateGlow {
+    from {
+        transform: rotate(0deg);
     }
 
-    50% {
-        transform: translate(30px, 50px) scale(1.1);
-    }
-
-    100% {
-        transform: translate(-20px, -30px) scale(0.95);
+    to {
+        transform: rotate(360deg);
     }
 }
 
@@ -2595,39 +2477,6 @@ select:focus {
     background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
 }
 
-/* ===========================
-   Background (Viral Aurora + Noise)
-   =========================== */
-.aurora-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    background-color: var(--bg-gradient-3);
-    /* Base Warm Sand */
-
-    /* Layered Gradients for "Foggy" Look */
-    background-image:
-        /* 1. Noise Texture (Top) */
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E"),
-
-        /* 2. Soft Lavender (Top Left) */
-        radial-gradient(circle at 0% 0%, var(--bg-gradient-1) 0%, transparent 60%),
-
-        /* 3. Milky Blush (Center/Right) */
-        radial-gradient(circle at 60% 40%, var(--bg-gradient-2) 0%, transparent 50%),
-
-        /* 4. Warm Sand (Bottom Right) */
-        radial-gradient(circle at 100% 100%, var(--bg-gradient-3) 0%, transparent 60%);
-
-    background-blend-mode: overlay, normal, normal, normal;
-    background-size: auto, 120% 120%, 100% 100%, 100% 100%;
-    /* Slight scale for fog */
-}
-
 .greeting-card[data-mood="vintage"] {
     background:
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E"),
@@ -2818,23 +2667,6 @@ select:focus {
     margin-top: 16px;
 }
 
-/* Columns */
-.editor-column,
-.preview-column {
-    width: 100%;
-    /* Full width in stacked/narrow layout */
-}
-
-/* Reverse order on mobile if needed, but for now stack naturally */
-@media (min-width: 1100px) {
-    /* If we want side-by-side on VERY large screens, we can add it back here, 
-       but for the "focused object" look, a central stack is often better or a wider container.
-       Let's keep it stacked/max-800px as requested for the "White Block" fix. 
-       If the user wants side-by-side, we'll revert to 1200px and transparent container.
-       BUT the user specifically asked for "Main Container (White Box)". 
-       So reduced width is the correct interpretation. */
-}
-
 /* Sticker Panel (Left) */
 .sticker-panel {
     background: var(--glass-bg);
@@ -2992,27 +2824,40 @@ select:focus {
 }
 
 /* Font Row */
-.font-row {
-    display: flex;
-    gap: 4px;
+/* Font Grid */
+.font-grid-mini {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 12px;
 }
 
 .font-mini {
-    flex: 1;
-    padding: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    background: transparent;
-    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
+    padding: 8px;
     transition: var(--transition);
+    aspect-ratio: 1;
+    /* Square buttons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.font-mini:hover,
+.font-mini:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
 .font-mini.active {
-    background: rgba(99, 102, 241, 0.3);
+    background: var(--color-primary);
     border-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 /* Frame Row */
