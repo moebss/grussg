@@ -400,6 +400,20 @@ document.querySelectorAll('.mood-emoji').forEach(btn => {
         btn.classList.add('active');
         greetingCard.setAttribute('data-mood', btn.dataset.mood);
         greetingCard.removeAttribute('data-card-theme');
+
+        // Clear any remix backgrounds when selecting a mood
+        greetingCard.style.backgroundImage = '';
+        greetingCard.style.backgroundSize = '';
+        greetingCard.style.backgroundPosition = '';
+        greetingCard.classList.remove('has-custom-bg');
+
+        const customBg = document.getElementById('cardCustomBg');
+        if (customBg) {
+            customBg.style.backgroundImage = '';
+            customBg.style.backgroundSize = '';
+            customBg.style.backgroundPosition = '';
+        }
+
         playSound(clickSound);
     });
 });
