@@ -1013,8 +1013,8 @@ body {
 
 
 .message-text {
-    font-size: 1.15rem;
-    line-height: 1.9;
+    font-size: 1.4rem;
+    line-height: 1.8;
     white-space: pre-wrap;
     padding-right: 50px;
     color: #000000;
@@ -1071,21 +1071,21 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 14px 12px;
+    gap: 4px;
+    padding: 10px 8px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     color: var(--color-text);
     cursor: pointer;
     font-family: inherit;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 500;
     transition: var(--transition);
 }
 
 .btn-action span:first-child {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .btn-action:hover {
@@ -2706,8 +2706,8 @@ body {
    =========================== */
 .editor-layout {
     display: grid;
-    grid-template-columns: 250px minmax(400px, 1fr) 250px;
-    gap: 20px;
+    grid-template-columns: 180px minmax(450px, 1fr) 180px;
+    gap: 16px;
     align-items: start;
     justify-content: center;
     margin-top: 16px;
