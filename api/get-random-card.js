@@ -38,7 +38,10 @@ export default async (req, res) => {
 
     try {
         // List all files in the remix-cards bucket
-        const listResponse = await fetch(`${supabaseUrl}/storage/v1/object/list/remix-cards`, {
+        const listUrl = `${supabaseUrl}/storage/v1/object/list/remix-cards`;
+        console.log('Fetching from:', listUrl);
+
+        const listResponse = await fetch(listUrl, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${supabaseKey}`,
@@ -54,11 +57,15 @@ export default async (req, res) => {
 
         if (!listResponse.ok) {
             const errorText = await listResponse.text();
-            console.error('Supabase Storage Error:', errorText);
-            return res.status(500).json({ error: 'Fehler beim Laden der Bilder' });
+            console.error('Supabase Storage Error:', listResponse.status, errorText);
+            return res.status(500).json({
+                error: 'Fehler beim Laden der Bilder',
+                debug: { status: listResponse.status, errorText }
+            });
         }
 
         const files = await listResponse.json();
+        console.log('Supabase returned files:', JSON.stringify(files));
 
         // Filter only image files
         const imageFiles = files.filter(file =>
@@ -67,12 +74,15 @@ export default async (req, res) => {
             /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
         );
 
+        console.log('Filtered image files:', imageFiles.length);
+
         if (imageFiles.length === 0) {
             // Fallback: return a gradient instead
             return res.status(200).json({
                 type: 'gradient',
                 css: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #fff5f3 50%, #a8edea 75%, #fed6e3 100%)',
-                message: 'Keine Bilder gefunden, Fallback-Gradient verwendet'
+                message: 'Keine Bilder gefunden, Fallback-Gradient verwendet',
+                debug: { rawFiles: files, supabaseUrl }
             });
         }
 
