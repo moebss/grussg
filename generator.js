@@ -1118,11 +1118,85 @@ document.getElementById('copyBtn').addEventListener('click', () => {
         .catch(() => showToast('Kopieren fehlgeschlagen 😞', 'error'));
 });
 
-// WhatsApp share
-document.getElementById('whatsappBtn').addEventListener('click', () => {
+// Helper function to generate card image as blob
+async function generateCardBlob() {
+    const card = document.getElementById('greetingCard');
+    const messageHeader = card.querySelector('.message-header');
+
+    if (messageHeader) messageHeader.style.display = 'none';
+
+    const originalText = generatedMessage.innerText;
+    generatedMessage.innerText = originalText.replace(/\*\*/g, '').replace(/\*/g, '');
+
+    try {
+        const dataUrl = await htmlToImage.toPng(card, {
+            quality: 0.95,
+            pixelRatio: 2,
+            style: { transform: 'scale(1)' }
+        });
+
+        // Convert dataUrl to blob
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+
+        generatedMessage.innerText = originalText;
+        if (messageHeader) messageHeader.style.display = '';
+
+        return { blob, dataUrl };
+    } catch (error) {
+        generatedMessage.innerText = originalText;
+        if (messageHeader) messageHeader.style.display = '';
+        throw error;
+    }
+}
+
+// Share card as image using Web Share API
+async function shareCardAsImage(platform) {
     playSound(clickSound);
-    const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    showToast('Bild wird vorbereitet... 📸', 'info');
+
+    try {
+        const { blob, dataUrl } = await generateCardBlob();
+        const file = new File([blob], 'gruss.png', { type: 'image/png' });
+
+        // Check if Web Share API supports files
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: 'Mein Gruß',
+                text: '💌 Erstellt mit grussgenerator.de'
+            });
+            showToast('Gruß geteilt! 🎉', 'success');
+            return true;
+        } else {
+            // Fallback: Download and show instructions
+            showToast(`Web Share nicht unterstützt. Bild wird heruntergeladen...`, 'warning');
+            const link = document.createElement('a');
+            link.download = `gruss-${Date.now()}.png`;
+            link.href = dataUrl;
+            link.click();
+            showToast(`Bild gespeichert! Öffne ${platform} und teile das Bild manuell.`, 'info');
+            return false;
+        }
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            showToast('Teilen abgebrochen', 'info');
+        } else {
+            console.error('Share failed:', error);
+            showToast('Teilen fehlgeschlagen 😞', 'error');
+        }
+        return false;
+    }
+}
+
+// WhatsApp share - try image first, fallback to text
+document.getElementById('whatsappBtn').addEventListener('click', async () => {
+    const shared = await shareCardAsImage('WhatsApp');
+    if (!shared && !navigator.canShare) {
+        // Pure fallback for old browsers
+        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
 });
 
 // Email share
@@ -1177,24 +1251,30 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     if (messageHeader) messageHeader.style.display = '';
 });
 
-// Twitter share
-document.getElementById('twitterBtn')?.addEventListener('click', () => {
-    playSound(clickSound);
-    const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌 Probiere es selbst: grussgenerator.de');
-    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+// Twitter share - try image, fallback to text
+document.getElementById('twitterBtn')?.addEventListener('click', async () => {
+    const shared = await shareCardAsImage('Twitter/X');
+    if (!shared && !navigator.canShare) {
+        const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌 Probiere es selbst: grussgenerator.de');
+        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    }
 });
 
-// Telegram share
-document.getElementById('telegramBtn')?.addEventListener('click', () => {
-    playSound(clickSound);
-    const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
-    window.open(`https://t.me/share/url?url=https://grussgenerator.de&text=${text}`, '_blank');
+// Telegram share - try image, fallback to text
+document.getElementById('telegramBtn')?.addEventListener('click', async () => {
+    const shared = await shareCardAsImage('Telegram');
+    if (!shared && !navigator.canShare) {
+        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
+        window.open(`https://t.me/share/url?url=https://grussgenerator.de&text=${text}`, '_blank');
+    }
 });
 
-// Facebook share
-document.getElementById('facebookBtn')?.addEventListener('click', () => {
-    playSound(clickSound);
-    window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
+// Facebook share - try image, fallback to link
+document.getElementById('facebookBtn')?.addEventListener('click', async () => {
+    const shared = await shareCardAsImage('Facebook');
+    if (!shared && !navigator.canShare) {
+        window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
+    }
 });
 
 /* TTS Logic Removed */
