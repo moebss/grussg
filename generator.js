@@ -567,6 +567,30 @@ document.getElementById('clearStickersBtn')?.addEventListener('click', () => {
     }
 });
 
+// Copy text to clipboard
+document.getElementById('copyTextBtn')?.addEventListener('click', async () => {
+    const textElement = document.getElementById('generatedMessage');
+    if (textElement && textElement.innerText) {
+        try {
+            await navigator.clipboard.writeText(textElement.innerText);
+            playSound(successSound);
+            showToast('Text kopiert! 📋', 'success');
+        } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = textElement.innerText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            playSound(successSound);
+            showToast('Text kopiert! 📋', 'success');
+        }
+    } else {
+        showToast('Kein Text zum Kopieren vorhanden', 'error');
+    }
+});
+
 // ===========================
 // DRAGGABLE MESSAGE TEXT
 // ===========================

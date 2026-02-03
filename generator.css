@@ -3528,3 +3528,26 @@ body {
     background-size: 100% 100%;
     background-position: center;
 }
+
+/* ===========================
+   Copy Text Button
+   =========================== */
+.btn-copy-text {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border: none;
+    border-radius: var(--radius-md);
+    color: white;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-copy-text:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
