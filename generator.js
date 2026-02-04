@@ -51,30 +51,6 @@ document.getElementById('soundToggle')?.addEventListener('click', () => {
 });
 
 // ===========================
-// THEME TOGGLE (Dark/Light)
-// ===========================
-document.getElementById('themeToggle')?.addEventListener('click', () => {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', newTheme);
-
-    const btn = document.getElementById('themeToggle');
-    btn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-
-    playSound(clickSound);
-    localStorage.setItem('theme', newTheme);
-});
-
-// Load saved theme
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const btn = document.getElementById('themeToggle');
-    if (btn) btn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-}
-
-// ===========================
 // BACK TO GENERATOR BUTTON
 // ===========================
 document.getElementById('backToGenerator')?.addEventListener('click', () => {
@@ -118,20 +94,6 @@ function initBackground() {
 
     function drawParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-
-        if (isDark) {
-            const gradient = ctx.createRadialGradient(
-                canvas.width / 2, 0, 0,
-                canvas.width / 2, canvas.height, canvas.height
-            );
-            gradient.addColorStop(0, 'rgba(99, 102, 241, 0.1)');
-            gradient.addColorStop(0.5, 'rgba(10, 10, 18, 0)');
-            gradient.addColorStop(1, 'rgba(244, 114, 182, 0.08)');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
 
         particles.forEach(p => {
             ctx.beginPath();
@@ -335,8 +297,7 @@ const occasionThemes = {
     ],
     general: [
         { id: 'general-gradient', name: '🌈 Gradient', default: true },
-        { id: 'general-minimal', name: '⬜ Minimal' },
-        { id: 'general-dark', name: '🌙 Dunkel' }
+        { id: 'general-minimal', name: '⬜ Minimal' }
     ]
 };
 
