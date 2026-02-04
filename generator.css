@@ -331,21 +331,33 @@ body {
 }
 
 .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-size: 1.8rem;
     font-weight: 900;
-    color: var(--color-text);
+    color: #5d4037;
     text-decoration: none;
+    padding: 10px 24px;
+    background: linear-gradient(145deg, #fffefb, #f5e6d3);
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(139, 90, 43, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: var(--transition);
 }
 
 .logo:hover {
-    color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 90, 43, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .tagline {
     color: var(--color-text-muted);
-    margin-top: 8px;
+    margin-top: 12px;
     font-size: 1.1rem;
+    font-style: italic;
 }
 
 /* Stats Counter */
