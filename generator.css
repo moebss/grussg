@@ -342,8 +342,8 @@ body {
     background: linear-gradient(145deg, #fffefb, #f5e6d3);
     border: 1px solid rgba(139, 90, 43, 0.2);
     border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(139, 90, 43, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(139, 90, 43, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transition: var(--transition);
 }
 
