@@ -3864,115 +3864,65 @@ body {
 }
 
 /* ===========================
-   Unified Action Bar (Rating + Share)
+   Star Rating Styles
    =========================== */
-.unified-action-bar {
+.reaction-buttons.rating-stars {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 15px;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    padding: 10px 15px;
-    border-radius: 50px;
-    margin-top: 25px;
-    box-shadow: 0 4px 15px rgba(93, 64, 55, 0.05);
-    flex-wrap: wrap;
-    /* Fallback for small screens */
+    /* More space for stars */
 }
 
-.action-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.action-label {
-    font-weight: 600;
-    color: #5d4037;
-    font-size: 0.95rem;
-}
-
-.reaction-buttons.mini {
-    display: flex;
-    gap: 5px;
-}
-
-.reaction-buttons.mini .reaction-btn {
-    font-size: 1.2rem;
-    padding: 6px;
+.star-btn {
     background: transparent;
     border: none;
+    font-size: 2rem;
+    /* Larger stars */
     cursor: pointer;
-    transition: transform 0.2s;
-    border-radius: 50%;
+    transition: transform 0.2s ease, filter 0.2s;
+    filter: grayscale(100%) opacity(0.6);
+    /* Default greyish */
 }
 
-.reaction-buttons.mini .reaction-btn:hover {
-    transform: scale(1.3);
-    background: rgba(255, 223, 186, 0.5);
+.star-btn:hover,
+.star-btn.active {
+    transform: scale(1.2);
+    filter: grayscale(0%) drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+    opacity: 1;
 }
 
-.action-divider {
-    height: 24px;
-    width: 1px;
-    background: rgba(93, 64, 55, 0.2);
-    display: block;
-}
-
-.share-group {
-    display: flex;
-    gap: 8px;
-}
-
-.share-btn-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    align-items: center;
+/* ===========================
+   Enhanced Download Button
+   =========================== */
+.btn-download-large {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Center content */
+    gap: 10px !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.2s ease !important;
+    /* Override potential share-btn circle styles */
+    width: auto !important;
+    height: auto !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    /* Prevent wrap */
 }
 
-.share-btn-icon:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+.btn-download-large:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
 }
 
-.share-whatsapp {
-    background: linear-gradient(135deg, #25D366, #128C7E);
-}
-
-.share-telegram {
-    background: linear-gradient(135deg, #0088cc, #005f8e);
-}
-
-.share-facebook {
-    background: linear-gradient(135deg, #1877F2, #0d5cb3);
-}
-
-.btn-download-icon {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
-    margin-left: 8px;
-    /* Separate download from share */
-}
-
-/* Mobile responsive tweak */
-@media (max-width: 600px) {
-    .unified-action-bar {
-        flex-direction: column;
-        gap: 10px;
-        border-radius: 20px;
-        padding: 15px;
-    }
-
-    .action-divider {
-        display: none;
-    }
+.btn-download-large span {
+    font-size: 1.2rem;
 }

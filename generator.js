@@ -1796,3 +1796,44 @@ document.querySelectorAll('.design-tab-btn').forEach(btn => {
         }
     });
 });
+
+/* ===========================
+   Star Rating Logic
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star-btn');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = parseInt(star.dataset.rating);
+
+            // Update visual state
+            stars.forEach(s => {
+                const sRating = parseInt(s.dataset.rating);
+                if (sRating <= rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+
+            // Log rating (or send to analytics if implemented)
+            console.log(`User rated greeting: ${rating} stars`);
+
+            // Simple feedback (e.g. confetti for 5 stars)
+            if (rating >= 4 && window.confetti) {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.8 },
+                    colors: ['#FFD700', '#FFA500', '#ffffff'] // Gold theme
+                });
+            }
+
+            // Play click sound
+            if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
+                playSound(clickSound);
+            }
+        });
+    });
+});
