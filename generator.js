@@ -1837,3 +1837,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+/* ===========================
+   Download Logic
+   =========================== */
+document.getElementById('downloadBtn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('downloadBtn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Speichere...';
+    btn.disabled = true;
+
+    try {
+        const card = document.getElementById('greetingCard');
+        if (!card) throw new Error('Card not found');
+
+        // Use html-to-image
+        const dataUrl = await htmlToImage.toPng(card, {
+            quality: 1.0,
+            pixelRatio: 2,
+            style: { transform: 'none' }
+        });
+
+        const link = document.createElement('a');
+        link.download = `gruss-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+
+        if (typeof playSound === 'function' && typeof successSound !== 'undefined') {
+            playSound(successSound);
+        }
+
+        // Show celebration
+        if (window.confetti) {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+
+    } catch (err) {
+        console.error('Download failed:', err);
+        alert('Fehler beim Speichern. Bitte versuche es erneut.');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+});
