@@ -3825,3 +3825,40 @@ body {
     margin: 0 10px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+/* ===========================
+   Parchment Button Styles (New & Copy buttons)
+   =========================== */
+.btn-remix,
+.btn-copy-text {
+    background: linear-gradient(to bottom, #fffefb 0%, #f3e7c9 100%) !important;
+    color: #5d4037 !important;
+    border: 1px solid #d7c9a8 !important;
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 0 20px rgba(243, 231, 201, 0.5) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.2s ease;
+}
+
+.btn-remix:hover,
+.btn-copy-text:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 20px rgba(93, 64, 55, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 0 20px rgba(243, 231, 201, 0.6) !important;
+}
