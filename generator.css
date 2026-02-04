@@ -3299,15 +3299,17 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    pointer-events: auto;
-    /* Enable interaction with children */
-    z-index: 1;
-    /* Behind text (z-index 2) */
+    pointer-events: none;
+    /* Let clicks pass through empty areas */
+    z-index: 20;
+    /* Above text (z-index 2) */
 }
 
 .placed-sticker {
     position: absolute;
     cursor: grab;
+    pointer-events: auto;
+    /* Re-enable for stickers */
     user-select: none;
     transition: transform 0.2s ease;
     z-index: 20;
@@ -3324,6 +3326,7 @@ body {
     position: absolute;
     display: inline-block;
     z-index: 20;
+    pointer-events: auto;
 }
 
 .sticker-resize-handle {
