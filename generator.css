@@ -333,15 +333,15 @@ body {
 .logo {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 1.8rem;
+    gap: 12px;
+    font-size: 1.6rem;
     font-weight: 900;
     color: #5d4037;
     text-decoration: none;
-    padding: 10px 24px;
+    padding: 12px 28px;
     background: linear-gradient(145deg, #fffefb, #f5e6d3);
     border: 1px solid rgba(139, 90, 43, 0.2);
-    border-radius: 40px;
+    border-radius: 50px;
     box-shadow: 0 4px 15px rgba(139, 90, 43, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: var(--transition);
@@ -353,11 +353,21 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.tagline {
-    color: var(--color-text-muted);
-    margin-top: 12px;
-    font-size: 1.1rem;
+.logo-text {
+    font-weight: 900;
+}
+
+.logo-divider {
+    color: rgba(139, 90, 43, 0.3);
+    font-weight: 300;
+}
+
+.logo .tagline {
+    font-size: 0.95rem;
+    font-weight: 400;
     font-style: italic;
+    color: #8b7355;
+    margin: 0;
 }
 
 /* Stats Counter */
