@@ -253,7 +253,22 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 12px 20px;
+    padding: 12px 20px;
     z-index: 100;
+}
+
+.brand-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.brand-icon.small {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
 }
 
 .language-switcher {
