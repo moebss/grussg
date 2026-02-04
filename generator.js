@@ -1841,3 +1841,34 @@ document.getElementById('downloadBtn')?.addEventListener('click', async () => {
         btn.disabled = false;
     }
 });
+
+/* ===========================
+   Text Effect Toggles
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const messageText = document.getElementById('generatedMessage');
+
+    const effectMap = {
+        'effectShadow': 'effect-shadow',
+        'effectOutline': 'effect-outline',
+        'effectGlow': 'effect-glow'
+    };
+
+    Object.keys(effectMap).forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+
+        btn.addEventListener('click', () => {
+            const effectClass = effectMap[btnId];
+
+            // Toggle effect
+            btn.classList.toggle('active');
+            messageText.classList.toggle(effectClass);
+
+            // Play sound
+            if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
+                playSound(clickSound);
+            }
+        });
+    });
+});

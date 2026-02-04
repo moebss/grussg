@@ -3981,3 +3981,54 @@ body {
     border: 2px solid #fffefb;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+/* ===========================
+   Text Effect Toggles
+   =========================== */
+.effect-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.effect-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: linear-gradient(145deg, #fffefb, #f5e6d3);
+    border: 1px solid #d4a574;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #5d4037;
+}
+
+.effect-btn:hover {
+    background: linear-gradient(145deg, #f5e6d3, #e8d5c4);
+    transform: translateY(-1px);
+}
+
+.effect-btn.active {
+    background: linear-gradient(145deg, #8b5a2b, #6b4423);
+    color: #fff;
+    border-color: #5d4037;
+    box-shadow: 0 2px 8px rgba(139, 90, 43, 0.3);
+}
+
+/* ===========================
+   Message Text Effects
+   =========================== */
+.message-text.effect-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.message-text.effect-outline {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+    paint-order: stroke fill;
+}
+
+.message-text.effect-glow {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6),
+        0 0 20px rgba(255, 215, 0, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.2);
+}

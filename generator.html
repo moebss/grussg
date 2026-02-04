@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&family=Indie+Flower&family=Kalam:wght@400;700&family=Comic+Neue:wght@400;700&family=Lobster&family=Sacramento&family=Shadows+Into+Light&family=Fredericka+the+Great&family=Patrick+Hand&display=swap"
         rel="stylesheet">
 
     <!-- Favicon -->
@@ -514,33 +514,72 @@
                         <!-- Text Tab -->
                         <div class="design-tab-content hidden" id="design-tab-text">
                             <div class="design-section">
-                                <span class="section-label">Text</span>
+                                <span class="section-label">Farbe & Größe</span>
                                 <div class="mini-controls">
                                     <input type="color" id="textColorPicker" value="#000000" class="mini-color-picker"
                                         title="Textfarbe">
                                     <input type="range" id="textSizeSlider" min="1.0" max="2.2" step="0.1" value="1.4"
                                         class="mini-slider" title="Textgröße">
                                 </div>
+                            </div>
+
+                            <div class="design-section">
+                                <span class="section-label">Effekte</span>
+                                <div class="effect-toggles">
+                                    <button class="effect-btn" id="effectShadow" title="Schatten">🌑 Schatten</button>
+                                    <button class="effect-btn" id="effectOutline" title="Umrandung">⭕ Umrandung</button>
+                                    <button class="effect-btn" id="effectGlow" title="Leuchten">✨ Leuchten</button>
+                                </div>
+                            </div>
+
+                            <div class="design-section">
+                                <span class="section-label">Schriftart</span>
                                 <div class="font-grid-mini">
+                                    <!-- Modern -->
                                     <button class="font-mini active" data-font="'Outfit', sans-serif"
                                         title="Outfit">Aa</button>
                                     <button class="font-mini" data-font="'Playfair Display', serif"
                                         style="font-family: 'Playfair Display', serif;" title="Playfair">Aa</button>
+
+                                    <!-- Handwriting -->
                                     <button class="font-mini" data-font="'Caveat', cursive"
                                         style="font-family: 'Caveat', cursive;" title="Caveat">Aa</button>
-                                    <button class="font-mini" data-font="'Pacifico', cursive"
-                                        style="font-family: 'Pacifico', cursive;" title="Pacifico">Aa</button>
+                                    <button class="font-mini" data-font="'Indie Flower', cursive"
+                                        style="font-family: 'Indie Flower', cursive;" title="Indie">Aa</button>
+                                    <button class="font-mini" data-font="'Kalam', cursive"
+                                        style="font-family: 'Kalam', cursive;" title="Kalam">Aa</button>
+                                    <button class="font-mini" data-font="'Patrick Hand', cursive"
+                                        style="font-family: 'Patrick Hand', cursive;" title="Patrick">Aa</button>
+                                    <button class="font-mini" data-font="'Shadows Into Light', cursive"
+                                        style="font-family: 'Shadows Into Light', cursive;" title="Shadows">Aa</button>
+
+                                    <!-- Elegant -->
                                     <button class="font-mini" data-font="'Dancing Script', cursive"
                                         style="font-family: 'Dancing Script', cursive;" title="Dancing">Aa</button>
                                     <button class="font-mini" data-font="'Great Vibes', cursive"
                                         style="font-family: 'Great Vibes', cursive;" title="Vibes">Aa</button>
+                                    <button class="font-mini" data-font="'Sacramento', cursive"
+                                        style="font-family: 'Sacramento', cursive;" title="Sacramento">Aa</button>
                                     <button class="font-mini" data-font="'Satisfy', cursive"
                                         style="font-family: 'Satisfy', cursive;" title="Satisfy">Aa</button>
+                                    <button class="font-mini" data-font="'Pacifico', cursive"
+                                        style="font-family: 'Pacifico', cursive;" title="Pacifico">Aa</button>
+                                    <button class="font-mini" data-font="'Lobster', cursive"
+                                        style="font-family: 'Lobster', cursive;" title="Lobster">Aa</button>
+
+                                    <!-- Fun / Kids -->
                                     <button class="font-mini" data-font="'Amatic SC', cursive"
                                         style="font-family: 'Amatic SC', cursive; font-weight: 700;"
                                         title="Amatic">Aa</button>
                                     <button class="font-mini" data-font="'Permanent Marker', cursive"
                                         style="font-family: 'Permanent Marker', cursive;" title="Marker">Aa</button>
+                                    <button class="font-mini" data-font="'Comic Neue', cursive"
+                                        style="font-family: 'Comic Neue', cursive;" title="Comic">Aa</button>
+                                    <button class="font-mini" data-font="'Fredericka the Great', cursive"
+                                        style="font-family: 'Fredericka the Great', cursive;"
+                                        title="Fredericka">Aa</button>
+
+                                    <!-- Classic -->
                                     <button class="font-mini" data-font="'Courier New', monospace"
                                         style="font-family: 'Courier New', monospace;" title="Retro">Aa</button>
                                 </div>
