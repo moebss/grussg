@@ -154,7 +154,16 @@ body {
 
 /* Light Theme Background Override */
 [data-theme="light"] .aurora-background {
-    background: linear-gradient(135deg, #faf8f5 0%, #f0e6d8 50%, #fce7f3 100%);
+    background-color: #fdfbf7;
+    background-image:
+        /* Vignette (burned edges) */
+        radial-gradient(circle at center, transparent 30%, rgba(139, 90, 43, 0.08) 100%),
+        /* Paper Texture */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"),
+        /* Warm Vintage Gradient */
+        linear-gradient(135deg, #fffcf5 0%, #f5e6d3 50%, #fffcf5 100%);
+    background-blend-mode: multiply, overlay, normal;
+    background-attachment: fixed;
 }
 
 [data-theme="light"] .aurora-blob {
