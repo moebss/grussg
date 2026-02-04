@@ -3598,3 +3598,28 @@ body {
     background: var(--color-primary);
     color: white;
 }
+
+/* ===========================
+   Form Input Fields - Purple Tint
+   =========================== */
+.input-section input[type="text"],
+.input-section textarea,
+.input-section select {
+    background: linear-gradient(135deg, rgba(238, 235, 255, 0.9), rgba(248, 240, 255, 0.9));
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    color: var(--color-text);
+    transition: var(--transition);
+}
+
+.input-section input[type="text"]:focus,
+.input-section textarea:focus,
+.input-section select:focus {
+    background: linear-gradient(135deg, rgba(248, 245, 255, 1), rgba(255, 250, 255, 1));
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.input-section input[type="text"]::placeholder,
+.input-section textarea::placeholder {
+    color: rgba(99, 102, 241, 0.5);
+}
