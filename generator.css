@@ -3933,3 +3933,74 @@ body {
 .btn-download-large span {
     font-size: 1.2rem;
 }
+
+/* ===========================
+   Color Picker Visibility Fix
+   =========================== */
+.mini-color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: 2px solid #5d4037 !important;
+    /* Strong brown border */
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    vertical-align: middle;
+}
+
+.mini-color-picker:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: #8d6e63 !important;
+}
+
+.mini-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.mini-color-picker::-webkit-color-swatch {
+    border: none;
+}
+
+.mini-color-picker::-moz-color-swatch {
+    border: none;
+}
+
+/* Enhancing the slider visibility too */
+.mini-slider {
+    -webkit-appearance: none;
+    height: 6px;
+    background: #e0d5c1;
+    border-radius: 5px;
+    outline: none;
+    vertical-align: middle;
+}
+
+.mini-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #5d4037;
+    cursor: pointer;
+    border: 2px solid #fffefb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mini-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #5d4037;
+    cursor: pointer;
+    border: 2px solid #fffefb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
