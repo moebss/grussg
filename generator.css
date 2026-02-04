@@ -3605,21 +3605,30 @@ body {
 .input-section input[type="text"],
 .input-section textarea,
 .input-section select {
-    background: linear-gradient(135deg, rgba(238, 235, 255, 0.9), rgba(248, 240, 255, 0.9));
+    background: linear-gradient(135deg, rgba(238, 235, 255, 0.95), rgba(248, 240, 255, 0.95));
     border: 2px solid rgba(139, 92, 246, 0.2);
-    color: var(--color-text);
+    color: #1e293b !important;
+    /* Force dark text for readability on light background */
     transition: var(--transition);
+}
+
+.input-section input[type="text"]::placeholder,
+.input-section textarea::placeholder {
+    color: rgba(30, 41, 59, 0.5) !important;
+    /* Darker placeholder */
 }
 
 .input-section input[type="text"]:focus,
 .input-section textarea:focus,
 .input-section select:focus {
-    background: linear-gradient(135deg, rgba(248, 245, 255, 1), rgba(255, 250, 255, 1));
+    background: #ffffff;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    color: #000000 !important;
 }
 
-.input-section input[type="text"]::placeholder,
-.input-section textarea::placeholder {
-    color: rgba(99, 102, 241, 0.5);
+/* Fix dropdown options visibility */
+.input-section select option {
+    background-color: #ffffff;
+    color: #1e293b;
 }
