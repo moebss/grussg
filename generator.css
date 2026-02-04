@@ -189,7 +189,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 80px 20px 20px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -3705,8 +3705,8 @@ body {
     z-index: 2;
     background: radial-gradient(ellipse at center, rgba(253, 251, 247, 0.95) 0%, rgba(253, 251, 247, 0.6) 40%, rgba(253, 251, 247, 0) 70%);
     padding: 30px 0 20px;
-    margin: -20px auto 20px;
-    /* Pull up to compensate for container padding */
+    margin: 0 auto 30px;
+    /* Reset margin */
     width: 100%;
     max-width: 800px;
     /* Focus the gradient */
