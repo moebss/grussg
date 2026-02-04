@@ -160,7 +160,7 @@ body {
         radial-gradient(circle at center, transparent 40%, rgba(139, 90, 43, 0.1) 100%),
         /* Card Pattern */
         url("assets/bg-cards.png");
-    background-size: cover, 500px 500px;
+    background-size: cover, 800px 800px;
     background-repeat: no-repeat, repeat;
     background-blend-mode: multiply, normal;
     background-attachment: fixed;
