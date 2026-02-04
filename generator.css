@@ -3695,7 +3695,37 @@ body {
         inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Remove old shimmer if it conflicts, or adapt it */
-.icon-shimmer::after {
-    display: none;
+/* ===========================
+   Header Visibility Improvements
+   =========================== */
+.header {
+    position: relative;
+    z-index: 2;
+    background: radial-gradient(ellipse at center, rgba(253, 251, 247, 0.95) 0%, rgba(253, 251, 247, 0.6) 40%, rgba(253, 251, 247, 0) 70%);
+    padding: 30px 0 20px;
+    margin: -20px auto 20px;
+    /* Pull up to compensate for container padding */
+    width: 100%;
+    max-width: 800px;
+    /* Focus the gradient */
+}
+
+.logo {
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
+    position: relative;
+    z-index: 2;
+}
+
+.tagline {
+    font-weight: 600;
+    color: #374151 !important;
+    /* Darker for contrast */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 4px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    backdrop-filter: blur(2px);
+    margin-top: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
