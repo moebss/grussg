@@ -1846,8 +1846,6 @@ document.getElementById('downloadBtn')?.addEventListener('click', async () => {
    Text Effect Toggles
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
-    const messageText = document.getElementById('generatedMessage');
-
     const effectMap = {
         'effectShadow': 'effect-shadow',
         'effectOutline': 'effect-outline',
@@ -1856,14 +1854,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Object.keys(effectMap).forEach(btnId => {
         const btn = document.getElementById(btnId);
-        if (!btn) return;
+        if (!btn) {
+            console.warn('Effect button not found:', btnId);
+            return;
+        }
 
         btn.addEventListener('click', () => {
+            const messageText = document.getElementById('generatedMessage');
+            if (!messageText) {
+                console.warn('generatedMessage element not found');
+                return;
+            }
+
             const effectClass = effectMap[btnId];
 
             // Toggle effect
             btn.classList.toggle('active');
             messageText.classList.toggle(effectClass);
+
+            console.log('Effect toggled:', effectClass, 'Active:', btn.classList.contains('active'));
 
             // Play sound
             if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
