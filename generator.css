@@ -3713,7 +3713,7 @@ body {
 }
 
 .logo {
-    text-shadow: 0 2px 0 rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
+    text-shadow: none;
     position: relative;
     z-index: 2;
 }
