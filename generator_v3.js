@@ -1298,16 +1298,41 @@ function renderHistory(history) {
                 </div>
             `).join('');
 
+            // Add click listeners to Switch Greeting
             outputHistoryList.querySelectorAll('.output-history-item').forEach(item => {
                 item.addEventListener('click', () => {
                     const index = parseInt(item.dataset.index);
                     const entry = history[index];
+
+                    // Restore Text
                     generatedMessage.textContent = entry.text;
+
+                    // Restore Occasion Theme if possible (optional but good)
+                    if (entry.occasion && entry.occasion !== currentOccasion) {
+                        currentOccasion = entry.occasion;
+                        renderOccasionThemes(currentOccasion);
+                    }
+
+                    // Visual Feedback
+                    document.querySelectorAll('.output-history-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
                     playSound(clickSound);
-                    showToast('Gruß aus Historie geladen 📜', 'info');
+                    showToast('Gruß geladen! 📜', 'info');
                 });
             });
         }
+    }
+    outputHistoryList.querySelectorAll('.output-history-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const index = parseInt(item.dataset.index);
+            const entry = history[index];
+            generatedMessage.textContent = entry.text;
+            playSound(clickSound);
+            showToast('Gruß aus Historie geladen 📜', 'info');
+        });
+    });
+}
     }
 }
 
