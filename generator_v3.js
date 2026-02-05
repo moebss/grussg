@@ -812,7 +812,7 @@ async function doRemix() {
             // Fallback: use gradient if no images available
             // Clear custom bg first
             if (customBg) {
-                customBg.src = '';
+                customBg.removeAttribute('src');
                 customBg.classList.add('hidden');
             }
 
@@ -986,7 +986,7 @@ function handleImageUpload(file) {
 }
 
 removeBgBtn?.addEventListener('click', () => {
-    cardCustomBg.src = '';
+    cardCustomBg.removeAttribute('src'); // Completely remove src to prevent 404s/errors
     cardCustomBg.classList.add('hidden');
     greetingCard.classList.remove('has-custom-bg');
     removeBgBtn.classList.add('hidden');
@@ -1456,6 +1456,13 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
             canvasWidth: 1080,
             canvasHeight: 1080,
             backgroundColor: (getComputedStyle(card).backgroundColor === 'rgba(0, 0, 0, 0)') ? '#ffffff' : null,
+            filter: (node) => {
+                // Exclude hidden elements to prevent loading errors (especially empty src images)
+                if (node.classList && node.classList.contains('hidden')) return false;
+                // Exclude confetti canvas if it causes issues (optional, but safe)
+                if (node.tagName === 'CANVAS') return false;
+                return true;
+            },
             style: {
                 transform: 'none',
                 margin: '0',
