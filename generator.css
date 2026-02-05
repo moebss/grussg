@@ -1395,105 +1395,161 @@ body {
     border-color: #1877f2;
 }
 
-/* Unified Action Bar */
+/* Unified Action Bar - Modern Dock Style */
 .unified-action-bar {
     display: flex;
     flex-wrap: wrap;
-    /* Allow wrap on very small screens */
+    /* Wrap on tiny screens */
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
-    padding: 15px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    gap: 16px;
+    margin: 30px auto;
+    /* Center nicely */
+    padding: 12px 24px;
+
+    /* Modern Glassy Dock Look */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    /* Full pill shape */
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(0, 0, 0, 0.02);
+    /* Crisp outline */
+
+    width: fit-content;
+    max-width: 95%;
+    transition: all 0.3s ease;
+}
+
+.unified-action-bar:hover {
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .compact-rating {
     display: flex;
-    gap: 5px;
-    margin-right: 15px;
-    /* Separation from buttons */
+    gap: 4px;
+    /* Tighter gap */
+    padding-right: 16px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    /* Separator */
+    margin-right: 4px;
 }
 
-/* Compact Download Button */
+/* Star Styles */
+.compact-rating .star-btn {
+    font-size: 1.4rem;
+    /* Slightly larger */
+    padding: 4px;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.compact-rating .star-btn:hover {
+    transform: scale(1.3) rotate(5deg);
+}
+
+/* Modern Gradient Download Button */
 .btn-download-compact {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #f0e68c 0%, #ffd700 100%);
-    color: #5d4037;
+    gap: 10px;
+    padding: 12px 28px;
+
+    /* Vibrant, Modern Gradient */
+    background: linear-gradient(135deg, #FFD700 0%, #FFB900 100%);
+    color: #4A3B00;
+
     border: none;
     border-radius: 50px;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    box-shadow:
+        0 4px 6px -1px rgba(255, 185, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    /* Inner highlight */
 }
 
 .btn-download-compact:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+        0 10px 15px -3px rgba(255, 185, 0, 0.4),
+        0 4px 6px -2px rgba(255, 185, 0, 0.2);
+    filter: brightness(1.05);
+}
+
+.btn-download-compact:active {
+    transform: translateY(0) scale(0.98);
 }
 
 /* Share Dropdown Container */
 .share-dropdown-container {
     position: relative;
-    /* Container for the button and the expanding menu */
 }
 
+/* Share Trigger Button */
 .btn-share-trigger {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
+    gap: 10px;
+    padding: 12px 24px;
     background: white;
-    border: 1px solid #e2e8f0;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     z-index: 20;
-    /* Above the menu if overlapping */
     position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* Subtle shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 .btn-share-trigger:hover {
     background: #f8fafc;
     border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Expanding Menu (Horizontal) */
 .share-options-menu {
     position: absolute;
     top: 50%;
-    /* Center vertically relative to button */
-    left: 100%;
-    /* Start at the right edge of the button */
-    transform: translateY(-50%) translateX(-20px) scaleX(0);
-    /* Start hidden/collapsed */
+    left: 50%;
+    /* Center horizontally to trigger */
+    transform: translateY(-50%) translateX(-40px) scaleX(0);
+    /* Start collapsed behind */
+
     background: white;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 50px;
-    padding: 5px 10px 5px 20px;
-    /* Left padding covers the overlap */
+    /* Pill */
+    padding: 6px 12px 6px 60px;
+    /* Huge left padding to clear the trigger button */
+
     display: flex;
-    gap: 8px;
+    gap: 12px;
     opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.2s ease;
+
     transform-origin: left center;
     pointer-events: none;
-    /* Don't block clicks when hidden */
     z-index: 10;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
-    margin-left: -15px;
-    /* Pull it slightly under the trigger button for seamless look */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    margin-left: -40px;
+    /* Pull it underneath the main button */
 }
 
 /* Active State (Expanded) */
@@ -1501,41 +1557,60 @@ body {
 .share-dropdown-container.active .share-options-menu {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(-50%) translateX(0) scaleX(1);
-    padding-left: 25px;
-    /* Add space so buttons don't clip under the trigger */
+    /* Slide out the right side */
+    transform: translateY(-50%) translateX(20px) scaleX(1);
 }
+
+/* New: Make the trigger background opaque to hide the slide-out mechanism */
+.share-dropdown-container:hover .btn-share-trigger,
+.share-dropdown-container.active .btn-share-trigger {
+    background: white;
+    z-index: 30;
+    /* Ensure on top */
+}
+
 
 /* Social Buttons inside menu */
 .share-options-menu .share-btn {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     padding: 8px;
     border-radius: 50%;
     border: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s;
-    background: transparent;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: #f8fafc;
+    color: #475569;
 }
 
 .share-options-menu .share-btn:hover {
-    transform: scale(1.1);
-    background: #f1f5f9;
+    transform: translateY(-3px) scale(1.1);
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobile responsive */
 @media (max-width: 600px) {
     .unified-action-bar {
+        /* On mobile, become a bottom sheet or stacked block */
         flex-direction: column;
+        width: 90%;
+        margin: 20px auto;
+        border-radius: 24px;
         gap: 20px;
         padding: 20px;
     }
 
     .compact-rating {
-        margin-right: 0;
-        margin-bottom: 5px;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 15px;
+        width: 100%;
+        justify-content: center;
+        margin: 0;
     }
 
     .share-dropdown-container,
@@ -1544,17 +1619,23 @@ body {
         justify-content: center;
     }
 
-    /* On mobile, open downwards instead of sideways */
+    /* On mobile, open downwards */
     .share-options-menu {
+        top: auto;
+        bottom: 100%;
+        /* Open UPWARDS on mobile usually better if space, or downwards */
         top: 100%;
+        /* Let's stick to downwards */
+
         left: 50%;
         transform: translateX(-50%) translateY(-10px) scaleY(0);
         transform-origin: top center;
+
+        padding: 10px;
+        margin: 10px 0 0 0;
+
         flex-wrap: wrap;
         justify-content: center;
-        margin-left: 0;
-        margin-top: 10px;
-        border-radius: 12px;
         width: max-content;
         max-width: 90vw;
     }
@@ -1562,7 +1643,6 @@ body {
     .share-dropdown-container:hover .share-options-menu,
     .share-dropdown-container.active .share-options-menu {
         transform: translateX(-50%) translateY(0) scaleY(1);
-        padding: 10px;
     }
 }
 
