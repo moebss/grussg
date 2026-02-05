@@ -2210,6 +2210,11 @@ body {
     background-position: center;
     border-radius: inherit;
     z-index: 0;
+
+    /* Support for IMG tag */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-overlay {
