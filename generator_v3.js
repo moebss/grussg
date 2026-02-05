@@ -1839,15 +1839,28 @@ document.querySelectorAll('.design-tab-btn').forEach(btn => {
 /* ===========================
    Star Rating Logic
    =========================== */
-document.addEventListener('DOMContentLoaded', () => {
+/* ===========================
+   Star Rating Logic
+   =========================== */
+function initStars() {
     const stars = document.querySelectorAll('.star-btn');
+    console.log(`Initializing ${stars.length} rating stars`);
 
     stars.forEach(star => {
+        // Clone to remove old listeners if any
+        const newStar = star.cloneNode(true);
+        star.parentNode.replaceChild(newStar, star);
+    });
+
+    // Re-select
+    const freshStars = document.querySelectorAll('.star-btn');
+    freshStars.forEach(star => {
         star.addEventListener('click', () => {
             const rating = parseInt(star.dataset.rating);
+            if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
 
             // Update visual state
-            stars.forEach(s => {
+            freshStars.forEach(s => {
                 const sRating = parseInt(s.dataset.rating);
                 if (sRating <= rating) {
                     s.classList.add('active');
@@ -1856,26 +1869,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Log rating (or send to analytics if implemented)
             console.log(`User rated greeting: ${rating} stars`);
 
-            // Simple feedback (e.g. confetti for 5 stars)
             if (rating >= 4 && window.confetti) {
                 confetti({
-                    particleCount: 50,
-                    spread: 60,
+                    particleCount: 80,
+                    spread: 70,
                     origin: { y: 0.8 },
-                    colors: ['#FFD700', '#FFA500', '#ffffff'] // Gold theme
+                    colors: ['#FFD700', '#FFA500', '#ffffff']
                 });
-            }
-
-            // Play click sound
-            if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
-                playSound(clickSound);
             }
         });
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStars);
+} else {
+    initStars();
+}
 
 /* ===========================
    Download Logic

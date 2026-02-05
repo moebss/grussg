@@ -3895,6 +3895,8 @@ body {
     transition: transform 0.2s ease, filter 0.2s;
     filter: grayscale(100%) opacity(0.6);
     /* Default greyish */
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .star-btn:hover,
