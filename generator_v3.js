@@ -1846,57 +1846,41 @@ document.querySelectorAll('.design-tab-btn').forEach(btn => {
    Star Rating Logic
    =========================== */
 /* ===========================
-   Star Rating Logic
+   Star Rating Logic (Direct Global)
    =========================== */
-function initStars() {
+window.rateGreeting = function (rating) {
+    console.log(`Rate greeting called with: ${rating}`);
+
+    if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+
     const stars = document.querySelectorAll('.star-btn');
-    console.log(`Initializing ${stars.length} rating stars`);
-
-    stars.forEach(star => {
-        // Clone to remove old listeners if any
-        const newStar = star.cloneNode(true);
-        star.parentNode.replaceChild(newStar, star);
+    stars.forEach(s => {
+        const sRating = parseInt(s.dataset.rating);
+        if (sRating <= rating) {
+            s.classList.add('active');
+            s.style.filter = 'grayscale(0%) drop-shadow(0 0 8px gold)';
+            s.style.transform = 'scale(1.2)';
+        } else {
+            s.classList.remove('active');
+            s.style.filter = '';
+            s.style.transform = '';
+        }
     });
 
-    // Re-select
-    const freshStars = document.querySelectorAll('.star-btn');
-    freshStars.forEach(star => {
-        star.addEventListener('click', () => {
-            const rating = parseInt(star.dataset.rating);
-            if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+    console.log(`User rated greeting: ${rating} stars`);
 
-            // Update visual state
-            freshStars.forEach(s => {
-                const sRating = parseInt(s.dataset.rating);
-                if (sRating <= rating) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-
-            console.log(`User rated greeting: ${rating} stars`);
-
-            if (rating >= 4 && window.confetti) {
-                confetti({
-                    particleCount: 80,
-                    spread: 70,
-                    origin: { y: 0.8 },
-                    colors: ['#FFD700', '#FFA500', '#ffffff']
-                });
-            }
+    if (rating >= 4 && window.confetti) {
+        confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.8 },
+            colors: ['#FFD700', '#FFA500', '#ffffff']
         });
-    });
-}
+    }
+};
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initStars);
-} else {
-    // Already loaded, run immediately
-    initStars();
-    // Double check after small delay for dynamic content
-    setTimeout(initStars, 500);
-}
+// Auto-init logs just to verify script loaded
+console.log('Star rating system ready (Global Mode)');
 
 /* ===========================
    Download Logic
