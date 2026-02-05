@@ -933,11 +933,62 @@ overlaySlider?.addEventListener('input', (e) => {
 // ===========================
 // IMAGE UPLOAD
 // ===========================
+// ===========================
+// IMAGE UPLOAD (SHARED LOGIC)
+// ===========================
 const uploadZone = document.getElementById('uploadZone');
 const imageUpload = document.getElementById('imageUpload');
 const cardCustomBg = document.getElementById('cardCustomBg');
 const removeBgBtn = document.getElementById('removeBgBtn');
+const bgUpload = document.getElementById('bgUpload'); // Also ref here?
 
+function handleBackgroundUpload(file) {
+    if (!file.type.startsWith('image/')) {
+        showToast('Bitte nur Bilder hochladen! 🖼️', 'error');
+        return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Bild zu groß! Max. 5MB 📁', 'error');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        if (cardCustomBg) {
+            cardCustomBg.src = e.target.result;
+            cardCustomBg.classList.remove('hidden');
+
+            const card = document.getElementById('greetingCard');
+            if (card) card.classList.add('has-custom-bg');
+
+            if (removeBgBtn) removeBgBtn.classList.remove('hidden');
+
+            playSound(successSound);
+            showToast('Hintergrundbild gesetzt! 🖼️', 'success');
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearBackground() {
+    if (cardCustomBg) {
+        cardCustomBg.removeAttribute('src');
+        cardCustomBg.classList.add('hidden');
+    }
+
+    const card = document.getElementById('greetingCard');
+    if (card) card.classList.remove('has-custom-bg');
+
+    if (removeBgBtn) removeBgBtn.classList.add('hidden');
+
+    if (imageUpload) imageUpload.value = '';
+    if (bgUpload) bgUpload.value = ''; // Clear both inputs
+
+    playSound(clickSound);
+    showToast('Bild entfernt', 'info');
+}
+
+// Bind Generic Upload Zone
 uploadZone?.addEventListener('click', () => imageUpload?.click());
 
 uploadZone?.addEventListener('dragover', (e) => {
@@ -952,48 +1003,17 @@ uploadZone?.addEventListener('dragleave', () => {
 uploadZone?.addEventListener('drop', (e) => {
     e.preventDefault();
     uploadZone.classList.remove('dragover');
-
     const file = e.dataTransfer.files[0];
-    if (file) handleImageUpload(file);
+    if (file) handleBackgroundUpload(file);
 });
 
 imageUpload?.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (file) handleImageUpload(file);
+    if (file) handleBackgroundUpload(file);
 });
 
-function handleImageUpload(file) {
-    if (!file.type.startsWith('image/')) {
-        showToast('Bitte nur Bilder hochladen! 🖼️', 'error');
-        return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-        showToast('Bild zu groß! Max. 5MB 📁', 'error');
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        cardCustomBg.src = e.target.result;
-        cardCustomBg.classList.remove('hidden');
-        greetingCard.classList.add('has-custom-bg');
-        removeBgBtn?.classList.remove('hidden');
-        playSound(successSound);
-        showToast('Bild hochgeladen! 🎨', 'success');
-    };
-    reader.readAsDataURL(file);
-}
-
-removeBgBtn?.addEventListener('click', () => {
-    cardCustomBg.removeAttribute('src'); // Completely remove src to prevent 404s/errors
-    cardCustomBg.classList.add('hidden');
-    greetingCard.classList.remove('has-custom-bg');
-    removeBgBtn.classList.add('hidden');
-    imageUpload.value = '';
-    playSound(clickSound);
-    showToast('Bild entfernt', 'info');
-});
+// Bind Remove Button (Single Listener)
+removeBgBtn?.addEventListener('click', clearBackground);
 
 // ===========================
 // LANGUAGE SWITCHING
@@ -1324,112 +1344,90 @@ document.getElementById('copyBtn')?.addEventListener('click', () => {
         .catch(() => showToast('Kopieren fehlgeschlagen 😞', 'error'));
 });
 
-// Helper function to generate card image as blob
-async function generateCardBlob() {
-    const card = document.getElementById('greetingCard');
-    const messageHeader = card.querySelector('.message-header');
+// ===========================
+// CORE IMAGE GENERATION
+// ===========================
 
+/**
+ * Captures the greeting card as a Data URL.
+ * @param {string} format - 'jpeg' or 'png'
+ * @param {number} targetSize - Optional target width in pixels (e.g., 1080).
+ */
+async function captureCard(format = 'png', targetSize = null) {
+    const card = document.getElementById('greetingCard');
+    if (!card) throw new Error('Kartenelement nicht gefunden');
+
+    // UI Prep: Hide header, clean text
+    const messageHeader = card.querySelector('.message-header');
+    const originalDisplay = messageHeader ? messageHeader.style.display : '';
     if (messageHeader) messageHeader.style.display = 'none';
 
     const originalText = generatedMessage.innerText;
     generatedMessage.innerText = originalText.replace(/\*\*/g, '').replace(/\*/g, '');
 
     try {
-        const width = card.offsetWidth;
-        const height = card.offsetHeight;
+        const currentWidth = card.clientWidth;
+        const currentHeight = card.clientHeight;
 
-        const dataUrl = await htmlToImage.toPng(card, {
+        // Calculate scale
+        let scale = 2; // Default for high res PNG
+        if (targetSize) {
+            scale = targetSize / currentWidth;
+        }
+
+        const config = {
             quality: 0.95,
-            pixelRatio: 2,
-            width: width,
-            height: height,
+            pixelRatio: scale,
+            width: currentWidth,
+            height: currentHeight,
+            backgroundColor: (getComputedStyle(card).backgroundColor === 'rgba(0, 0, 0, 0)') ? '#ffffff' : null,
+            filter: (node) => {
+                if (node.classList && node.classList.contains('hidden')) return false;
+                if (node.tagName === 'CANVAS') return false;
+                return true;
+            },
             style: {
                 transform: 'none',
                 margin: '0',
-                display: 'flex'
+                borderRadius: '0'
             },
             cacheBust: false
-        });
+        };
 
-        // Convert dataUrl to blob
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+        const timeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Timeout bei Bilderstellung')), 15000)
+        );
 
+        console.log(`Processing capture: ${format.toUpperCase()}, Scale ${scale.toFixed(2)}`);
+
+        let promise;
+        if (format === 'jpeg') {
+            promise = htmlToImage.toJpeg(card, config);
+        } else {
+            promise = htmlToImage.toPng(card, config);
+        }
+
+        return await Promise.race([promise, timeout]);
+
+    } finally {
+        // Restore UI
         generatedMessage.innerText = originalText;
-        if (messageHeader) messageHeader.style.display = '';
-
-        return { blob, dataUrl };
-    } catch (error) {
-        generatedMessage.innerText = originalText;
-        if (messageHeader) messageHeader.style.display = '';
-        throw error;
+        if (messageHeader) messageHeader.style.display = originalDisplay;
     }
 }
 
-// Share card as image using Web Share API
-async function shareCardAsImage(platform) {
-    playSound(clickSound);
-    showToast('Bild wird vorbereitet... 📸', 'info');
-
-    try {
-        const { blob, dataUrl } = await generateCardBlob();
-        const file = new File([blob], 'gruss.png', { type: 'image/png' });
-
-        // Check if Web Share API supports files
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-                files: [file],
-                title: 'Mein Gruß',
-                text: '💌 Erstellt mit grussgenerator.de'
-            });
-            showToast('Gruß geteilt! 🎉', 'success');
-            return true;
-        } else {
-            // Fallback: Download and show instructions
-            showToast(`Web Share nicht unterstützt. Bild wird heruntergeladen...`, 'warning');
-            const link = document.createElement('a');
-            link.download = `gruss-${Date.now()}.png`;
-            link.href = dataUrl;
-            link.click();
-            showToast(`Bild gespeichert! Öffne ${platform} und teile das Bild manuell.`, 'info');
-            return false;
-        }
-    } catch (error) {
-        if (error.name === 'AbortError') {
-            showToast('Teilen abgebrochen', 'info');
-        } else {
-            console.error('Share failed:', error);
-            showToast('Teilen fehlgeschlagen 😞', 'error');
-        }
-        return false;
-    }
+// Wrapper for Blob generation (Sharing)
+async function generateCardBlob() {
+    const dataUrl = await captureCard('png', null); // Use PNG for sharing
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    return { blob, dataUrl };
 }
 
-// WhatsApp share - try image first, fallback to text
-document.getElementById('whatsappBtn').addEventListener('click', async () => {
-    const shared = await shareCardAsImage('WhatsApp');
-    if (!shared && !navigator.canShare) {
-        // Pure fallback for old browsers
-        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
-        window.open(`https://wa.me/?text=${text}`, '_blank');
-    }
-});
-
-// Email share
-document.getElementById('emailBtn').addEventListener('click', () => {
-    playSound(clickSound);
-    const subject = encodeURIComponent('Ein persönlicher Gruß für dich 💌');
-    const body = encodeURIComponent(generatedMessage.textContent + '\n\n---\nErstellt mit grussgenerator.de');
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-});
-
-// Download as image
+// Download Button Handler
 document.getElementById('downloadBtn').addEventListener('click', async () => {
-    console.log('Download button clicked - processing 1080x1080 JPEG');
-
-    // Check library
     if (typeof htmlToImage === 'undefined') {
-        alert('Fehler: Bild-Bibliothek nicht geladen. Bitte Seite neu laden.');
+        alert('Fehler: Bibliothek nicht geladen. Bitte Reload.');
         return;
     }
 
@@ -1437,67 +1435,10 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
         playSound(clickSound);
         showToast('Wird erstellt (1080x1080)... 📸', 'info');
 
-        const card = document.getElementById('greetingCard');
-        const messageHeader = card.querySelector('.message-header');
+        // Create 1080p JPEG
+        const dataUrl = await captureCard('jpeg', 1080);
 
-        if (!card) throw new Error('Kartenelement nicht gefunden');
-
-        // Temporary UI Adjustments
-        if (messageHeader) messageHeader.style.display = 'none';
-
-        // Clean text (remove accidental markdown)
-        const originalText = generatedMessage.innerText;
-        generatedMessage.innerText = originalText.replace(/\*\*/g, '').replace(/\*/g, '');
-
-        console.log('Starting htmlToImage.toJpeg (V3 - Timeout Protected)...');
-
-        // Create a timeout promise
-        const timeout = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Zeitüberschreitung bei der Bilderstellung (15s)')), 15000)
-        );
-
-        // Calculate explicit scale to get exactly 1080px
-        const currentWidth = card.clientWidth;
-        const currentHeight = card.clientHeight; // Should be same as width for square card
-        const targetSize = 1080;
-        const scale = targetSize / currentWidth;
-
-        console.log(`Auto-scaling image: ${currentWidth}px -> 1080px (Ratio: ${scale.toFixed(2)})`);
-
-        // Actual generation promise
-        const generation = htmlToImage.toJpeg(card, {
-            quality: 0.95,
-            pixelRatio: scale,
-            width: currentWidth,   // Capture at natural size
-            height: currentHeight, // Capture at natural size
-            backgroundColor: (getComputedStyle(card).backgroundColor === 'rgba(0, 0, 0, 0)') ? '#ffffff' : null,
-            filter: (node) => {
-                // Exclude hidden elements to prevent loading errors (especially empty src images)
-                if (node.classList && node.classList.contains('hidden')) return false;
-                // Exclude confetti canvas if it causes issues (optional, but safe)
-                if (node.tagName === 'CANVAS') return false;
-                return true;
-            },
-            style: {
-                transform: 'none', // Flatten any 3D effects
-                margin: '0',
-                borderRadius: '0'
-                // REMOVED: display:flex, width:1080px override which broke layout
-            },
-            cacheBust: false // Disable cacheBust to rely on already loaded (CORS-validated) images
-        });
-
-        // Race them
-        const dataUrl = await Promise.race([generation, timeout]);
-
-        console.log('Image generated, triggering download...');
-
-        // Debug output size
-        const img = new Image();
-        img.onload = () => console.log(`Generated image size: ${img.width}x${img.height}`);
-        img.src = dataUrl;
-
-        // Create Download
+        // Download
         const link = document.createElement('a');
         link.download = `gruss-${Date.now()}.jpg`;
         link.href = dataUrl;
@@ -1507,23 +1448,9 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 
         playSound(successSound);
         showToast('Bild gespeichert! 🎉', 'success');
-
-        // Restore
-        generatedMessage.innerText = originalText;
-        if (messageHeader) messageHeader.style.display = '';
-
     } catch (error) {
         console.error('Download Error:', error);
-        alert('Fehler beim Speichern: ' + error.message);
-
-        // Attempt basic restore
-        try {
-            const card = document.getElementById('greetingCard');
-            if (card) {
-                const messageHeader = card.querySelector('.message-header');
-                if (messageHeader) messageHeader.style.display = '';
-            }
-        } catch (e) { }
+        alert('Fehler: ' + error.message);
     }
 });
 
@@ -1569,46 +1496,21 @@ document.getElementById('newGreetingBtn').addEventListener('click', () => {
 // ===========================
 // ADVANCED IMAGE UPLOAD
 // ===========================
+// ===========================
+// ADVANCED IMAGE UPLOAD (Integrated)
+// ===========================
 const uploadBgZone = document.getElementById('uploadBgZone');
-const bgUpload = document.getElementById('bgUpload');
-// cardCustomBg and removeBgBtn are already declared above
+// bgUpload declared above
 
-
-const uploadStickerZone = document.getElementById('uploadStickerZone');
-const stickerUpload = document.getElementById('stickerUpload');
-
-// Background Upload
+// Bind Advanced Upload Zone
 uploadBgZone?.addEventListener('click', () => bgUpload?.click());
 
 bgUpload?.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            if (cardCustomBg) {
-                cardCustomBg.src = e.target.result;
-                cardCustomBg.classList.remove('hidden');
-                greetingCard.classList.add('has-custom-bg');
-                removeBgBtn?.classList.remove('hidden');
-                playSound(successSound);
-                showToast('Hintergrundbild gesetzt! 🖼️', 'success');
-            }
-        };
-        reader.readAsDataURL(file);
-    }
+    if (file) handleBackgroundUpload(file);
 });
 
-removeBgBtn?.addEventListener('click', () => {
-    if (cardCustomBg) {
-        cardCustomBg.src = '';
-        cardCustomBg.classList.add('hidden');
-    }
-    greetingCard.classList.remove('has-custom-bg');
-    removeBgBtn?.classList.add('hidden');
-    // Also reset input so same file can be selected again
-    if (bgUpload) bgUpload.value = '';
-    playSound(clickSound);
-});
+// removeBgBtn listener is already attached in Shared Logic block logic above.
 
 // Sticker Upload
 uploadStickerZone?.addEventListener('click', () => stickerUpload?.click());
@@ -1796,51 +1698,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* Signature Feature Removed */
 
-// ===========================
-// LAYOUT CLEANUP: TAB SYSTEM
-// ===========================
-
-// Sticker Tabs
-document.querySelectorAll('.sticker-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Visual feedback
-        document.querySelectorAll('.sticker-tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Show/Hide Content
-        document.querySelectorAll('.sticker-tab-content').forEach(c => c.classList.add('hidden'));
-        const tabId = btn.dataset.tab;
-        const target = document.getElementById(`tab-${tabId}`);
-        if (target) {
-            target.classList.remove('hidden');
-        }
-
-        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
-            playSound(clickSound);
-        }
-    });
-});
-
-// Design Tabs
-document.querySelectorAll('.design-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Visual feedback
-        document.querySelectorAll('.design-tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Show/Hide Content
-        document.querySelectorAll('.design-tab-content').forEach(c => c.classList.add('hidden'));
-        const tabId = btn.dataset.tab;
-        const target = document.getElementById(`design-tab-${tabId}`);
-        if (target) {
-            target.classList.remove('hidden');
-        }
-
-        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') {
-            playSound(clickSound);
-        }
-    });
-});
+// [Deleted duplicate tab logic]
 
 /* ===========================
    Star Rating Logic
@@ -1885,45 +1743,7 @@ console.log('Star rating system ready (Global Mode)');
 /* ===========================
    Download Logic
    =========================== */
-document.getElementById('downloadBtn')?.addEventListener('click', async () => {
-    const btn = document.getElementById('downloadBtn');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ Speichere...';
-    btn.disabled = true;
-
-    try {
-        const card = document.getElementById('greetingCard');
-        if (!card) throw new Error('Card not found');
-
-        // Use html-to-image
-        const dataUrl = await htmlToImage.toPng(card, {
-            quality: 1.0,
-            pixelRatio: 2,
-            style: { transform: 'none' }
-        });
-
-        const link = document.createElement('a');
-        link.download = `gruss-${Date.now()}.png`;
-        link.href = dataUrl;
-        link.click();
-
-        if (typeof playSound === 'function' && typeof successSound !== 'undefined') {
-            playSound(successSound);
-        }
-
-        // Show celebration
-        if (window.confetti) {
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        }
-
-    } catch (err) {
-        console.error('Download failed:', err);
-        alert('Fehler beim Speichern. Bitte versuche es erneut.');
-    } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-    }
-});
+// [Deleted redundant download handler]
 
 /* ===========================
    Text Effect Toggles
@@ -1968,65 +1788,4 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ===========================
    Download Image Button (DEBUG MODE - DELEGATED)
    =========================== */
-document.addEventListener('click', async (e) => {
-    // Event Delegation: Check if clicked element is (or is inside) #downloadBtn
-    const btn = e.target.closest('#downloadBtn');
-
-    if (btn) {
-        alert('1/4: Klick registriert (via Delegation). Starte Prozess...');
-
-        const greetingCard = document.getElementById('greetingCard');
-
-        if (!greetingCard) {
-            alert('FEHLER: Greeting Card Element nicht gefunden!');
-            return;
-        }
-
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '⏳ Speichern...';
-        btn.disabled = true;
-
-        try {
-            // Check Library
-            if (typeof htmlToImage === 'undefined') {
-                alert('FEHLER: html-to-image Bibliothek nicht geladen! Bitte Seite neu laden.');
-                throw new Error('Library missing');
-            }
-
-            alert('2/4: Bibliothek gefunden. Erstelle Bild...');
-
-            // Hide watermark
-            const watermark = greetingCard.querySelector('.bg-watermark');
-            if (watermark) watermark.style.display = 'none';
-
-            // Capture
-            const dataUrl = await htmlToImage.toPng(greetingCard, {
-                quality: 0.95,
-                pixelRatio: 2,
-                filter: (node) => node.tagName !== 'SCRIPT',
-            });
-
-            alert('3/4: Bild erstellt. Starte Download...');
-
-            // Download
-            const link = document.createElement('a');
-            link.download = `gruss_${Date.now()}.png`;
-            link.href = dataUrl;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            alert('4/4: Fertig! Download sollte gestartet sein.');
-
-            // Restore
-            if (watermark) watermark.style.display = '';
-
-        } catch (error) {
-            alert('FEHLER BEIM SPEICHERN: ' + error.message);
-            console.error(error);
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
-    }
-});
+// [Deleted debug download handler]
