@@ -1885,6 +1885,9 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ===========================
    Download Image Button
    =========================== */
+/* ===========================
+   Download Image Button
+   =========================== */
 document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadBtn');
     const greetingCard = document.getElementById('greetingCard');
@@ -1910,13 +1913,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const watermark = greetingCard.querySelector('.bg-watermark');
             if (watermark) watermark.style.display = 'none';
 
-            // Use html-to-image library
-            if (typeof htmlToImage !== 'undefined') {
-                const dataUrl = await htmlToImage.toPng(greetingCard, {
-                    quality: 1.0,
-                    pixelRatio: 2,
-                    backgroundColor: null
+            // Check if html2canvas is loaded
+            if (typeof html2canvas !== 'undefined') {
+                const canvas = await html2canvas(greetingCard, {
+                    scale: 2, // Retína quality
+                    useCORS: true, // Allow cross-origin images
+                    backgroundColor: null, // Transparent background if set
+                    logging: true // Debug logging
                 });
+
+                const dataUrl = canvas.toDataURL('image/png');
 
                 // Create download link
                 const link = document.createElement('a');
@@ -1932,7 +1938,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     playSound(successSound);
                 }
             } else {
-                console.error('html-to-image library not loaded');
+                console.error('html2canvas library not loaded');
                 if (typeof showToast === 'function') {
                     showToast('❌ Fehler: Bild-Bibliothek nicht geladen', 'error');
                 }
@@ -1946,6 +1952,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof showToast === 'function') {
                 showToast('❌ Fehler beim Speichern des Bildes', 'error');
             }
+            alert('Fehler beim Speichern: ' + error.message); // Direct user feedback
         } finally {
             // Restore button
             downloadBtn.innerHTML = originalText;
