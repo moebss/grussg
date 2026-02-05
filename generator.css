@@ -1241,10 +1241,11 @@ body {
 }
 
 /* Watermark container */
+/* Watermark container */
 .card-footer {
     position: absolute;
-    bottom: 16px;
-    right: 16px;
+    bottom: 24px;
+    right: 24px;
     z-index: 100;
     margin-top: 0;
     text-align: right;
@@ -1260,7 +1261,9 @@ body {
     padding: 6px 14px !important;
     border-radius: 50px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
     text-shadow: none !important;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
