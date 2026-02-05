@@ -1883,72 +1883,67 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ===========================
-   Download Image Button (DEBUG MODE)
+   Download Image Button (DEBUG MODE - DELEGATED)
    =========================== */
-document.addEventListener('DOMContentLoaded', () => {
-    const downloadBtn = document.getElementById('downloadBtn');
-    const greetingCard = document.getElementById('greetingCard');
+document.addEventListener('click', async (e) => {
+    // Event Delegation: Check if clicked element is (or is inside) #downloadBtn
+    const btn = e.target.closest('#downloadBtn');
 
-    if (downloadBtn) {
-        // Clone to remove old listeners
-        const newBtn = downloadBtn.cloneNode(true);
-        downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
-        const btn = document.getElementById('downloadBtn');
+    if (btn) {
+        alert('1/4: Klick registriert (via Delegation). Starte Prozess...');
 
-        btn.addEventListener('click', async () => {
-            alert('1/4: Klick registriert. Starte Prozess...');
+        const greetingCard = document.getElementById('greetingCard');
 
-            if (!greetingCard) {
-                alert('FEHLER: Greeting Card Element nicht gefunden!');
-                return;
+        if (!greetingCard) {
+            alert('FEHLER: Greeting Card Element nicht gefunden!');
+            return;
+        }
+
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '⏳ Speichern...';
+        btn.disabled = true;
+
+        try {
+            // Check Library
+            if (typeof htmlToImage === 'undefined') {
+                alert('FEHLER: html-to-image Bibliothek nicht geladen! Bitte Seite neu laden.');
+                throw new Error('Library missing');
             }
 
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '⏳ Speichern...';
-            btn.disabled = true;
+            alert('2/4: Bibliothek gefunden. Erstelle Bild...');
 
-            try {
-                // Check Library
-                if (typeof htmlToImage === 'undefined') {
-                    alert('FEHLER: html-to-image Bibliothek nicht geladen! Bitte Seite neu laden.');
-                    throw new Error('Library missing');
-                }
+            // Hide watermark
+            const watermark = greetingCard.querySelector('.bg-watermark');
+            if (watermark) watermark.style.display = 'none';
 
-                alert('2/4: Bibliothek gefunden. Erstelle Bild...');
+            // Capture
+            const dataUrl = await htmlToImage.toPng(greetingCard, {
+                quality: 0.95,
+                pixelRatio: 2,
+                filter: (node) => node.tagName !== 'SCRIPT',
+            });
 
-                // Hide watermark
-                const watermark = greetingCard.querySelector('.bg-watermark');
-                if (watermark) watermark.style.display = 'none';
+            alert('3/4: Bild erstellt. Starte Download...');
 
-                // Capture
-                const dataUrl = await htmlToImage.toPng(greetingCard, {
-                    quality: 0.95,
-                    pixelRatio: 2,
-                    filter: (node) => node.tagName !== 'SCRIPT',
-                });
+            // Download
+            const link = document.createElement('a');
+            link.download = `gruss_${Date.now()}.png`;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-                alert('3/4: Bild erstellt. Starte Download...');
+            alert('4/4: Fertig! Download sollte gestartet sein.');
 
-                // Download
-                const link = document.createElement('a');
-                link.download = `gruss_${Date.now()}.png`;
-                link.href = dataUrl;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            // Restore
+            if (watermark) watermark.style.display = '';
 
-                alert('4/4: Fertig! Download sollte gestartet sein.');
-
-                // Restore
-                if (watermark) watermark.style.display = '';
-
-            } catch (error) {
-                alert('FEHLER BEIM SPEICHERN: ' + error.message);
-                console.error(error);
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        });
+        } catch (error) {
+            alert('FEHLER BEIM SPEICHERN: ' + error.message);
+            console.error(error);
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
     }
 });
