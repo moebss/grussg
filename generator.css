@@ -1100,7 +1100,7 @@ body {
     position: relative;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     border-radius: var(--radius-lg);
-    padding: 24px;
+    padding: 16px;
     width: 100%;
     max-width: 100%;
     /* Social Media Square Ratio 1:1 (approx 1080x1080) */
@@ -1215,7 +1215,7 @@ body {
     font-size: 1.4rem;
     line-height: 1.8;
     white-space: pre-wrap;
-    padding-right: 50px;
+    padding-right: 0;
     color: #000000;
     text-shadow: none;
     user-select: text !important;
