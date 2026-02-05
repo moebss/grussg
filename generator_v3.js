@@ -1203,13 +1203,18 @@ function loadHistory() {
 }
 
 function saveToHistory(entry) {
-    let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-    history.unshift(entry);
-    if (history.length > MAX_HISTORY) {
-        history = history.slice(0, MAX_HISTORY);
+    try {
+        let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+        console.log('Saving to history:', entry);
+        history.unshift(entry);
+        if (history.length > MAX_HISTORY) {
+            history = history.slice(0, MAX_HISTORY);
+        }
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        renderHistory(history);
+    } catch (e) {
+        console.error('History save failed:', e);
     }
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-    renderHistory(history);
 }
 
 function renderHistory(history) {
@@ -1261,6 +1266,7 @@ function renderHistory(history) {
 
     // Render output section history list
     const outputHistoryList = document.getElementById('outputHistoryList');
+    if (!outputHistoryList) console.warn('Output history list element not found!');
     if (outputHistoryList) {
         if (history.length === 0) {
             outputHistoryList.innerHTML = '<p class="empty-history">Noch keine Grüße erstellt.</p>';
@@ -1886,7 +1892,10 @@ function initStars() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initStars);
 } else {
+    // Already loaded, run immediately
     initStars();
+    // Double check after small delay for dynamic content
+    setTimeout(initStars, 500);
 }
 
 /* ===========================
