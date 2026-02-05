@@ -1450,11 +1450,20 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
             setTimeout(() => reject(new Error('Zeitüberschreitung bei der Bilderstellung (15s)')), 15000)
         );
 
+        // Calculate explicit scale to get exactly 1080px
+        const currentWidth = card.clientWidth;
+        const currentHeight = card.clientHeight; // Should be same as width for square card
+        const targetSize = 1080;
+        const scale = targetSize / currentWidth;
+
+        console.log(`Auto-scaling image: ${currentWidth}px -> 1080px (Ratio: ${scale.toFixed(2)})`);
+
         // Actual generation promise
         const generation = htmlToImage.toJpeg(card, {
             quality: 0.95,
-            canvasWidth: 1080,
-            canvasHeight: 1080,
+            pixelRatio: scale,
+            width: currentWidth,   // Capture at natural size
+            height: currentHeight, // Capture at natural size
             backgroundColor: (getComputedStyle(card).backgroundColor === 'rgba(0, 0, 0, 0)') ? '#ffffff' : null,
             filter: (node) => {
                 // Exclude hidden elements to prevent loading errors (especially empty src images)
@@ -1464,15 +1473,10 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
                 return true;
             },
             style: {
-                transform: 'none',
+                transform: 'none', // Flatten any 3D effects
                 margin: '0',
-                display: 'flex',
-                // Force layout size to match target resolution
-                width: '1080px',
-                height: '1080px',
-                maxWidth: 'none',
-                maxHeight: 'none',
                 borderRadius: '0'
+                // REMOVED: display:flex, width:1080px override which broke layout
             },
             cacheBust: false // Disable cacheBust to rely on already loaded (CORS-validated) images
         });
