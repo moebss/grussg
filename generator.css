@@ -1113,7 +1113,10 @@ body {
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    /* Was space-between. Allow text to start at top. */
+    gap: 10px;
+    /* Minimal gap between elements */
 }
 
 /* Light Theme - Prominent Card Shadow */
@@ -1218,6 +1221,10 @@ body {
     padding-right: 0;
     color: #000000;
     text-shadow: none;
+    position: relative;
+    /* Ensure z-index works */
+    z-index: 50;
+    /* Above decorations */
     user-select: text !important;
     -webkit-user-select: text !important;
     -moz-user-select: text !important;
