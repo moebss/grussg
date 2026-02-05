@@ -1395,35 +1395,183 @@ body {
     border-color: #1877f2;
 }
 
-/* Viral CTA */
-.viral-cta {
-    margin: 20px 0;
-    padding: 20px;
+/* Unified Action Bar */
+.unified-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow wrap on very small screens */
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    padding: 15px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
-.viral-cta p {
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.reaction-buttons {
+.compact-rating {
     display: flex;
-    justify-content: center;
-    gap: 12px;
+    gap: 5px;
+    margin-right: 15px;
+    /* Separation from buttons */
 }
 
-.reaction-btn {
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border: 2px solid var(--glass-border);
-    border-radius: 50%;
+/* Compact Download Button */
+.btn-download-compact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f0e68c 0%, #ffd700 100%);
+    color: #5d4037;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 1.5rem;
-    transition: var(--transition);
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.btn-download-compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+/* Share Dropdown Container */
+.share-dropdown-container {
+    position: relative;
+    /* Container for the button and the expanding menu */
+}
+
+.btn-share-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 20;
+    /* Above the menu if overlapping */
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow */
+}
+
+.btn-share-trigger:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+/* Expanding Menu (Horizontal) */
+.share-options-menu {
+    position: absolute;
+    top: 50%;
+    /* Center vertically relative to button */
+    left: 100%;
+    /* Start at the right edge of the button */
+    transform: translateY(-50%) translateX(-20px) scaleX(0);
+    /* Start hidden/collapsed */
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px;
+    padding: 5px 10px 5px 20px;
+    /* Left padding covers the overlap */
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+    pointer-events: none;
+    /* Don't block clicks when hidden */
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    margin-left: -15px;
+    /* Pull it slightly under the trigger button for seamless look */
+}
+
+/* Active State (Expanded) */
+.share-dropdown-container:hover .share-options-menu,
+.share-dropdown-container.active .share-options-menu {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(-50%) translateX(0) scaleX(1);
+    padding-left: 25px;
+    /* Add space so buttons don't clip under the trigger */
+}
+
+/* Social Buttons inside menu */
+.share-options-menu .share-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    background: transparent;
+}
+
+.share-options-menu .share-btn:hover {
+    transform: scale(1.1);
+    background: #f1f5f9;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .unified-action-bar {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .compact-rating {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .share-dropdown-container,
+    .btn-download-compact {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* On mobile, open downwards instead of sideways */
+    .share-options-menu {
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px) scaleY(0);
+        transform-origin: top center;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: 10px;
+        border-radius: 12px;
+        width: max-content;
+        max-width: 90vw;
+    }
+
+    .share-dropdown-container:hover .share-options-menu,
+    .share-dropdown-container.active .share-options-menu {
+        transform: translateX(-50%) translateY(0) scaleY(1);
+        padding: 10px;
+    }
+}
+
+background: transparent;
+border: 2px solid var(--glass-border);
+border-radius: 50%;
+cursor: pointer;
+font-size: 1.5rem;
+transition: var(--transition);
 }
 
 .reaction-btn:hover {
