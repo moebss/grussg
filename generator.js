@@ -1883,80 +1883,72 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ===========================
-   Download Image Button
-   =========================== */
-/* ===========================
-   Download Image Button
+   Download Image Button (DEBUG MODE)
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadBtn');
     const greetingCard = document.getElementById('greetingCard');
 
-    if (!downloadBtn) {
-        console.warn('Download button not found');
-        return;
-    }
+    if (downloadBtn) {
+        // Clone to remove old listeners
+        const newBtn = downloadBtn.cloneNode(true);
+        downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
+        const btn = document.getElementById('downloadBtn');
 
-    downloadBtn.addEventListener('click', async () => {
-        if (!greetingCard) {
-            console.error('Greeting card element not found');
-            return;
-        }
+        btn.addEventListener('click', async () => {
+            alert('1/4: Klick registriert. Starte Prozess...');
 
-        // Show loading state
-        const originalText = downloadBtn.innerHTML;
-        downloadBtn.innerHTML = '⏳ Wird gespeichert...';
-        downloadBtn.disabled = true;
+            if (!greetingCard) {
+                alert('FEHLER: Greeting Card Element nicht gefunden!');
+                return;
+            }
 
-        try {
-            // Hide watermark for export
-            const watermark = greetingCard.querySelector('.bg-watermark');
-            if (watermark) watermark.style.display = 'none';
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Speichern...';
+            btn.disabled = true;
 
-            // Check if html2canvas is loaded
-            if (typeof html2canvas !== 'undefined') {
-                const canvas = await html2canvas(greetingCard, {
-                    scale: 2, // Retína quality
-                    useCORS: true, // Allow cross-origin images
-                    backgroundColor: null, // Transparent background if set
-                    logging: true // Debug logging
+            try {
+                // Check Library
+                if (typeof htmlToImage === 'undefined') {
+                    alert('FEHLER: html-to-image Bibliothek nicht geladen! Bitte Seite neu laden.');
+                    throw new Error('Library missing');
+                }
+
+                alert('2/4: Bibliothek gefunden. Erstelle Bild...');
+
+                // Hide watermark
+                const watermark = greetingCard.querySelector('.bg-watermark');
+                if (watermark) watermark.style.display = 'none';
+
+                // Capture
+                const dataUrl = await htmlToImage.toPng(greetingCard, {
+                    quality: 0.95,
+                    pixelRatio: 2,
+                    filter: (node) => node.tagName !== 'SCRIPT',
                 });
 
-                const dataUrl = canvas.toDataURL('image/png');
+                alert('3/4: Bild erstellt. Starte Download...');
 
-                // Create download link
+                // Download
                 const link = document.createElement('a');
                 link.download = `gruss_${Date.now()}.png`;
                 link.href = dataUrl;
+                document.body.appendChild(link);
                 link.click();
+                document.body.removeChild(link);
 
-                // Success feedback
-                if (typeof showToast === 'function') {
-                    showToast('✅ Bild wurde gespeichert!', 'success');
-                }
-                if (typeof playSound === 'function' && typeof successSound !== 'undefined') {
-                    playSound(successSound);
-                }
-            } else {
-                console.error('html2canvas library not loaded');
-                if (typeof showToast === 'function') {
-                    showToast('❌ Fehler: Bild-Bibliothek nicht geladen', 'error');
-                }
+                alert('4/4: Fertig! Download sollte gestartet sein.');
+
+                // Restore
+                if (watermark) watermark.style.display = '';
+
+            } catch (error) {
+                alert('FEHLER BEIM SPEICHERN: ' + error.message);
+                console.error(error);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
-
-            // Show watermark again
-            if (watermark) watermark.style.display = '';
-
-        } catch (error) {
-            console.error('Error saving image:', error);
-            if (typeof showToast === 'function') {
-                showToast('❌ Fehler beim Speichern des Bildes', 'error');
-            }
-            alert('Fehler beim Speichern: ' + error.message); // Direct user feedback
-        } finally {
-            // Restore button
-            downloadBtn.innerHTML = originalText;
-            downloadBtn.disabled = false;
-        }
-    });
+        });
+    }
 });
