@@ -1449,6 +1449,44 @@ async function generateCardBlob() {
     return { blob, dataUrl };
 }
 
+// Shared sharing function
+async function shareCardAsImage(platform) {
+    if (typeof htmlToImage === 'undefined') {
+        alert('Fehler: Bibliothek nicht geladen. Bitte Reload.');
+        return false;
+    }
+
+    try {
+        playSound(clickSound);
+        showToast(`Bereite Bild für ${platform} vor... 📤`, 'info');
+
+        // Capture as Blob
+        const { blob, dataUrl } = await generateCardBlob();
+
+        // Check for Web Share API support
+        if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'gruss.png', { type: 'image/png' })] })) {
+            const file = new File([blob], `gruss-${Date.now()}.png`, { type: 'image/png' });
+            await navigator.share({
+                files: [file],
+                title: 'Mein Gruß',
+                text: 'Schau mal, was ich gerade erstellt habe! 💌 grussgenerator.de'
+            });
+            playSound(successSound);
+            showToast('Erfolgreich geteilt! 🎉', 'success');
+            return true;
+        }
+
+        // If Web Share not supported or files share not supported
+        return false;
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            console.error('Sharing Error:', error);
+            showToast(`Teilen fehlgeschlagen: ${error.message}`, 'error');
+        }
+        return false;
+    }
+}
+
 // Download Button Handler
 document.getElementById('downloadBtn').addEventListener('click', async () => {
     if (typeof htmlToImage === 'undefined') {
@@ -1476,6 +1514,15 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     } catch (error) {
         console.error('Download Error:', error);
         alert('Fehler: ' + error.message);
+    }
+});
+
+// WhatsApp share - try image, fallback to text
+document.getElementById('whatsappBtn')?.addEventListener('click', async () => {
+    const shared = await shareCardAsImage('WhatsApp');
+    if (!shared && !navigator.canShare) {
+        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
+        window.open(`https://wa.me/?text=${text}`, '_blank');
     }
 });
 
