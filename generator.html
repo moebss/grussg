@@ -693,6 +693,32 @@
         <source src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Emergency Fallback Script -->
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            alert("JS Error: " + msg + "\nLine: " + line);
+        };
+
+        // Fallback if main script fails
+        if (!window.rateGreeting) {
+            window.rateGreeting = function (rating) {
+                alert("Star Clicked (Fallback Active)! Rating: " + rating);
+                const stars = document.querySelectorAll('.star-btn');
+                stars.forEach(s => {
+                    if (parseInt(s.dataset.rating) <= rating) {
+                        s.style.color = 'gold';
+                        s.style.filter = 'grayscale(0%)';
+                        s.style.transform = 'scale(1.2)';
+                    } else {
+                        s.style.color = '#ccc';
+                        s.style.filter = 'grayscale(100%)';
+                        s.style.transform = 'none';
+                    }
+                });
+            }
+        }
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="i18n.js"></script>
