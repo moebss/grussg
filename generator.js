@@ -1881,3 +1881,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+/* ===========================
+   Download Image Button
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const downloadBtn = document.getElementById('downloadBtn');
+    const greetingCard = document.getElementById('greetingCard');
+
+    if (!downloadBtn) {
+        console.warn('Download button not found');
+        return;
+    }
+
+    downloadBtn.addEventListener('click', async () => {
+        if (!greetingCard) {
+            console.error('Greeting card element not found');
+            return;
+        }
+
+        // Show loading state
+        const originalText = downloadBtn.innerHTML;
+        downloadBtn.innerHTML = '⏳ Wird gespeichert...';
+        downloadBtn.disabled = true;
+
+        try {
+            // Hide watermark for export
+            const watermark = greetingCard.querySelector('.bg-watermark');
+            if (watermark) watermark.style.display = 'none';
+
+            // Use html-to-image library
+            if (typeof htmlToImage !== 'undefined') {
+                const dataUrl = await htmlToImage.toPng(greetingCard, {
+                    quality: 1.0,
+                    pixelRatio: 2,
+                    backgroundColor: null
+                });
+
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `gruss_${Date.now()}.png`;
+                link.href = dataUrl;
+                link.click();
+
+                // Success feedback
+                if (typeof showToast === 'function') {
+                    showToast('✅ Bild wurde gespeichert!', 'success');
+                }
+                if (typeof playSound === 'function' && typeof successSound !== 'undefined') {
+                    playSound(successSound);
+                }
+            } else {
+                console.error('html-to-image library not loaded');
+                if (typeof showToast === 'function') {
+                    showToast('❌ Fehler: Bild-Bibliothek nicht geladen', 'error');
+                }
+            }
+
+            // Show watermark again
+            if (watermark) watermark.style.display = '';
+
+        } catch (error) {
+            console.error('Error saving image:', error);
+            if (typeof showToast === 'function') {
+                showToast('❌ Fehler beim Speichern des Bildes', 'error');
+            }
+        } finally {
+            // Restore button
+            downloadBtn.innerHTML = originalText;
+            downloadBtn.disabled = false;
+        }
+    });
+});
