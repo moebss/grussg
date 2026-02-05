@@ -1483,7 +1483,7 @@ document.getElementById('facebookBtn')?.addEventListener('click', async () => {
 /* TTS Logic Removed */
 
 // New greeting button
-document.getElementById('newGreetingBtn').addEventListener('click', () => {
+document.getElementById('newGreetingBtn')?.addEventListener('click', () => {
     playSound(clickSound);
     outputSection.classList.add('hidden');
     inputSection.classList.remove('hidden');
