@@ -1323,17 +1323,6 @@ function renderHistory(history) {
             });
         }
     }
-    outputHistoryList.querySelectorAll('.output-history-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const index = parseInt(item.dataset.index);
-            const entry = history[index];
-            generatedMessage.textContent = entry.text;
-            playSound(clickSound);
-            showToast('Gruß aus Historie geladen 📜', 'info');
-        });
-    });
-}
-    }
 }
 
 historyToggle.addEventListener('click', () => {
