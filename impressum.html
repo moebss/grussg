@@ -8,79 +8,126 @@
     <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="generator.css">
     <style>
+        .legal-page {
+            background: #faf8f5;
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+
         .legal-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 60px 24px 100px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
         }
 
         .legal-container h1 {
-            font-size: 2.5rem;
-            color: var(--color-primary);
-            margin-bottom: 40px;
-            text-align: center;
+            font-size: 2.2rem;
+            color: #5d4037;
+            margin-bottom: 30px;
+            font-weight: 900;
         }
 
         .legal-container h2 {
             font-size: 1.4rem;
-            color: var(--color-primary);
+            color: #5d4037;
             margin: 32px 0 16px;
+            font-weight: 700;
+        }
+
+        .legal-container h3 {
+            font-size: 1.1rem;
+            color: #5d4037;
+            margin: 24px 0 12px;
+            font-weight: 600;
         }
 
         .legal-container p,
         .legal-container ul {
-            color: var(--color-text);
+            color: #475569;
             line-height: 1.8;
             margin-bottom: 16px;
         }
 
         .legal-container a {
-            color: var(--color-primary);
+            color: #6366f1;
+            text-decoration: none;
+        }
+
+        .legal-container a:hover {
+            text-decoration: underline;
         }
 
         .back-link {
-            display: inline-block;
-            margin-bottom: 40px;
-            color: var(--color-text);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            color: #5d4037;
             text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+            font-weight: 600;
+            transition: all 0.2s;
         }
 
         .back-link:hover {
-            opacity: 1;
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .legal-page {
+                padding-top: 80px;
+            }
+
+            .legal-container {
+                margin: 20px;
+                padding: 25px;
+            }
         }
     </style>
 </head>
 
-<body>
+<body class="legal-page">
+    <!-- Aurora Background from main site -->
+    <div class="aurora-background" style="background: #faf8f5;">
+        <div class="aurora-blob blob-1" style="opacity: 0.1; background: #c7d2fe;"></div>
+        <div class="aurora-blob blob-2" style="opacity: 0.1; background: #fce7f3;"></div>
+    </div>
+
     <div class="container">
         <div class="legal-container">
-            <a href="index.html" class="back-link">← Zurück zur Startseite</a>
+            <a href="index.html" class="back-link">
+                <span>←</span> Zurück zum Generator
+            </a>
 
             <h1>Impressum</h1>
 
             <h2>Angaben gemäß § 5 TMG</h2>
             <p>
                 Alexander Rheindorf<br>
-                [Straße und Hausnummer]<br>
-                [PLZ und Ort]<br>
+                Pankratiusstraße 31<br>
+                50739 Köln<br>
                 Deutschland
             </p>
 
             <h2>Kontakt</h2>
             <p>
-                E-Mail: kontakt@grussgenerator.de
+                E-Mail: info@kryptokoelsch.de<br>
+                Web: <a href="https://grussgenerator.de">www.grussgenerator.de</a>
             </p>
 
             <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
             <p>
                 Alexander Rheindorf<br>
-                [Adresse wie oben]
+                Pankratiusstraße 31<br>
+                50739 Köln
             </p>
 
             <h2>Haftungsausschluss</h2>
