@@ -1646,12 +1646,13 @@ body {
     }
 }
 
-background: transparent;
-border: 2px solid var(--glass-border);
-border-radius: 50%;
-cursor: pointer;
-font-size: 1.5rem;
-transition: var(--transition);
+.reaction-btn {
+    background: transparent;
+    border: 2px solid var(--glass-border);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: var(--transition);
 }
 
 .reaction-btn:hover {
@@ -4216,6 +4217,7 @@ transition: var(--transition);
 /* Enhancing the slider visibility too */
 .mini-slider {
     -webkit-appearance: none;
+    appearance: none;
     height: 6px;
     background: #e0d5c1;
     border-radius: 5px;
@@ -4346,11 +4348,11 @@ transition: var(--transition);
 }
 
 .seo-content h2 {
-    font-size: 2rem;
-    background: linear-gradient(135deg, #4f46e5, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #5d4037;
     margin-bottom: 20px;
+    letter-spacing: -0.02em;
 }
 
 .seo-content p {
@@ -4376,7 +4378,7 @@ transition: var(--transition);
 .seo-card h3 {
     font-size: 1.1rem;
     margin-bottom: 10px;
-    color: #1e293b;
+    color: #5d4037;
 }
 
 .seo-card p {
@@ -4401,7 +4403,7 @@ transition: var(--transition);
 .faq-item strong {
     display: block;
     font-size: 1.05rem;
-    color: #1e293b;
+    color: #5d4037;
     margin-bottom: 5px;
 }
 
