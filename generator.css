@@ -3109,6 +3109,7 @@ body {
    Background Watermark
    =========================== */
 .bg-watermark {
+    display: none !important;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -3241,6 +3242,7 @@ body {
     }
 
     .bg-watermark {
+        display: none !important;
         font-size: 1.8rem;
     }
 }
@@ -3598,6 +3600,7 @@ body {
 
 /* Large Anti-Screenshot Watermark */
 .bg-watermark {
+    display: none !important;
     position: absolute;
     top: 50%;
     left: 50%;
