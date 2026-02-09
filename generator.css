@@ -351,13 +351,23 @@ body {
     box-shadow: 0 4px 12px rgba(139, 90, 43, 0.15);
 }
 
+.logo-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: left;
+}
+
 .logo-text {
     font-weight: 900;
+    margin: 0 0 4px 0;
+    line-height: 1;
 }
 
 .logo-divider {
-    color: rgba(139, 90, 43, 0.3);
-    font-weight: 300;
+    display: none;
 }
 
 .logo .tagline {
