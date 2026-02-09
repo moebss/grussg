@@ -688,9 +688,7 @@ function updateFloatingEmojis(occasion) {
     const decorations = document.getElementById('cardDecorations');
     const emojis = occasionEmojis[occasion] || occasionEmojis.general;
 
-    decorations.innerHTML = emojis.map(emoji =>
-        `<span class="floating-emoji">${emoji}</span>`
-    ).join('');
+    decorations.innerHTML = ''; // Emojis deaktiviert
 
     greetingCard.setAttribute('data-occasion', occasion);
 }

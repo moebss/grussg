@@ -4431,3 +4431,5 @@ body {
         padding: 25px;
     }
 }
+/* Force hide floating emojis */
+.floating-emoji { display: none !important; }
