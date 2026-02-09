@@ -1172,6 +1172,8 @@ greetingForm.addEventListener('submit', async (e) => {
         function cleanCitations(text) {
             return text
                 .replace(/\[\d+\]/g, '')           // Remove [1], [2], etc.
+                .replace(/\*\*/g, '')              // Remove bold markdown **
+                .replace(/\*/g, '')                // Remove italic markdown *
                 .replace(/  +/g, ' ')              // Clean multiple spaces (not newlines!)
                 .replace(/ +\n/g, '\n')            // Remove trailing spaces before newlines
                 .replace(/\n +/g, '\n')            // Remove leading spaces after newlines  
