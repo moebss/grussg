@@ -250,8 +250,8 @@ body {
 }
 
 .brand-icon {
-    width: 48px;
-    height: 48px;
+    width: 160px;
+    height: 160px;
     margin-right: 12px;
     vertical-align: middle;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
@@ -361,7 +361,7 @@ body {
 }
 
 .logo .tagline {
-    font-size: 0.95rem;
+    font-size: 1.25rem;
     font-weight: 400;
     font-style: italic;
     color: #8b7355;
