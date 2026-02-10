@@ -2532,16 +2532,7 @@ body {
     opacity: 1;
 }
 
-.greeting-card .message-text {
-    position: absolute;
-    left: 5%;
-    top: 10%;
-    width: 90%;
-    z-index: 2;
-    pointer-events: auto;
-    cursor: grab;
-    user-select: none;
-}
+/* message-text styling consolidated at line ~3740 */
 
 .greeting-card .card-footer {
     position: absolute;
@@ -3745,6 +3736,11 @@ body {
     position: relative;
     z-index: 2;
     padding: 15% !important;
+    pointer-events: auto;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
 }
 
 /* ===========================
