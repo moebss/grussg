@@ -571,6 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (messageText && greetingCard) {
         console.log('Drag system ready');
 
+        // DEBUG: Log what is being clicked
+        greetingCard.addEventListener('mousedown', (e) => {
+            console.log('Clicked element:', e.target.tagName, e.target.className, e.target.id);
+        });
+
         const startHandler = (e) => {
             // Check if it's the left mouse button or touch
             if (e.type === 'mousedown' && e.button !== 0) return;

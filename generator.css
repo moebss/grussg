@@ -3736,6 +3736,10 @@ body {
     position: relative;
     z-index: 2;
     padding: 15% !important;
+    border: 2px dashed red;
+    /* DEBUG: Visualize text area */
+    background: rgba(255, 0, 0, 0.1);
+    /* DEBUG: Visualize hit area */
     pointer-events: auto;
     cursor: grab;
     user-select: none;
