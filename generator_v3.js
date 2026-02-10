@@ -559,19 +559,37 @@ document.getElementById('copyTextBtn')?.addEventListener('click', async () => {
 // ===========================
 // DRAGGABLE MESSAGE TEXT
 // ===========================
-const messageText = document.getElementById('generatedMessage');
 let textDrag = null;
 let textDragOffset = { x: 0, y: 0 };
 let textTranslate = { x: 0, y: 0 };
 
-if (messageText && greetingCard) {
-    messageText.addEventListener('mousedown', startTextDrag);
-    messageText.addEventListener('touchstart', startTextDrag, { passive: false });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const messageText = document.getElementById('generatedMessage');
+    const greetingCard = document.getElementById('greetingCard');
 
-function startTextDrag(e) {
+    if (messageText && greetingCard) {
+        console.log('Drag logic initialized for messageText', messageText);
+
+        // Mobile/Touch support
+        messageText.addEventListener('touchstart', (e) => {
+            console.log('Touch start');
+            startTextDrag(e, messageText);
+        }, { passive: false });
+
+        // Desktop/Mouse support
+        messageText.addEventListener('mousedown', (e) => {
+            console.log('Mouse down');
+            startTextDrag(e, messageText);
+        });
+    } else {
+        console.error('Drag init failed: messageText or greetingCard missing', { messageText, greetingCard });
+    }
+});
+
+function startTextDrag(e, element) {
     e.preventDefault();
-    textDrag = messageText;
+    e.stopPropagation(); // Stop bubbling
+    textDrag = element;
     textDrag.style.cursor = 'grabbing';
 
     const clientX = e.clientX || e.touches[0].clientX;
@@ -584,6 +602,8 @@ function startTextDrag(e) {
     document.addEventListener('mouseup', stopTextDrag);
     document.addEventListener('touchmove', dragText, { passive: false });
     document.addEventListener('touchend', stopTextDrag);
+
+    console.log('Drag started', { startX: clientX, startY: clientY });
 }
 
 function dragText(e) {
@@ -593,15 +613,17 @@ function dragText(e) {
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
 
-    const cardRect = greetingCard.getBoundingClientRect();
+    const cardRect = document.getElementById('greetingCard').getBoundingClientRect();
 
     let newX = clientX - textDragOffset.x;
     let newY = clientY - textDragOffset.y;
 
-    // Clamp to stay roughly inside the card
-    const maxShift = cardRect.width * 0.3;
-    newX = Math.max(-maxShift, Math.min(maxShift, newX));
-    newY = Math.max(-maxShift, Math.min(maxShift, newY));
+    // Clamp to stay roughly inside (relaxed to 45% of width/height)
+    const maxShiftX = cardRect.width * 0.45;
+    const maxShiftY = cardRect.height * 0.45;
+
+    newX = Math.max(-maxShiftX, Math.min(maxShiftX, newX));
+    newY = Math.max(-maxShiftY, Math.min(maxShiftY, newY));
 
     textTranslate.x = newX;
     textTranslate.y = newY;
@@ -612,6 +634,7 @@ function stopTextDrag() {
     if (textDrag) {
         textDrag.style.cursor = 'grab';
         textDrag = null;
+        console.log('Drag stopped');
     }
     document.removeEventListener('mousemove', dragText);
     document.removeEventListener('mouseup', stopTextDrag);
