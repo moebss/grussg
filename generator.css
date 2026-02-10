@@ -3730,15 +3730,24 @@ body {
 /* ===========================
    Generated Message Layout
    =========================== */
+/* Message Text - Draggable Absolute Position */
 .message-text {
-    padding: 15% !important;
-    /* 15% uniform padding */
-    text-align: left;
-    width: 100%;
-    max-width: 100%;
+    position: absolute;
+    left: 10%;
+    top: 30%;
+    width: auto;
+    max-width: 90%;
+    padding: 16px;
     box-sizing: border-box;
+    text-align: center;
+    /* Center text inside the box */
     display: block;
     text-wrap: balance;
+    cursor: grab;
+    z-index: 50;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
 }
 
 /* ===========================
@@ -3766,12 +3775,7 @@ body {
 }
 
 /* Ensure text sits on top correctly with new padding */
-.greeting-card .message-text {
-    position: relative;
-    z-index: 2;
-    padding: 15% !important;
-    /* Keep the requested text padding */
-}
+
 
 /* Ensure placeholder moods don't break layout */
 .greeting-card[data-mood^="mood-"] {

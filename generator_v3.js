@@ -597,8 +597,16 @@ function dragText(e) {
     const x = ((clientX - cardRect.left - textDragOffset.x) / cardRect.width) * 100;
     const y = ((clientY - cardRect.top - textDragOffset.y) / cardRect.height) * 100;
 
-    textDrag.style.left = Math.max(0, Math.min(70, x)) + '%';
-    textDrag.style.top = Math.max(0, Math.min(70, y)) + '%';
+    // Calculate dynamic bounds based on element size
+    const elWidth = (textDrag.offsetWidth / cardRect.width) * 100;
+    const elHeight = (textDrag.offsetHeight / cardRect.height) * 100;
+
+    // Constrain to stay inside (max left = 100% - element width %)
+    const maxLeft = Math.max(0, 100 - elWidth);
+    const maxTop = Math.max(0, 100 - elHeight);
+
+    textDrag.style.left = Math.max(0, Math.min(maxLeft, x)) + '%';
+    textDrag.style.top = Math.max(0, Math.min(maxTop, y)) + '%';
 }
 
 function stopTextDrag() {
