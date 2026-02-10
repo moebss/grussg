@@ -64,6 +64,9 @@ document.getElementById('backToGenerator')?.addEventListener('click', () => {
 // ANIMATED BACKGROUND
 // ===========================
 function initBackground() {
+    // Skip heavy particle animation on mobile
+    if (window.innerWidth <= 480) return;
+
     const canvas = document.getElementById('bgCanvas');
     if (!canvas) return;
 
