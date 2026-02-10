@@ -71,6 +71,50 @@ body {
 }
 
 /* ===========================
+   Custom Scrollbars (Desktop)
+   =========================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    /* muted primary */
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.6);
+    /* primary */
+}
+
+/* ===========================
+   3D Tilt Effect
+   =========================== */
+.greeting-card-wrapper {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.greeting-card {
+    transition: transform 0.1s ease-out;
+    /* Smooth follow */
+    will-change: transform;
+}
+
+/* Reset transition on mouse leave for smooth return */
+.greeting-card.reset-tilt {
+    transition: transform 0.5s ease !important;
+}
+
+/* ===========================
    Aurora Background
    =========================== */
 .aurora-background {
@@ -3628,9 +3672,16 @@ body {
 
 /* Mobile: Stack layout */
 @media (max-width: 900px) {
+    .container {
+        padding-top: 80px !important;
+        /* Reduce top padding for mobile */
+    }
+
     .editor-layout {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
+        gap: 20px;
+        /* Add gap between stacked containers */
     }
 
     .sticker-panel {
@@ -3640,18 +3691,32 @@ body {
 
     .card-center {
         order: 1;
+        margin-bottom: 20px;
+        /* Space below card */
     }
 
     .design-panel {
         order: 3;
     }
 
+    /* Larger touch targets on mobile */
     .sticker-grid {
-        grid-template-columns: repeat(8, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+        /* Bigger stickers (5 per row) */
+        gap: 8px;
+    }
+
+    .sticker {
+        font-size: 2rem;
+        /* Larger emoji size */
+        padding: 12px;
+        /* Larger hit area */
     }
 
     .design-panel .mood-grid-compact {
-        grid-template-columns: repeat(8, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+        /* Bigger mood templates */
+        gap: 8px;
     }
 }
 
@@ -4431,5 +4496,55 @@ body {
         padding: 25px;
     }
 }
+
 /* Force hide floating emojis */
-.floating-emoji { display: none !important; }
+.floating-emoji {
+    display: none !important;
+}
+
+/* ===========================
+   Supabase Moods Grid
+   =========================== */
+.mood-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+    width: 100%;
+}
+
+.mood-emoji {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mood-emoji img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.mood-emoji:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mood-emoji:hover img {
+    transform: scale(1.1);
+}
+
+.mood-emoji.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}

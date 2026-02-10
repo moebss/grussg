@@ -100,10 +100,10 @@ export default async (req, res) => {
             });
         }
 
-        // Select 1 or 2 random images
-        const count = req.body?.count || 1;
+        // Select requested number of images (max 50)
+        const count = Math.min(req.body?.count || 1, 50);
         const shuffled = imageFiles.sort(() => Math.random() - 0.5);
-        const selectedFiles = shuffled.slice(0, Math.min(count, 2));
+        const selectedFiles = shuffled.slice(0, count);
 
         // Generate public URLs
         const images = selectedFiles.map(file => ({

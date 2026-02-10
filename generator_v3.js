@@ -682,6 +682,75 @@ document.querySelectorAll('.font-mini').forEach(btn => {
     });
 });
 
+/* ===========================
+   3D Tilt Effect Logic
+   =========================== */
+const cardWrapper = document.querySelector('.greeting-card-wrapper');
+const card = document.getElementById('greetingCard');
+
+if (cardWrapper && card && window.matchMedia("(min-width: 900px)").matches) {
+    cardWrapper.addEventListener('mousemove', (e) => {
+        const rect = cardWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Calculate rotation (max 10 degrees)
+        const xRotation = -1 * ((y - rect.height / 2) / rect.height * 10);
+        const yRotation = (x - rect.width / 2) / rect.width * 10;
+
+        card.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+        card.classList.remove('reset-tilt');
+    });
+
+    cardWrapper.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0) rotateY(0)';
+        card.classList.add('reset-tilt');
+    });
+}
+
+/* ===========================
+   Keyboard Shortcuts
+   =========================== */
+document.addEventListener('keydown', (e) => {
+    // Only if a sticker is selected/being dragged (we track this via class 'selected-sticker' if we had one, 
+    // but typically we can track the last clicked sticker. For now, let's look for a focused sticker or add selection logic)
+
+    // START SIMPLE: If an element is focused and it is a sticker? 
+    // Actually, stickers are <span> or <img>. We need to make them focusable or track active sticker.
+    // Let's rely on the 'placed-sticker' global variable if it exists, or find the one with a 'selected' class.
+
+    const selectedSticker = document.querySelector('.placed-sticker.selected');
+
+    if (selectedSticker) {
+        const step = e.shiftKey ? 10 : 1;
+        const currentLeft = parseInt(selectedSticker.style.left) || 0;
+        const currentTop = parseInt(selectedSticker.style.top) || 0;
+
+        switch (e.key) {
+            case 'Delete':
+            case 'Backspace':
+                selectedSticker.remove();
+                break;
+            case 'ArrowLeft':
+                selectedSticker.style.left = `${currentLeft - step}%`;
+                e.preventDefault();
+                break;
+            case 'ArrowRight':
+                selectedSticker.style.left = `${currentLeft + step}%`;
+                e.preventDefault();
+                break;
+            case 'ArrowUp':
+                selectedSticker.style.top = `${currentTop - step}%`;
+                e.preventDefault();
+                break;
+            case 'ArrowDown':
+                selectedSticker.style.top = `${currentTop + step}%`;
+                e.preventDefault();
+                break;
+        }
+    }
+});
+
 /* Frame Logic Removed */
 
 function updateFloatingEmojis(occasion) {
@@ -1506,31 +1575,137 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     }
 });
 
+// Helper for mobile detection
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 // WhatsApp share - try image, fallback to text
 document.getElementById('whatsappBtn')?.addEventListener('click', async () => {
     const shared = await shareCardAsImage('WhatsApp');
-    if (!shared && !navigator.canShare) {
-        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
-        window.open(`https://wa.me/?text=${text}`, '_blank');
+    if (!shared) {
+        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
+
+        if (isMobileDevice()) {
+            // Mobile: Try direct app link
+            window.location.href = `whatsapp://send?text=${text}`;
+            // Fallback to wa.me if app not installed (handler usually handles this but good practice)
+            setTimeout(() => {
+                window.open(`https://wa.me/?text=${text}`, '_blank');
+            }, 500);
+        } else {
+            // Desktop: Use WhatsApp Web directly
+            window.open(`https://web.whatsapp.com/send?text=${text}`, '_blank');
+        }
     }
 });
 
 // Twitter share - try image, fallback to text
 document.getElementById('twitterBtn')?.addEventListener('click', async () => {
-    const shared = await shareCardAsImage('Twitter/X');
-    if (!shared && !navigator.canShare) {
-        const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌 Probiere es selbst: grussgenerator.de');
-        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-    }
+    // Twitter doesn't support direct image sharing via web intent well, mostly text/url
+    // We prioritize text share for Twitter
+    const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌\n\n' + generatedMessage.textContent.substring(0, 100) + '...\n\nProbiere es selbst: https://grussgenerator.de');
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
 });
 
 // Telegram share - try image, fallback to text
 document.getElementById('telegramBtn')?.addEventListener('click', async () => {
     const shared = await shareCardAsImage('Telegram');
-    if (!shared && !navigator.canShare) {
-        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 grussgenerator.de');
-        window.open(`https://t.me/share/url?url=https://grussgenerator.de&text=${text}`, '_blank');
+    if (!shared) {
+        const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit https://grussgenerator.de');
+        const url = encodeURIComponent('https://grussgenerator.de');
+
+        if (isMobileDevice()) {
+            window.location.href = `tg://msg?text=${text}`;
+        } else {
+            window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+        }
     }
+});
+
+// ===========================
+// SUPABASE MOODS INTEGRATION
+// ===========================
+async function loadSupabaseMoods() {
+    const container = document.getElementById('supabaseMoods');
+    if (!container) return;
+
+    try {
+        // Fetch unlimited (up to 50) images
+        const response = await fetch('/api/get-random-card', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ count: 30 }) // Fetch 30 images for the gallery
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (data.type === 'image' && data.images && data.images.length > 0) {
+
+            // Clear container (keep it if we want to append? No, fresh load)
+            container.innerHTML = '';
+
+            // Add label
+            const label = document.createElement('div');
+            label.style.width = '100%';
+            label.style.fontSize = '0.85rem';
+            label.style.fontWeight = '600';
+            label.style.color = '#64748b';
+            label.style.marginBottom = '8px';
+            label.innerText = '✨ Community Designs';
+            container.appendChild(label);
+
+            data.images.forEach(img => {
+                const btn = document.createElement('button');
+                btn.className = 'mood-emoji'; // Reuse existing class for styling
+                btn.title = 'Community Design';
+
+                const image = document.createElement('img');
+                image.src = img.url;
+                image.alt = 'Design';
+                image.loading = 'lazy'; // Lazy load for performance
+
+                btn.appendChild(image);
+
+                btn.addEventListener('click', () => {
+                    // Visual feedback
+                    document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Set as background
+                    const greetingCard = document.getElementById('greetingCard');
+                    const customBg = document.getElementById('cardCustomBg');
+
+                    if (greetingCard && customBg) {
+                        // Use customBg element for proper layering
+                        customBg.src = img.url;
+                        customBg.classList.remove('hidden');
+
+                        // Fallback on card (optional, but good for some browsers/exports)
+                        greetingCard.style.backgroundImage = `url('${img.url}')`;
+                        greetingCard.style.backgroundSize = 'cover';
+                        greetingCard.style.backgroundPosition = 'center';
+
+                        // Ensure text is legible (remove custom-bg class which might add gray overlay if not desired, 
+                        // or KEEP it if we want contrast. Let's keep it but ensure contrast logic exists in CSS)
+                        // greetingCard.classList.add('has-custom-bg'); 
+                    }
+
+                    playSound(clickSound);
+                });
+
+                container.appendChild(btn);
+            });
+        }
+    } catch (err) {
+        console.error('Failed to load Supabase moods:', err);
+    }
+}
+
+// Load on init
+document.addEventListener('DOMContentLoaded', () => {
+    loadSupabaseMoods();
 });
 
 // Facebook share - try image, fallback to link
@@ -1850,3 +2025,158 @@ document.addEventListener('DOMContentLoaded', () => {
    Download Image Button (DEBUG MODE - DELEGATED)
    =========================== */
 // [Deleted debug download handler]
+
+/* ===========================
+   Custom Tooltips Logic
+   =========================== */
+let tooltipElem = document.createElement('div');
+tooltipElem.className = 'custom-tooltip';
+document.body.appendChild(tooltipElem);
+
+document.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('[title]');
+    if (target) {
+        const title = target.getAttribute('title');
+        if (title) {
+            target.setAttribute('data-original-title', title);
+            target.removeAttribute('title'); // Hide native
+
+            tooltipElem.textContent = title;
+            tooltipElem.classList.add('visible');
+
+            const rect = target.getBoundingClientRect();
+            const tooltipRect = tooltipElem.getBoundingClientRect();
+
+            let top = rect.top - tooltipRect.height - 8;
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+            // Keep in viewport
+            if (top < 0) top = rect.bottom + 8;
+            if (left < 0) left = 8;
+            if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 8;
+
+            tooltipElem.style.top = `${top}px`;
+            tooltipElem.style.left = `${left}px`;
+        }
+    } else if (e.target.closest('[data-original-title]')) {
+        // Already processed, just show
+        const t = e.target.closest('[data-original-title]');
+        tooltipElem.textContent = t.getAttribute('data-original-title');
+        tooltipElem.classList.add('visible');
+
+        const rect = t.getBoundingClientRect();
+        const tooltipRect = tooltipElem.getBoundingClientRect();
+
+        let top = rect.top - tooltipRect.height - 8;
+        let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+        // Keep in viewport
+        if (top < 0) top = rect.bottom + 8;
+        if (left < 0) left = 8;
+        if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 8;
+
+        tooltipElem.style.top = `${top}px`;
+        tooltipElem.style.left = `${left}px`;
+    }
+});
+
+document.addEventListener('mouseout', (e) => {
+    const target = e.target.closest('[data-original-title]');
+    if (target) {
+        tooltipElem.classList.remove('visible');
+    }
+});
+
+/* ===========================
+   Custom Context Menu Logic
+   =========================== */
+const ctxMenu = document.createElement('div');
+ctxMenu.className = 'custom-context-menu';
+ctxMenu.innerHTML = `
+    <div class="ctx-menu-item" id="ctxFlip">🔄 Spiegeln</div>
+    <div class="ctx-menu-item" id="ctxFront">⬆️ Nach vorne</div>
+    <div class="ctx-menu-item" id="ctxBack">⬇️ Nach hinten</div>
+    <div class="ctx-menu-separator"></div>
+    <div class="ctx-menu-item" id="ctxDelete" style="color: var(--color-error);">🗑️ Löschen</div>
+`;
+document.body.appendChild(ctxMenu);
+
+let ctxTargetSticker = null;
+
+document.addEventListener('contextmenu', (e) => {
+    const sticker = e.target.closest('.placed-sticker');
+    if (sticker) {
+        e.preventDefault();
+        ctxTargetSticker = sticker;
+
+        // Select it visually
+        document.querySelectorAll('.placed-sticker').forEach(s => s.classList.remove('selected'));
+        sticker.classList.add('selected');
+
+        // Position menu
+        let top = e.clientY;
+        let left = e.clientX;
+
+        // Adjust if out of bounds (simple check)
+        if (left + 160 > window.innerWidth) left = window.innerWidth - 170;
+        if (top + 150 > window.innerHeight) top = window.innerHeight - 160;
+
+        ctxMenu.style.top = `${top}px`;
+        ctxMenu.style.left = `${left}px`;
+        ctxMenu.classList.add('visible');
+    }
+});
+
+// Close menu on click elsewhere
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-context-menu')) {
+        ctxMenu.classList.remove('visible');
+    }
+});
+
+// Menu Actions
+document.getElementById('ctxFlip').addEventListener('click', () => {
+    if (ctxTargetSticker) {
+        // Toggle flip class
+        ctxTargetSticker.classList.toggle('flipped');
+
+        // Apply transform based on class
+        let currentTransform = ctxTargetSticker.style.transform || '';
+
+        // Remove existing scaleX if present to avoid stacking
+        currentTransform = currentTransform.replace(/scaleX\([-]?1\)/g, '').trim();
+
+        if (ctxTargetSticker.classList.contains('flipped')) {
+            ctxTargetSticker.style.transform = `${currentTransform} scaleX(-1)`;
+        } else {
+            ctxTargetSticker.style.transform = `${currentTransform} scaleX(1)`;
+        }
+
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+        ctxMenu.classList.remove('visible');
+    }
+});
+
+document.getElementById('ctxFront').addEventListener('click', () => {
+    if (ctxTargetSticker) {
+        ctxTargetSticker.style.zIndex = parseInt(ctxTargetSticker.style.zIndex || 5) + 1;
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+    }
+    ctxMenu.classList.remove('visible');
+});
+
+document.getElementById('ctxBack').addEventListener('click', () => {
+    if (ctxTargetSticker) {
+        ctxTargetSticker.style.zIndex = Math.max(1, (parseInt(ctxTargetSticker.style.zIndex || 5) - 1));
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+    }
+    ctxMenu.classList.remove('visible');
+});
+
+document.getElementById('ctxDelete').addEventListener('click', () => {
+    if (ctxTargetSticker) {
+        ctxTargetSticker.remove();
+        if (typeof playSound === 'function' && typeof clickSound !== 'undefined') playSound(clickSound);
+    }
+    ctxMenu.classList.remove('visible');
+});
