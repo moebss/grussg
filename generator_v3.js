@@ -571,10 +571,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (messageText && greetingCard) {
         console.log('Drag system ready');
 
-        // DEBUG: Log what is being clicked
-        greetingCard.addEventListener('mousedown', (e) => {
-            console.log('Clicked element:', e.target.tagName, e.target.className, e.target.id);
-        });
+        // DEBUG: Log global clicks to find interceptor
+        window.addEventListener('mousedown', (e) => {
+            console.log('Global Click on:', e.target.tagName, e.target.className, e.target.id);
+            // Check z-index and pointer-events of target
+            const style = window.getComputedStyle(e.target);
+            console.log('Target styles:', {
+                zIndex: style.zIndex,
+                pointerEvents: style.pointerEvents,
+                position: style.position
+            });
+        }, { capture: true });
 
         const startHandler = (e) => {
             // Check if it's the left mouse button or touch
