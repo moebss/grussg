@@ -3734,18 +3734,17 @@ body {
 /* Ensure text sits on top correctly with new padding */
 .greeting-card .message-text {
     position: relative;
-    z-index: 2;
+    z-index: 50;
+    /* Ensure text is above overlay/stickers */
     padding: 15% !important;
-    border: 2px dashed red;
-    /* DEBUG: Visualize text area */
-    background: rgba(255, 0, 0, 0.1);
-    /* DEBUG: Visualize hit area */
     pointer-events: auto;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
     will-change: transform;
+    transform: translateZ(0);
+    /* Force layer */
 }
 
 .message-text.is-dragging {

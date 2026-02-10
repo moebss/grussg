@@ -569,20 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const greetingCard = document.getElementById('greetingCard');
 
     if (messageText && greetingCard) {
-        console.log('Drag system ready');
-
-        // DEBUG: Log global clicks to find interceptor
-        window.addEventListener('mousedown', (e) => {
-            console.log('Global Click on:', e.target.tagName, e.target.className, e.target.id);
-            // Check z-index and pointer-events of target
-            const style = window.getComputedStyle(e.target);
-            console.log('Target styles:', {
-                zIndex: style.zIndex,
-                pointerEvents: style.pointerEvents,
-                position: style.position
-            });
-        }, { capture: true });
-
         const startHandler = (e) => {
             // Check if it's the left mouse button or touch
             if (e.type === 'mousedown' && e.button !== 0) return;
@@ -746,6 +732,8 @@ document.querySelectorAll('.font-mini').forEach(btn => {
 const cardWrapper = document.querySelector('.greeting-card-wrapper');
 const card = document.getElementById('greetingCard');
 
+// 3D Tilt disabled to prevent drag conflicts
+/*
 if (cardWrapper && card && window.matchMedia("(min-width: 900px)").matches) {
     cardWrapper.addEventListener('mousemove', (e) => {
         const rect = cardWrapper.getBoundingClientRect();
@@ -765,6 +753,7 @@ if (cardWrapper && card && window.matchMedia("(min-width: 900px)").matches) {
         card.classList.add('reset-tilt');
     });
 }
+*/
 
 /* ===========================
    Keyboard Shortcuts
