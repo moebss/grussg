@@ -3730,24 +3730,21 @@ body {
 /* ===========================
    Generated Message Layout
    =========================== */
-/* Message Text - Draggable Absolute Position */
 .message-text {
-    position: absolute;
-    left: 10%;
-    top: 30%;
-    width: auto;
-    max-width: 90%;
-    padding: 16px;
+    padding: 15% !important;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
-    text-align: center;
-    /* Center text inside the box */
     display: block;
     text-wrap: balance;
-    cursor: grab;
-    z-index: 50;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: none;
+}
+
+/* Ensure text sits on top correctly with new padding */
+.greeting-card .message-text {
+    position: relative;
+    z-index: 2;
+    padding: 15% !important;
 }
 
 /* ===========================

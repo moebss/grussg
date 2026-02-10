@@ -562,6 +562,7 @@ document.getElementById('copyTextBtn')?.addEventListener('click', async () => {
 const messageText = document.getElementById('generatedMessage');
 let textDrag = null;
 let textDragOffset = { x: 0, y: 0 };
+let textTranslate = { x: 0, y: 0 };
 
 if (messageText && greetingCard) {
     messageText.addEventListener('mousedown', startTextDrag);
@@ -573,12 +574,11 @@ function startTextDrag(e) {
     textDrag = messageText;
     textDrag.style.cursor = 'grabbing';
 
-    const rect = textDrag.getBoundingClientRect();
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
 
-    textDragOffset.x = clientX - rect.left;
-    textDragOffset.y = clientY - rect.top;
+    textDragOffset.x = clientX - textTranslate.x;
+    textDragOffset.y = clientY - textTranslate.y;
 
     document.addEventListener('mousemove', dragText);
     document.addEventListener('mouseup', stopTextDrag);
@@ -590,23 +590,22 @@ function dragText(e) {
     if (!textDrag) return;
     e.preventDefault();
 
-    const cardRect = greetingCard.getBoundingClientRect();
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
 
-    const x = ((clientX - cardRect.left - textDragOffset.x) / cardRect.width) * 100;
-    const y = ((clientY - cardRect.top - textDragOffset.y) / cardRect.height) * 100;
+    const cardRect = greetingCard.getBoundingClientRect();
 
-    // Calculate dynamic bounds based on element size
-    const elWidth = (textDrag.offsetWidth / cardRect.width) * 100;
-    const elHeight = (textDrag.offsetHeight / cardRect.height) * 100;
+    let newX = clientX - textDragOffset.x;
+    let newY = clientY - textDragOffset.y;
 
-    // Constrain to stay inside (max left = 100% - element width %)
-    const maxLeft = Math.max(0, 100 - elWidth);
-    const maxTop = Math.max(0, 100 - elHeight);
+    // Clamp to stay roughly inside the card
+    const maxShift = cardRect.width * 0.3;
+    newX = Math.max(-maxShift, Math.min(maxShift, newX));
+    newY = Math.max(-maxShift, Math.min(maxShift, newY));
 
-    textDrag.style.left = Math.max(0, Math.min(maxLeft, x)) + '%';
-    textDrag.style.top = Math.max(0, Math.min(maxTop, y)) + '%';
+    textTranslate.x = newX;
+    textTranslate.y = newY;
+    textDrag.style.transform = `translate(${newX}px, ${newY}px)`;
 }
 
 function stopTextDrag() {
