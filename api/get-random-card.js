@@ -1,6 +1,10 @@
 export default async (req, res) => {
     // CORS Headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigins = ['https://grussgenerator.de', 'https://www.grussgenerator.de'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -91,12 +95,7 @@ export default async (req, res) => {
             return res.status(200).json({
                 type: 'gradient',
                 css: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #fff5f3 50%, #a8edea 75%, #fed6e3 100%)',
-                message: 'Keine Bilder gefunden, Fallback-Gradient verwendet',
-                debug: {
-                    rawFiles: files,
-                    supabaseUrl,
-                    hint: 'Bitte füge eine SELECT RLS-Policy zum remix-cards Bucket hinzu. In Supabase: Storage -> Policies -> New policy -> For full customization -> SELECT -> "true" als Policy'
-                }
+                message: 'Keine Bilder gefunden, Fallback-Gradient verwendet'
             });
         }
 

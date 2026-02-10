@@ -1353,6 +1353,13 @@ function saveToHistory(entry) {
     }
 }
 
+// Security: Escape HTML to prevent XSS via innerHTML
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 function renderHistory(history) {
     if (historyBadge) historyBadge.textContent = history.length;
 
@@ -1380,10 +1387,10 @@ function renderHistory(history) {
             historyList.innerHTML = history.map((item, index) => `
                 <div class="history-item" data-index="${index}">
                     <div class="history-item-header">
-                        <span class="history-item-occasion">${occasionNames[item.occasion] || item.occasion}</span>
-                        <span class="history-item-date">${new Date(item.date).toLocaleDateString('de-DE')}</span>
+                        <span class="history-item-occasion">${escapeHtml(occasionNames[item.occasion] || item.occasion)}</span>
+                        <span class="history-item-date">${escapeHtml(new Date(item.date).toLocaleDateString('de-DE'))}</span>
                     </div>
-                    <div class="history-item-preview">${item.text.substring(0, 50)}...</div>
+                    <div class="history-item-preview">${escapeHtml(item.text.substring(0, 50))}...</div>
                 </div>
             `).join('');
 
@@ -1409,8 +1416,8 @@ function renderHistory(history) {
         } else {
             outputHistoryList.innerHTML = history.map((item, index) => `
                 <div class="output-history-item" data-index="${index}">
-                    <div class="history-occasion">${occasionNames[item.occasion] || item.occasion}</div>
-                    <div class="history-preview">${item.text.substring(0, 40)}...</div>
+                    <div class="history-occasion">${escapeHtml(occasionNames[item.occasion] || item.occasion)}</div>
+                    <div class="history-preview">${escapeHtml(item.text.substring(0, 40))}...</div>
                 </div>
             `).join('');
 

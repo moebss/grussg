@@ -1,6 +1,10 @@
 export default async (req, res) => {
     // CORS Headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigins = ['https://grussgenerator.de', 'https://www.grussgenerator.de'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -32,7 +36,35 @@ export default async (req, res) => {
     rateLimitMap.set(ip, recentRequests);
 
     // --- REQUEST BODY ---
-    const { name, relation, info, tone, lang, occasion } = req.body;
+    const { name: rawName, relation: rawRelation, info: rawInfo, tone, lang, occasion } = req.body;
+
+    // --- INPUT VALIDATION & SANITIZATION ---
+    function sanitizeInput(str, maxLen) {
+        if (!str || typeof str !== 'string') return '';
+        return str
+            .substring(0, maxLen)
+            .replace(/[\x00-\x1F\x7F]/g, '')  // Strip control characters
+            .trim();
+    }
+
+    const name = sanitizeInput(rawName, 100);
+    const relation = sanitizeInput(rawRelation, 50);
+    const info = sanitizeInput(rawInfo, 500);
+
+    // Validate allowed values for enum fields
+    const allowedTones = ['warm', 'funny', 'formal', 'poetic', 'short'];
+    const allowedOccasions = ['birthday', 'wedding', 'christmas', 'easter', 'newyear', 'thanks', 'baby', 'getwell', 'mothersday', 'fathersday', 'graduation', 'anniversary', 'general'];
+    const allowedLangs = ['de', 'en', 'tr', 'es', 'fr', 'it', 'bg'];
+
+    if (tone && !allowedTones.includes(tone)) {
+        return res.status(400).json({ error: 'Ungültiger Ton-Parameter' });
+    }
+    if (occasion && !allowedOccasions.includes(occasion)) {
+        return res.status(400).json({ error: 'Ungültiger Anlass-Parameter' });
+    }
+    if (lang && !allowedLangs.includes(lang)) {
+        return res.status(400).json({ error: 'Ungültiger Sprach-Parameter' });
+    }
 
     if (!process.env.PPLX_API_KEY) {
         return res.status(500).json({ error: 'API Key fehlt in Konfiguration' });

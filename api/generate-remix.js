@@ -1,6 +1,10 @@
 export default async (req, res) => {
     // CORS Headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigins = ['https://grussgenerator.de', 'https://www.grussgenerator.de'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -130,6 +134,13 @@ The gradient should harmoniously combine both color palettes. Keep the center ar
                 if (lastParen !== -1) {
                     cssGradient = cssGradient.substring(0, lastParen + 1);
                 }
+            }
+
+            // Security: Validate gradient contains only safe CSS characters
+            // Allow: letters, numbers, #, %, commas, parens, spaces, dots, hyphens
+            if (!/^linear-gradient\([a-zA-Z0-9#%,.()\s\-]+\)$/.test(cssGradient)) {
+                console.warn('Unsafe CSS gradient rejected:', cssGradient);
+                cssGradient = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #fff5f3 50%, #a8edea 75%, #fed6e3 100%)';
             }
         } else {
             // Fallback gradient if AI response is malformed
