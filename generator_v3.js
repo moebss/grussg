@@ -583,14 +583,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+const DRAG_THRESHOLD = 5; // Pixels to move before drag starts
+let isDraggingActive = false;
+
 function startTextDrag(e, element) {
-    if (textDrag) return; // Already dragging
-    e.preventDefault();
-    e.stopPropagation();
+    if (textDrag) return; // Already capturing
+    // e.preventDefault(); // Don't prevent default immediately, let click bubbles happen if it's just a tap
+    // e.stopPropagation();
 
     textDrag = element;
-    textDrag.classList.add('is-dragging');
-    document.body.style.cursor = 'grabbing';
+    // Note: Don't add .is-dragging yet! Wait for movement.
 
     // Get start coordinates
     const clientX = e.clientX || e.touches[0].clientX;
@@ -598,6 +600,7 @@ function startTextDrag(e, element) {
 
     dragStart = { x: clientX, y: clientY };
     translateStart = { ...currentTranslate };
+    isDraggingActive = false; // Reset threshold flag
 
     // Attach global listeners
     document.addEventListener('mousemove', dragText);
@@ -605,14 +608,10 @@ function startTextDrag(e, element) {
     document.addEventListener('touchmove', dragText, { passive: false });
     document.addEventListener('touchend', stopTextDrag);
     document.addEventListener('mouseleave', stopTextDrag); // Safety catch
-
-    console.log('Drag start', dragStart);
 }
 
 function dragText(e) {
     if (!textDrag) return;
-    e.preventDefault();
-    e.stopPropagation(); // Prevent 3D tilt interference
 
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
@@ -620,17 +619,35 @@ function dragText(e) {
     const deltaX = clientX - dragStart.x;
     const deltaY = clientY - dragStart.y;
 
+    // Check threshold
+    if (!isDraggingActive) {
+        if (Math.hypot(deltaX, deltaY) < DRAG_THRESHOLD) {
+            return; // Not moved enough yet
+        }
+        // Threshold exceeded, Activate Drag!
+        isDraggingActive = true;
+        textDrag.classList.add('is-dragging');
+        document.body.style.cursor = 'grabbing';
+    }
+
+    // Now responsible for events
+    if (e.cancelable) e.preventDefault();
+    e.stopPropagation();
+
     // Calculate new position
     let newX = translateStart.x + deltaX;
     let newY = translateStart.y + deltaY;
 
     // Boundary check (relaxed)
-    const cardRect = document.getElementById('greetingCard').getBoundingClientRect();
-    const limitX = cardRect.width * 0.48; // Almost 50%
-    const limitY = cardRect.height * 0.48;
+    const card = document.getElementById('greetingCard');
+    if (card) {
+        const cardRect = card.getBoundingClientRect();
+        const limitX = cardRect.width * 0.48; // Almost 50%
+        const limitY = cardRect.height * 0.48;
 
-    newX = Math.max(-limitX, Math.min(limitX, newX));
-    newY = Math.max(-limitY, Math.min(limitY, newY));
+        newX = Math.max(-limitX, Math.min(limitX, newX));
+        newY = Math.max(-limitY, Math.min(limitY, newY));
+    }
 
     // Update state and visual
     currentTranslate = { x: newX, y: newY };
