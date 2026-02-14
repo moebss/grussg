@@ -3886,6 +3886,76 @@ body {
     background-position: center;
 }
 
+/* Mood 15 */
+.greeting-card[data-mood="mood-15"] {
+    background-image: url('assets/templates/mood15.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 16 */
+.greeting-card[data-mood="mood-16"] {
+    background-image: url('assets/templates/mood16.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 17 */
+.greeting-card[data-mood="mood-17"] {
+    background-image: url('assets/templates/mood17.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 18 */
+.greeting-card[data-mood="mood-18"] {
+    background-image: url('assets/templates/mood18.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 19 */
+.greeting-card[data-mood="mood-19"] {
+    background-image: url('assets/templates/mood19.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 20 */
+.greeting-card[data-mood="mood-20"] {
+    background-image: url('assets/templates/mood20.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 21 */
+.greeting-card[data-mood="mood-21"] {
+    background-image: url('assets/templates/mood21.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 22 */
+.greeting-card[data-mood="mood-22"] {
+    background-image: url('assets/templates/mood22.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 23 */
+.greeting-card[data-mood="mood-23"] {
+    background-image: url('assets/templates/mood23.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+/* Mood 24 */
+.greeting-card[data-mood="mood-24"] {
+    background-image: url('assets/templates/mood24.jpg') !important;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
 /* Supabase Community Designs */
 .greeting-card[data-mood="supabase"] {
     background-color: #ffffff !important;

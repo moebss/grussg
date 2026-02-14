@@ -2,8 +2,8 @@
     const COOKIE_CONSENT_KEY = 'cookie_consent_status';
 
     // TODO: Replace with your actual IDs
-    const GTM_ID = 'G-XXXXXXXXXX'; // Google Analytics Measurement ID
-    const ADS_ID = 'AW-XXXXXXXXXX'; // Google Ads ID
+    const GTM_ID = 'G-2XYPBYCK7P'; // Google Analytics Measurement ID
+    // const ADS_ID = 'AW-XXXXXXXXXX'; // Google Ads ID (Disabled)
 
     function loadGoogleScripts() {
         // Prevent loading if already loaded
@@ -30,7 +30,7 @@
         });
 
         // 4. Config for Google Ads
-        gtag('config', ADS_ID);
+        // gtag('config', ADS_ID);
 
         console.log('Google Analytics & Ads initialized.');
     }
