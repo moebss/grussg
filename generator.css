@@ -3603,8 +3603,8 @@ body {
     /* Re-enable for stickers */
     user-select: none;
     transition: transform 0.2s ease;
-    z-index: 20;
-    /* Above text */
+    z-index: 25;
+    /* Above text and container */
 }
 
 .placed-sticker:active {
@@ -3734,8 +3734,8 @@ body {
 /* Ensure text sits on top correctly with new padding */
 .greeting-card .message-text {
     position: relative;
-    z-index: 50;
-    /* Ensure text is above overlay/stickers */
+    z-index: 2;
+    /* Below stickers (z-index 25) so stickers remain draggable */
     padding: 15% !important;
     pointer-events: auto;
     cursor: grab;
@@ -3886,6 +3886,14 @@ body {
     background-position: center;
 }
 
+/* Supabase Community Designs */
+.greeting-card[data-mood="supabase"] {
+    background-color: #ffffff !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
 /* ===========================
    Copy Text Button
    =========================== */
@@ -3917,7 +3925,8 @@ body {
     font-size: 4rem;
     cursor: grab;
     user-select: none;
-    z-index: 5;
+    z-index: 25;
+    /* Above message text (z-index 2) and placed-stickers container (z-index 20) */
     transition: transform 0.1s ease;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }

@@ -1702,11 +1702,10 @@ async function loadSupabaseMoods() {
     if (!container) return;
 
     try {
-        // Fetch unlimited (up to 50) images
         const response = await fetch('/api/get-random-card', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ count: 30 }) // Fetch 30 images for the gallery
+            body: JSON.stringify({ count: 30 })
         });
 
         if (!response.ok) return;
@@ -1714,54 +1713,49 @@ async function loadSupabaseMoods() {
         const data = await response.json();
         if (data.type === 'image' && data.images && data.images.length > 0) {
 
-            // Clear container (keep it if we want to append? No, fresh load)
             container.innerHTML = '';
 
-            // Add label
-            const label = document.createElement('div');
-            label.style.width = '100%';
-            label.style.fontSize = '0.85rem';
-            label.style.fontWeight = '600';
-            label.style.color = '#64748b';
-            label.style.marginBottom = '8px';
+            // Add label (consistent with other section labels)
+            const label = document.createElement('span');
+            label.className = 'section-label';
+            label.style.gridColumn = '1 / -1';
             label.innerText = '✨ Community Designs';
             container.appendChild(label);
 
             data.images.forEach(img => {
                 const btn = document.createElement('button');
-                btn.className = 'mood-emoji'; // Reuse existing class for styling
+                btn.className = 'mood-emoji';
                 btn.title = 'Community Design';
+                btn.dataset.supabaseUrl = img.url;
 
                 const image = document.createElement('img');
                 image.src = img.url;
                 image.alt = 'Design';
-                image.loading = 'lazy'; // Lazy load for performance
+                image.loading = 'lazy';
+                image.crossOrigin = 'anonymous';
 
                 btn.appendChild(image);
 
                 btn.addEventListener('click', () => {
-                    // Visual feedback
+                    // Visual feedback – deactivate all mood buttons (static + supabase)
                     document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    // Set as background
-                    const greetingCard = document.getElementById('greetingCard');
-                    const customBg = document.getElementById('cardCustomBg');
+                    // Set data-mood to 'supabase' so static CSS moods don't override
+                    greetingCard.setAttribute('data-mood', 'supabase');
+                    greetingCard.removeAttribute('data-card-theme');
 
-                    if (greetingCard && customBg) {
-                        // Use customBg element for proper layering
+                    // Apply via customBg element (proper layering for export)
+                    const customBg = document.getElementById('cardCustomBg');
+                    if (customBg) {
                         customBg.src = img.url;
                         customBg.classList.remove('hidden');
-
-                        // Fallback on card (optional, but good for some browsers/exports)
-                        greetingCard.style.backgroundImage = `url('${img.url}')`;
-                        greetingCard.style.backgroundSize = 'cover';
-                        greetingCard.style.backgroundPosition = 'center';
-
-                        // Ensure text is legible (remove custom-bg class which might add gray overlay if not desired, 
-                        // or KEEP it if we want contrast. Let's keep it but ensure contrast logic exists in CSS)
-                        // greetingCard.classList.add('has-custom-bg'); 
                     }
+
+                    // Also set inline background for consistent rendering
+                    greetingCard.style.backgroundImage = `url('${img.url}')`;
+                    greetingCard.style.backgroundSize = 'cover';
+                    greetingCard.style.backgroundPosition = 'center';
 
                     playSound(clickSound);
                 });
