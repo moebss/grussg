@@ -4467,21 +4467,24 @@ body {
    =========================== */
 @media (max-width: 768px) {
     .container {
-        padding-top: 90px;
+        padding-top: 80px;
     }
 
     .brand-icon {
-        width: 100px;
-        height: 100px;
+        width: 60px;
+        height: 60px;
     }
 
     .logo {
-        font-size: 1.3rem;
-        padding: 10px 20px;
+        font-size: 1.1rem;
+        padding: 8px 16px;
+        gap: 8px;
     }
 
     .logo .tagline {
-        font-size: 1rem;
+        font-size: 0.85rem;
+        display: none;
+        /* Hide tagline on mobile to save space */
     }
 
     .form-row-2col {
@@ -4490,13 +4493,75 @@ body {
     }
 
     .social-proof-banner {
-        font-size: 0.78rem;
-        padding: 8px 12px;
+        font-size: 0.75rem;
+        padding: 6px 12px;
+        max-height: 32px;
+        overflow: hidden;
     }
 
     .top-bar {
-        top: 38px;
-        padding: 8px 12px;
+        top: 32px;
+        padding: 6px 12px;
+    }
+
+    /* Sticker Grid: Force 5 columns on tablet/mobile */
+    .sticker-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 6px !important;
+    }
+
+    .sticker {
+        padding: 6px;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+    }
+
+    /* Tabs as Segmented Control */
+    .sticker-tabs-nav,
+    .design-tabs-nav {
+        display: flex;
+        overflow-x: auto;
+        gap: 4px;
+        padding: 4px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .sticker-tabs-nav::-webkit-scrollbar,
+    .design-tabs-nav::-webkit-scrollbar {
+        display: none;
+        /* Chrome/Safari */
+    }
+
+    .sticker-tab-btn,
+    .design-tab-btn {
+        flex: 0 0 auto;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        border-radius: 8px;
+        background: transparent;
+        border: none;
+        color: var(--color-text-muted);
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .sticker-tab-btn.active,
+    .design-tab-btn.active {
+        background: white;
+        color: var(--color-primary);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-weight: 600;
     }
 
     .card h2 {

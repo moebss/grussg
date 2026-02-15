@@ -1734,6 +1734,7 @@ function renderStaticMoods() {
 function handleMoodSelection(btn) {
     // Visual feedback
     document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     const mood = btn.dataset.mood;
@@ -1745,25 +1746,22 @@ function handleMoodSelection(btn) {
 
         // Handle Supabase/Community vs Static
         if (mood === 'supabase') {
-            // handled in specific listener, but we can unify here if passed correctly
-            // The supabase logic is separate below, we leave it for now or integrate?
-            // Let's leave Supabase logic as is for now to minimize risk, 
-            // this function mainly handles static moods.
+            // Supabase logic is handled in the separate listener below
         } else {
             // Static Mood (mood-1 to mood-24)
-            // Apply background image directly (replacing CSS rules)
+            // Use cardCustomBg <img> element for reliable layering (same as Supabase moods)
             const moodId = mood.replace('mood-', ''); // 1..24
-            greetingCard.style.backgroundImage = `url('assets/templates/mood${moodId}.jpg')`;
-            greetingCard.style.backgroundSize = '100% 100%';
-            greetingCard.style.backgroundPosition = 'center';
-            greetingCard.style.backgroundRepeat = 'no-repeat';
+            const imgUrl = `assets/templates/mood${moodId}.jpg`;
 
-            // Clear custom bg element if visible
             const customBg = document.getElementById('cardCustomBg');
             if (customBg) {
-                customBg.classList.add('hidden');
-                customBg.removeAttribute('src');
+                customBg.src = imgUrl;
+                customBg.classList.remove('hidden');
             }
+
+            // Also set inline background as fallback (for image export)
+            greetingCard.style.background = `url('${imgUrl}') center / 100% 100% no-repeat`;
+
             greetingCard.classList.remove('has-custom-bg');
         }
     }
