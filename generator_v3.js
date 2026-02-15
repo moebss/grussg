@@ -470,9 +470,10 @@ if (greetingCard) {
 // Drag functionality
 let currentDrag = null;
 let dragOffset = { x: 0, y: 0 };
+let rAFSticker = null; // Animation frame ID
 
 function startDrag(e) {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault(); // Prevent scroll on touch
 
     // Ignore if clicking resize handle
     if (e.target.classList.contains('sticker-resize-handle')) return;
@@ -485,7 +486,7 @@ function startDrag(e) {
     currentDrag.classList.add('dragging');
 
     const rect = currentDrag.getBoundingClientRect();
-    const cardRect = greetingCard.getBoundingClientRect();
+    // Use client coordinates directly
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
 
@@ -494,22 +495,35 @@ function startDrag(e) {
 
     document.addEventListener('mousemove', drag);
     document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchmove', drag, { passive: false });
     document.addEventListener('touchend', stopDrag);
+    document.addEventListener('touchcancel', stopDrag); // Handle cancellation
 }
 
 function drag(e) {
     if (!currentDrag) return;
+    if (e.cancelable) e.preventDefault(); // Stop scrolling
 
-    const cardRect = greetingCard.getBoundingClientRect();
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
 
-    const x = ((clientX - cardRect.left - dragOffset.x) / cardRect.width) * 100;
-    const y = ((clientY - cardRect.top - dragOffset.y) / cardRect.height) * 100;
+    if (rAFSticker) return; // Skip if frame pending
 
-    currentDrag.style.left = Math.max(0, Math.min(90, x)) + '%';
-    currentDrag.style.top = Math.max(0, Math.min(90, y)) + '%';
+    rAFSticker = requestAnimationFrame(() => {
+        if (!currentDrag) return;
+
+        const cardRect = greetingCard.getBoundingClientRect();
+
+        // Calculate percentages
+        const x = ((clientX - cardRect.left - dragOffset.x) / cardRect.width) * 100;
+        const y = ((clientY - cardRect.top - dragOffset.y) / cardRect.height) * 100;
+
+        // Apply with limits
+        currentDrag.style.left = Math.max(-10, Math.min(100, x)) + '%';
+        currentDrag.style.top = Math.max(-10, Math.min(100, y)) + '%';
+
+        rAFSticker = null;
+    });
 }
 
 function stopDrag() {
@@ -517,10 +531,16 @@ function stopDrag() {
         currentDrag.classList.remove('dragging');
         currentDrag = null;
     }
+    if (rAFSticker) {
+        cancelAnimationFrame(rAFSticker);
+        rAFSticker = null;
+    }
+
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('mouseup', stopDrag);
     document.removeEventListener('touchmove', drag);
     document.removeEventListener('touchend', stopDrag);
+    document.removeEventListener('touchcancel', stopDrag);
 }
 
 // Clear all stickers
@@ -585,14 +605,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const DRAG_THRESHOLD = 5; // Pixels to move before drag starts
 let isDraggingActive = false;
+let rAFText = null;
 
 function startTextDrag(e, element) {
     if (textDrag) return; // Already capturing
-    // e.preventDefault(); // Don't prevent default immediately, let click bubbles happen if it's just a tap
-    // e.stopPropagation();
+
+    // Explicitly prevent default on touch to avoid scroll interference
+    // This makes the text "stick" to the finger immediately
+    if (e.type === 'touchstart') {
+        // e.preventDefault(); // Uncommenting this ensures no scroll, but might block taps?
+        // Let's rely on touchmove prevention
+    }
 
     textDrag = element;
-    // Note: Don't add .is-dragging yet! Wait for movement.
 
     // Get start coordinates
     const clientX = e.clientX || e.touches[0].clientX;
@@ -607,11 +632,15 @@ function startTextDrag(e, element) {
     document.addEventListener('mouseup', stopTextDrag);
     document.addEventListener('touchmove', dragText, { passive: false });
     document.addEventListener('touchend', stopTextDrag);
+    document.addEventListener('touchcancel', stopTextDrag);
     document.addEventListener('mouseleave', stopTextDrag); // Safety catch
 }
 
 function dragText(e) {
     if (!textDrag) return;
+
+    // Prevent scrolling if we are dragging
+    if (e.cancelable) e.preventDefault();
 
     const clientX = e.clientX || e.touches[0].clientX;
     const clientY = e.clientY || e.touches[0].clientY;
@@ -630,32 +659,41 @@ function dragText(e) {
         document.body.style.cursor = 'grabbing';
     }
 
-    // Now responsible for events
-    if (e.cancelable) e.preventDefault();
-    e.stopPropagation();
+    if (rAFText) return;
 
-    // Calculate new position
-    let newX = translateStart.x + deltaX;
-    let newY = translateStart.y + deltaY;
+    rAFText = requestAnimationFrame(() => {
+        if (!textDrag) return;
 
-    // Boundary check (relaxed)
-    const card = document.getElementById('greetingCard');
-    if (card) {
-        const cardRect = card.getBoundingClientRect();
-        const limitX = cardRect.width * 0.48; // Almost 50%
-        const limitY = cardRect.height * 0.48;
+        // Calculate new position
+        let newX = translateStart.x + deltaX;
+        let newY = translateStart.y + deltaY;
 
-        newX = Math.max(-limitX, Math.min(limitX, newX));
-        newY = Math.max(-limitY, Math.min(limitY, newY));
-    }
+        // Boundary check (relaxed)
+        const card = document.getElementById('greetingCard');
+        if (card) {
+            const cardRect = card.getBoundingClientRect();
+            const limitX = cardRect.width * 0.48; // Almost 50%
+            const limitY = cardRect.height * 0.48;
 
-    // Update state and visual
-    currentTranslate = { x: newX, y: newY };
-    textDrag.style.transform = `translate(${newX}px, ${newY}px)`;
+            newX = Math.max(-limitX, Math.min(limitX, newX));
+            newY = Math.max(-limitY, Math.min(limitY, newY));
+        }
+
+        // Update state and visual
+        currentTranslate = { x: newX, y: newY };
+        textDrag.style.transform = `translate(${newX}px, ${newY}px)`;
+
+        rAFText = null;
+    });
 }
 
 function stopTextDrag() {
     if (!textDrag) return;
+
+    if (rAFText) {
+        cancelAnimationFrame(rAFText);
+        rAFText = null;
+    }
 
     textDrag.classList.remove('is-dragging');
     textDrag = null;
@@ -665,6 +703,7 @@ function stopTextDrag() {
     document.removeEventListener('mouseup', stopTextDrag);
     document.removeEventListener('touchmove', dragText);
     document.removeEventListener('touchend', stopTextDrag);
+    document.removeEventListener('touchcancel', stopTextDrag);
     document.removeEventListener('mouseleave', stopTextDrag);
 
     console.log('Drag end', currentTranslate);
