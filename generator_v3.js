@@ -856,23 +856,7 @@ document.querySelectorAll('.design-tab-btn').forEach(tab => {
 // ===========================
 // MOOD SELECTION (New Compact Grid)
 // ===========================
-document.querySelectorAll('.mood-emoji').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Visual feedback
-        document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Apply mood
-        const mood = btn.dataset.mood;
-        if (greetingCard) {
-            greetingCard.setAttribute('data-mood', mood);
-            // Clear any remix gradient when selecting a regular mood
-            greetingCard.style.backgroundImage = '';
-        }
-
-        playSound(clickSound);
-    });
-});
+// Old mood listener loop removed (Refactored to handleMoodSelection)
 
 // ===========================
 // REMIX FEATURE (Supabase Storage)
@@ -1695,6 +1679,102 @@ document.getElementById('telegramBtn')?.addEventListener('click', async () => {
 });
 
 // ===========================
+// MOOD MANAGER (Refactored)
+// ===========================
+const STATIC_MOOD_COUNT = 24;
+
+function renderStaticMoods() {
+    // We target a specific container now (if present), or fall back to finding where to insert
+    // But since we are refactoring HTML too, let's assume we will have #staticMoodsContainer
+    // For backward compatibility during migration, we can check.
+
+    // Actually, we are replacing the existing HTML content in the next step.
+    // So let's look for #staticMoodsContainer. 
+    // If not found (old HTML), we might want to do nothing or handle it.
+    // Given we are doing all steps now, let's target #design-tab-mood .mood-grid-compact first instance.
+
+    let container = document.getElementById('staticMoodsContainer');
+
+    // Fallback for existing structure if ID not yet added (during transition)
+    if (!container) {
+        const moodSection = document.querySelector('#design-tab-mood .mood-grid-compact');
+        if (moodSection && !moodSection.id) {
+            moodSection.id = 'staticMoodsContainer'; // Auto-assign ID if found by class
+            container = moodSection;
+            container.innerHTML = ''; // Clear hardcoded buttons
+        }
+    }
+
+    if (!container) return;
+
+    // Clear existing to be safe (idempotent)
+    container.innerHTML = '';
+
+    for (let i = 1; i <= STATIC_MOOD_COUNT; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'mood-emoji';
+        btn.dataset.mood = `mood-${i}`;
+        btn.title = `Stimmung ${i}`;
+
+        const img = document.createElement('img');
+        img.src = `assets/templates/mood${i}.jpg`;
+        img.alt = `${i}`;
+        img.loading = 'lazy';
+
+        btn.appendChild(img);
+
+        // Listeners handled via delegation or individual? 
+        // Delegation is better but let's stick to simple loop for now or unified handler.
+        btn.onclick = (e) => handleMoodSelection(e.currentTarget);
+
+        container.appendChild(btn);
+    }
+}
+
+function handleMoodSelection(btn) {
+    // Visual feedback
+    document.querySelectorAll('.mood-emoji').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const mood = btn.dataset.mood;
+    const greetingCard = document.getElementById('greetingCard');
+
+    if (greetingCard) {
+        greetingCard.setAttribute('data-mood', mood);
+        greetingCard.removeAttribute('data-card-theme');
+
+        // Handle Supabase/Community vs Static
+        if (mood === 'supabase') {
+            // handled in specific listener, but we can unify here if passed correctly
+            // The supabase logic is separate below, we leave it for now or integrate?
+            // Let's leave Supabase logic as is for now to minimize risk, 
+            // this function mainly handles static moods.
+        } else {
+            // Static Mood (mood-1 to mood-24)
+            // Apply background image directly (replacing CSS rules)
+            const moodId = mood.replace('mood-', ''); // 1..24
+            greetingCard.style.backgroundImage = `url('assets/templates/mood${moodId}.jpg')`;
+            greetingCard.style.backgroundSize = '100% 100%';
+            greetingCard.style.backgroundPosition = 'center';
+            greetingCard.style.backgroundRepeat = 'no-repeat';
+
+            // Clear custom bg element if visible
+            const customBg = document.getElementById('cardCustomBg');
+            if (customBg) {
+                customBg.classList.add('hidden');
+                customBg.removeAttribute('src');
+            }
+            greetingCard.classList.remove('has-custom-bg');
+        }
+    }
+
+    playSound(clickSound);
+}
+
+// Replaces the old event listener loop
+// document.querySelectorAll('.mood-emoji').forEach... (Removed)
+
+// ===========================
 // SUPABASE MOODS INTEGRATION
 // ===========================
 async function loadSupabaseMoods() {
@@ -1980,8 +2060,18 @@ function initUrlParameters() {
 // ===========================
 // INIT
 // ===========================
+// ===========================
+// INIT
+// ===========================
 document.addEventListener('DOMContentLoaded', () => {
+    renderStaticMoods(); // <-- Generate static buttons
+    loadSupabaseMoods(); // <-- Load community buttons
+
     initBackground();
+    loadHistory();
+    updateTotalCounter();
+    updateLiveCounter();
+    initUrlParameters();
     loadHistory();
     updateTotalCounter();
     updateLiveCounter();
