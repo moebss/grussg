@@ -124,6 +124,35 @@ document.getElementById('demoGenBtn')?.addEventListener('click', async () => {
     btn.textContent = '✨ Text generieren';
 });
 
+// Demo: Render mood thumbnails
+function renderDemoMoods() {
+    const grid = document.getElementById('demoMoodGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    for (let i = 1; i <= TOTAL_MOODS; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'demo-mood-btn' + (i === 1 ? ' active' : '');
+        btn.style.backgroundImage = `url(assets/templates/mood${i}.jpg)`;
+        btn.dataset.mood = i;
+        btn.title = `Design ${i}`;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.demo-mood-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('demoCardBg').src = `assets/templates/mood${i}.jpg`;
+        });
+        grid.appendChild(btn);
+    }
+}
+
+// Demo: Font selection
+document.querySelectorAll('.demo-font').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.demo-font').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('demoCardText').style.fontFamily = btn.dataset.font;
+    });
+});
+
 // ===========================
 // DASHBOARD - TEXT GENERATION
 // ===========================
@@ -471,4 +500,5 @@ document.getElementById('logoutBtn')?.addEventListener('click', logout);
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
     initAuth();
+    renderDemoMoods();
 });
