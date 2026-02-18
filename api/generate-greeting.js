@@ -53,7 +53,7 @@ export default async (req, res) => {
 
     // Validate allowed values for enum fields
     const allowedTones = ['warm', 'funny', 'formal', 'poetic', 'short'];
-    const allowedOccasions = ['birthday', 'wedding', 'christmas', 'easter', 'newyear', 'thanks', 'baby', 'getwell', 'mothersday', 'fathersday', 'graduation', 'anniversary', 'general'];
+    const allowedOccasions = ['birthday', 'wedding', 'christmas', 'easter', 'newyear', 'thanks', 'baby', 'getwell', 'mothersday', 'fathersday', 'graduation', 'anniversary', 'ramadan', 'lent', 'general'];
     const allowedLangs = ['de', 'en', 'tr', 'es', 'fr', 'it', 'bg'];
 
     if (tone && !allowedTones.includes(tone)) {
@@ -84,6 +84,8 @@ export default async (req, res) => {
         fathersday: `You are writing a Father's Day greeting. Express love, appreciation and gratitude for a father.`,
         graduation: `You are writing a graduation or exam congratulations message. Celebrate the achievement and wish success for the future.`,
         anniversary: `You are writing an anniversary message (wedding, work, or other). Celebrate the milestone and memories.`,
+        ramadan: `You are writing a Ramadan greeting (Ramadan Mubarak / Ramadan Kareem). Be respectful of Islamic traditions. Express wishes for blessings, peace, and spiritual growth during the holy month of fasting.`,
+        lent: `You are writing a Lent (Fastenzeit) greeting. Be reflective and encouraging. Express wishes for spiritual renewal, inner peace, and strength during the 40 days of fasting before Easter.`,
         general: `You are writing a general greeting message. Be warm and friendly.`
     };
 

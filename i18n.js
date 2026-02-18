@@ -28,6 +28,8 @@ const uiTranslations = {
         'occasion-graduation': 'Abschluss',
         'occasion-anniversary': 'Jubiläum',
         'occasion-condolence': 'Beileid',
+        'occasion-ramadan': 'Ramadan',
+        'occasion-lent': 'Fastenzeit',
         'occasion-general': 'Sonstiges',
 
         // Relationships
@@ -139,6 +141,8 @@ const uiTranslations = {
         'occasion-graduation': 'Graduation',
         'occasion-anniversary': 'Anniversary',
         'occasion-condolence': 'Condolence',
+        'occasion-ramadan': 'Ramadan',
+        'occasion-lent': 'Lent',
         'occasion-general': 'Other',
 
         // Relationships
@@ -250,6 +254,8 @@ const uiTranslations = {
         'occasion-graduation': 'Graduación',
         'occasion-anniversary': 'Aniversario',
         'occasion-condolence': 'Condolencias',
+        'occasion-ramadan': 'Ramadán',
+        'occasion-lent': 'Cuaresma',
         'occasion-general': 'Otro',
 
         // Relationships
@@ -361,6 +367,8 @@ const uiTranslations = {
         'occasion-graduation': 'Diplôme',
         'occasion-anniversary': 'Anniversaire (couple)',
         'occasion-condolence': 'Condoléances',
+        'occasion-ramadan': 'Ramadan',
+        'occasion-lent': 'Carême',
         'occasion-general': 'Autre',
 
         // Relationships
@@ -472,6 +480,8 @@ const uiTranslations = {
         'occasion-graduation': 'Mezuniyet',
         'occasion-anniversary': 'Yıl Dönümü',
         'occasion-condolence': 'Başsağlığı',
+        'occasion-ramadan': 'Ramazan',
+        'occasion-lent': 'Oruç Dönemi',
         'occasion-general': 'Diğer',
 
         // Relationships
@@ -583,6 +593,8 @@ const uiTranslations = {
         'occasion-graduation': 'Laurea',
         'occasion-anniversary': 'Anniversario',
         'occasion-condolence': 'Condoglianze',
+        'occasion-ramadan': 'Ramadan',
+        'occasion-lent': 'Quaresima',
         'occasion-general': 'Altro',
 
         // Relationships
