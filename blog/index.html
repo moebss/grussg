@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Grussgenerator.de – Tipps & Inspiration für Grüße</title>
+    <meta name="description"
+        content="Entdecke die besten Geburtstagswünsche, Hochzeitssprüche und Weihnachtsgrüße. Tipps und Inspiration für jeden Anlass – kostenlos!">
+    <link rel="canonical" href="https://grussgenerator.de/blog/">
+    <meta property="og:title" content="Blog | Grussgenerator.de">
+    <meta property="og:description" content="Tipps & Inspiration für perfekte Grüße zu jedem Anlass.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://grussgenerator.de/blog/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../generator.css">
+    <style>
+        .blog-page {
+            background: var(--color-bg, #faf8f5);
+            min-height: 100vh;
+        }
+
+        .blog-header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .blog-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--color-primary, #6366f1), var(--color-secondary, #f472b6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .blog-header p {
+            color: var(--color-text-muted, #64748b);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .blog-card {
+            background: var(--color-surface, rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-lg, 24px);
+            border: 1px solid var(--glass-border, rgba(0, 0, 0, 0.08));
+            box-shadow: var(--glass-shadow, 0 4px 24px rgba(0, 0, 0, 0.08));
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .blog-card-icon {
+            font-size: 3rem;
+            text-align: center;
+            padding: 30px 20px 10px;
+        }
+
+        .blog-card-body {
+            padding: 0 24px 24px;
+        }
+
+        .blog-card-body h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text, #1e293b);
+            margin-bottom: 8px;
+        }
+
+        .blog-card-body p {
+            color: var(--color-text-muted, #64748b);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .blog-card-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--color-primary, #6366f1), var(--color-secondary, #f472b6));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: var(--radius-full, 50px);
+            margin-top: 12px;
+        }
+
+        .blog-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary, #6366f1);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 20px;
+            transition: opacity 0.2s;
+        }
+
+        .blog-back:hover {
+            opacity: 0.7;
+        }
+
+        .blog-footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-muted, #64748b);
+            font-size: 0.85rem;
+        }
+
+        .blog-footer a {
+            color: var(--color-primary, #6366f1);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blog-page">
+        <a href="../index.html" class="blog-back">← Zurück zum Generator</a>
+
+        <header class="blog-header">
+            <h1>✍️ Grüße & Inspiration</h1>
+            <p>Die besten Sprüche, Wünsche und Tipps für jeden Anlass. Lass dich inspirieren – oder lass unsere KI für
+                dich schreiben!</p>
+        </header>
+
+        <div class="blog-grid">
+            <a href="geburtstagsgruesse.html" class="blog-card">
+                <div class="blog-card-icon">🎂</div>
+                <div class="blog-card-body">
+                    <h2>Die 50 besten Geburtstagswünsche 2026</h2>
+                    <p>Von lustig bis emotional – finde den perfekten Spruch für jedes Geburtstagskind.</p>
+                    <span class="blog-card-tag">Geburtstag</span>
+                </div>
+            </a>
+
+            <a href="hochzeitswuensche.html" class="blog-card">
+                <div class="blog-card-icon">💍</div>
+                <div class="blog-card-body">
+                    <h2>Hochzeitswünsche: Die schönsten Sprüche</h2>
+                    <p>Elegante und herzliche Worte für das Brautpaar – ideal für Karten, Reden und Nachrichten.</p>
+                    <span class="blog-card-tag">Hochzeit</span>
+                </div>
+            </a>
+
+            <a href="weihnachtsgruesse.html" class="blog-card">
+                <div class="blog-card-icon">🎄</div>
+                <div class="blog-card-body">
+                    <h2>Weihnachtsgrüße: Kreative Ideen</h2>
+                    <p>Besinnliche, lustige und originelle Weihnachtswünsche für Familie, Freunde und Kollegen.</p>
+                    <span class="blog-card-tag">Weihnachten</span>
+                </div>
+            </a>
+        </div>
+
+        <footer class="blog-footer">
+            <p>© 2026 <a href="https://grussgenerator.de">grussgenerator.de</a> | <a
+                    href="../impressum.html">Impressum</a> | <a href="../datenschutz.html">Datenschutz</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
