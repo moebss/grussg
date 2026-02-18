@@ -60,12 +60,7 @@
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
-   <url>
-      <loc>https://grussgenerator.de/blog/trauersprueche.html</loc>
-      <lastmod>2026-02-18</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
-   </url>
+
    <url>
       <loc>https://grussgenerator.de/impressum.html</loc>
       <lastmod>2026-02-06</lastmod>
