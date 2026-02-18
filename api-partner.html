@@ -6,1039 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greeting Card Engine für Shops | Grussgenerator.de – KI-Grußkarten per API</title>
     <meta name="description"
-        content="Komplette KI-Grußkarten-Engine für Ihren Online-Shop: Text + fertige Kartenbilder per API. 27 Designs, 15 Anlässe, 7 Sprachen.">
+        content="Komplette KI-Grußkarten-Engine: Text + fertige Kartenbilder. 27 Designs, 15 Anlässe, 7 Sprachen. Live Demo testen!">
     <link rel="canonical" href="https://grussgenerator.de/api-partner.html">
-    <meta property="og:title" content="Greeting Card Engine für Online-Shops | Grussgenerator.de">
-    <meta property="og:description"
-        content="KI-Grußkarten per API: Text-Generierung + fertige Kartenbilder mit 27 Designvorlagen. Für Floristen und Geschenkshops.">
+    <meta property="og:title" content="Greeting Card Engine | Grussgenerator.de">
+    <meta property="og:description" content="KI-Grußkarten per API: Text + fertige Kartenbilder mit 27 Designvorlagen.">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&family=Indie+Flower&family=Kalam:wght@400;700&family=Comic+Neue:wght@400;700&family=Lobster&family=Sacramento&family=Shadows+Into+Light&family=Fredericka+the+Great&family=Patrick+Hand&display=swap"
         rel="stylesheet">
     <link rel="icon" href="assets/favicon.png" type="image/png">
-    <style>
-        /* ===========================
-           RESET & VARIABLES
-           =========================== */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --accent: #f472b6;
-            --success: #22c55e;
-            --bg: #0f0f1a;
-            --bg-surface: rgba(255, 255, 255, 0.04);
-            --bg-card: rgba(255, 255, 255, 0.06);
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --glow: 0 0 60px rgba(99, 102, 241, 0.15);
-            --font: 'Outfit', -apple-system, sans-serif;
-            --mono: 'JetBrains Mono', monospace;
-            --radius: 16px;
-            --radius-sm: 10px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* ===========================
-           AURORA BACKGROUND
-           =========================== */
-        .aurora {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .aurora .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.3;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .aurora .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: var(--primary);
-            top: -10%;
-            left: -5%;
-        }
-
-        .aurora .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: var(--accent);
-            bottom: -10%;
-            right: -5%;
-            animation-delay: -7s;
-        }
-
-        .aurora .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: #22d3ee;
-            top: 40%;
-            left: 50%;
-            animation-delay: -14s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            33% {
-                transform: translate(30px, -30px) scale(1.05);
-            }
-
-            66% {
-                transform: translate(-20px, 20px) scale(0.95);
-            }
-        }
-
-        /* ===========================
-           LAYOUT
-           =========================== */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        /* ===========================
-           NAV
-           =========================== */
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            background: rgba(15, 15, 26, 0.8);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 0;
-        }
-
-        .nav .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-brand {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-brand span {
-            background: linear-gradient(135deg, var(--primary-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .nav-cta {
-            background: var(--primary);
-            color: white !important;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        /* ===========================
-           HERO
-           =========================== */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 6px 16px;
-            font-size: 0.85rem;
-            color: var(--primary-light);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.4;
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.2rem, 5vw, 3.8rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, var(--primary-light), var(--accent), #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-sub {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 640px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            flex-wrap: wrap;
-            margin-top: 48px;
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat-num {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* ===========================
-           BUTTONS
-           =========================== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.5);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-light);
-            background: var(--bg-card);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* ===========================
-           SECTION HEADERS
-           =========================== */
-        .section-header {
-            text-align: center;
-            margin-bottom: 56px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--primary-light);
-            margin-bottom: 12px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ===========================
-           PROBLEM / SOLUTION
-           =========================== */
-        .problem-grid {
-            display: grid;
-            grid-template-columns: 1fr 60px 1fr;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .prob-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 40px 32px;
-        }
-
-        .prob-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prob-card.problem {
-            border-color: rgba(239, 68, 68, 0.2);
-        }
-
-        .prob-card.problem h3 {
-            color: #f87171;
-        }
-
-        .prob-card.solution {
-            border-color: rgba(34, 197, 94, 0.2);
-            box-shadow: var(--glow);
-        }
-
-        .prob-card.solution h3 {
-            color: var(--success);
-        }
-
-        .prob-card ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .prob-card li {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .prob-card.problem li::before {
-            content: '✗';
-            position: absolute;
-            left: 0;
-            color: #f87171;
-            font-weight: 700;
-        }
-
-        .prob-card.solution li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success);
-            font-weight: 700;
-        }
-
-        .arrow-center {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--text-muted);
-        }
-
-        /* ===========================
-           LIVE DEMO
-           =========================== */
-        .demo-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--glow);
-        }
-
-        .demo-header {
-            background: rgba(99, 102, 241, 0.08);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .demo-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-        }
-
-        .demo-form {
-            padding: 32px;
-            border-right: 1px solid var(--border);
-        }
-
-        .demo-result {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text);
-            font-family: var(--font);
-            font-size: 0.95rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-light);
-        }
-
-        .form-group select option {
-            background: var(--bg);
-        }
-
-        .demo-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-
-        .demo-btn:hover {
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .demo-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .result-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 12px;
-        }
-
-        .result-text {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text);
-            min-height: 180px;
-            white-space: pre-wrap;
-        }
-
-        .result-text.placeholder {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .result-meta {
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* ===========================
-           CODE TABS
-           =========================== */
-        .code-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-        .code-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .code-tab {
-            padding: 12px 24px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .code-tab.active {
-            color: var(--primary-light);
-            border-bottom-color: var(--primary);
-        }
-
-        .code-tab:hover {
-            color: var(--text);
-        }
-
-        .code-panel {
-            display: none;
-            position: relative;
-        }
-
-        .code-panel.active {
-            display: block;
-        }
-
-        .code-panel pre {
-            padding: 24px;
-            overflow-x: auto;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: #e2e8f0;
-        }
-
-        .code-copy {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-muted);
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .code-copy:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--text);
-        }
-
-        .code-copy.copied {
-            color: var(--success);
-            border-color: var(--success);
-        }
-
-        /* Syntax colors */
-        .hl-key {
-            color: #7dd3fc;
-        }
-
-        .hl-str {
-            color: #86efac;
-        }
-
-        .hl-com {
-            color: #64748b;
-        }
-
-        .hl-fn {
-            color: #c4b5fd;
-        }
-
-        .hl-kw {
-            color: #f472b6;
-        }
-
-        .hl-num {
-            color: #fbbf24;
-        }
-
-        /* ===========================
-           PRICING
-           =========================== */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .price-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 40px 32px;
-            position: relative;
-            transition: transform 0.3s;
-        }
-
-        .price-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .price-card.featured {
-            border-color: var(--primary);
-            box-shadow: var(--glow);
-        }
-
-        .price-card.featured::before {
-            content: 'Beliebt';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .price-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-            margin-bottom: 4px;
-        }
-
-        .price-amount .eur {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .price-period {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-        }
-
-        .price-features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-
-        .price-features li {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .price-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success);
-            font-weight: 700;
-        }
-
-        .price-btn {
-            display: block;
-            text-align: center;
-            width: 100%;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.25s;
-        }
-
-        .price-btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .price-btn-primary:hover {
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .price-btn-outline {
-            border: 1px solid var(--border);
-            color: var(--text);
-            background: transparent;
-        }
-
-        .price-btn-outline:hover {
-            border-color: var(--primary-light);
-            background: var(--bg-card);
-        }
-
-        /* ===========================
-           STEPS
-           =========================== */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-
-        .step-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px;
-            text-align: center;
-            position: relative;
-        }
-
-        .step-num {
-            display: inline-flex;
-            width: 48px;
-            height: 48px;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 50%;
-            font-weight: 800;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-        }
-
-        .step-card h3 {
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .step-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ===========================
-           CTA
-           =========================== */
-        .cta-section {
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .cta-section h2 {
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-        }
-
-        .cta-section p {
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-email {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 8px 8px 8px 24px;
-            margin-top: 16px;
-        }
-
-        .cta-email span {
-            font-family: var(--mono);
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .cta-email-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-family: var(--font);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .cta-email-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        /* ===========================
-           FOOTER
-           =========================== */
-        .b2b-footer {
-            border-top: 1px solid var(--border);
-            padding: 32px 0;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .b2b-footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .b2b-footer a:hover {
-            color: var(--text);
-        }
-
-        /* ===========================
-           RESPONSE ENDPOINT
-           =========================== */
-        .endpoint-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            margin: 24px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .endpoint-method {
-            background: var(--success);
-            color: #0f172a;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-        }
-
-        .endpoint-url {
-            font-family: var(--mono);
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-
-        /* ===========================
-           RESPONSE FORMAT TABLE
-           =========================== */
-        .resp-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-
-        .resp-table th,
-        .resp-table td {
-            text-align: left;
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-
-        .resp-table th {
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .resp-table code {
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            background: rgba(99, 102, 241, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: var(--primary-light);
-        }
-
-        /* ===========================
-           RESPONSIVE
-           =========================== */
-        @media (max-width: 768px) {
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .arrow-center {
-                transform: rotate(90deg);
-            }
-
-            .demo-body {
-                grid-template-columns: 1fr;
-            }
-
-            .demo-form {
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-stats {
-                gap: 24px;
-            }
-
-            section {
-                padding: 56px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="partner.css">
 </head>
 
 <body>
@@ -1050,507 +29,566 @@
     </div>
 
     <!-- Nav -->
-    <nav class="nav">
+    <nav class="nav" id="mainNav">
         <div class="container">
             <a href="index.html" class="nav-brand">✨ <span>grussgenerator</span>.de</a>
-            <ul class="nav-links">
-                <li><a href="#demo">Live Demo</a></li>
-                <li><a href="#docs">API Docs</a></li>
-                <li><a href="#pricing">Preise</a></li>
-                <li><a href="#contact" class="nav-cta">Kontakt</a></li>
-            </ul>
+            <div class="nav-right">
+                <ul class="nav-links" id="navLinksLanding">
+                    <li><a href="#demo">Live Demo</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Preise</a></li>
+                </ul>
+                <div id="navUser" class="nav-user hidden">
+                    <img id="navAvatar" class="nav-avatar" src="" alt="">
+                    <span id="navName"></span>
+                    <button id="logoutBtn" class="nav-logout">Logout</button>
+                </div>
+                <button id="loginBtnNav" class="nav-cta">🔐 Login</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">
-                <div class="dot"></div>
-                API v1 – Live & bereit
-            </div>
-            <h1>KI-Grußkarten-Engine<br>für <span class="gradient">Ihren Online-Shop</span></h1>
-            <p class="hero-sub">
-                Text + fertige Kartenbilder per API – in unter einer Stunde integriert.
-                27 Designs, 15 Anlässe, 7 Sprachen. Perfekt für Floristen und Geschenkshops.
-            </p>
-            <div class="btn-group">
-                <a href="#demo" class="btn btn-primary">🚀 Live Demo testen</a>
-                <a href="#docs" class="btn btn-outline">📖 API Docs</a>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-num">27</div>
-                    <div class="hero-stat-label">Card Designs</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num">15</div>
-                    <div class="hero-stat-label">Anlässe</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num">7</div>
-                    <div class="hero-stat-label">Sprachen</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num">&lt;2s</div>
-                    <div class="hero-stat-label">Antwortzeit</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ========== VIEW 1: LANDING PAGE ========== -->
+    <div id="viewLanding">
 
-    <!-- Problem/Solution -->
-    <section id="problem">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Das Problem</div>
-                <h2>Leere Grußkartenfelder kosten Sie Umsatz</h2>
-            </div>
-            <div class="problem-grid">
-                <div class="prob-card problem">
-                    <h3>❌ Ohne KI-Texte</h3>
-                    <ul>
-                        <li>Kunden starren auf ein leeres Textfeld</li>
-                        <li>73% brechen ab, wenn sie selbst schreiben müssen</li>
-                        <li>Generische Standardtexte wirken unpersönlich</li>
-                        <li>Keine Mehrsprachigkeit – Kunden werden ausgeschlossen</li>
-                    </ul>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <div class="dot"></div> Live – Jetzt testen
                 </div>
-                <div class="arrow-center">→</div>
-                <div class="prob-card solution">
-                    <h3>✅ Mit Card Engine API</h3>
-                    <ul>
-                        <li>KI generiert persönliche Texte in 2 Sekunden</li>
-                        <li>27 fertige Kartendesigns – sofort als PNG</li>
-                        <li>15 Anlässe, 5 Stile – von lustig bis formell</li>
-                        <li>7 Sprachen inkl. Deutsch, Englisch, Türkisch</li>
-                    </ul>
+                <h1>KI-Grußkarten-Engine<br>für <span class="gradient">Ihren Online-Shop</span></h1>
+                <p class="hero-sub">Text + fertige Kartenbilder per API – in unter einer Stunde integriert. 27 Designs,
+                    15 Anlässe, 7 Sprachen.</p>
+                <div class="btn-group">
+                    <a href="#demo" class="btn btn-primary">🚀 Live Demo testen</a>
+                    <button id="loginBtnHero" class="btn btn-outline">🔐 Kostenlos starten</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">27</div>
+                        <div class="hero-stat-label">Card Designs</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">15</div>
+                        <div class="hero-stat-label">Anlässe</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">7</div>
+                        <div class="hero-stat-label">Sprachen</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">&lt;2s</div>
+                        <div class="hero-stat-label">Antwortzeit</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Live Demo -->
-    <section id="demo">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Live Demo</div>
-                <h2>Testen Sie die API – jetzt</h2>
-                <p>Füllen Sie die Felder aus und sehen Sie den generierten Text in Echtzeit.</p>
-            </div>
-            <div class="demo-card">
-                <div class="demo-header">⚡ API Playground</div>
-                <div class="demo-body">
-                    <div class="demo-form">
-                        <div class="form-group">
-                            <label>Empfänger</label>
-                            <input type="text" id="demoName" value="Maria" placeholder="z.B. Maria">
+        <!-- Live Demo -->
+        <section id="demo">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Live Demo</div>
+                    <h2>Testen Sie es selbst</h2>
+                    <p>Füllen Sie das Formular aus – die KI generiert in Echtzeit einen persönlichen Grußtext +
+                        Kartenvorschau.</p>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-header">⚡ API Live-Tester</div>
+                    <div class="demo-body">
+                        <div class="demo-form">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="demoName" value="Maria" placeholder="z.B. Maria">
+                            </div>
+                            <div class="form-group">
+                                <label>Anlass</label>
+                                <select id="demoOccasion">
+                                    <option value="birthday">🎂 Geburtstag</option>
+                                    <option value="wedding">💒 Hochzeit</option>
+                                    <option value="christmas">🎄 Weihnachten</option>
+                                    <option value="thanks">💐 Danke</option>
+                                    <option value="getwell">🏥 Gute Besserung</option>
+                                    <option value="baby">👶 Baby</option>
+                                    <option value="ramadan">🌙 Ramadan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tonalität</label>
+                                <select id="demoTone">
+                                    <option value="warm">😊 Warm</option>
+                                    <option value="funny">😂 Lustig</option>
+                                    <option value="formal">👔 Formell</option>
+                                    <option value="poetic">✍️ Poetisch</option>
+                                    <option value="short">⚡ Kurz</option>
+                                </select>
+                            </div>
+                            <button class="demo-btn" id="demoGenBtn">✨ Text generieren</button>
                         </div>
-                        <div class="form-group">
-                            <label>Beziehung</label>
-                            <select id="demoRelation">
+                        <div class="demo-result">
+                            <div class="demo-card-preview">
+                                <div class="mini-card" id="demoCard">
+                                    <img id="demoCardBg" src="assets/templates/mood1.jpg" alt="" class="mini-card-bg">
+                                    <div class="mini-card-text" id="demoCardText">Klicke auf "Text generieren" um die
+                                        KI-Engine in Aktion zu sehen...</div>
+                                </div>
+                            </div>
+                            <div class="result-meta" id="demoMeta"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Features</div>
+                    <h2>Die komplette Engine</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>KI-Textgenerierung</h3>
+                        <p>Persönliche Grußtexte in 2 Sekunden. 15 Anlässe, 5 Tonalitäten.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>27 Designvorlagen</h3>
+                        <p>Professionelle Kartendesigns für jeden Anlass – sofort als PNG.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>7 Sprachen</h3>
+                        <p>DE, EN, TR, ES, FR, IT, BG – automatisch korrekt und kulturell passend.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✏️</div>
+                        <h3>Card Designer</h3>
+                        <p>Sticker, 16 Schriftarten, Texteffekte, Farben – volle Gestaltungsfreiheit.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📸</div>
+                        <h3>Export & Teilen</h3>
+                        <p>Download als Bild, teilen via WhatsApp, Telegram oder Link.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>API-Ready</h3>
+                        <p>REST API mit Key-Auth. Ein POST-Request = fertige Karte.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Preise</div>
+                    <h2>Transparent & fair</h2>
+                </div>
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <div class="price-name">Free</div>
+                        <div class="price-amount">0<span class="eur">€</span></div>
+                        <div class="price-period">50 Requests / Tag</div>
+                        <ul class="price-features">
+                            <li>KI-Textgenerierung</li>
+                            <li>Alle Anlässe & Sprachen</li>
+                            <li>27 Designs</li>
+                            <li>Card Designer</li>
+                        </ul><button class="price-btn price-btn-outline" onclick="loginWithGoogle()">Kostenlos
+                            starten</button>
+                    </div>
+                    <div class="price-card featured">
+                        <div class="price-name">Starter</div>
+                        <div class="price-amount">99<span class="eur">€/Mo</span></div>
+                        <div class="price-period">1.000 Requests / Monat</div>
+                        <ul class="price-features">
+                            <li>Alles aus Free</li>
+                            <li>Card Render API</li>
+                            <li>Fertige PNG-Bilder</li>
+                            <li>E-Mail Support</li>
+                        </ul><a href="mailto:api@grussgenerator.de" class="price-btn price-btn-primary">Jetzt
+                            starten</a>
+                    </div>
+                    <div class="price-card">
+                        <div class="price-name">Enterprise</div>
+                        <div class="price-amount">299<span class="eur">€/Mo</span></div>
+                        <div class="price-period">Unlimited</div>
+                        <ul class="price-features">
+                            <li>Alles aus Starter</li>
+                            <li>White-Label</li>
+                            <li>Custom Designs</li>
+                            <li>Priority Support</li>
+                        </ul><a href="mailto:api@grussgenerator.de" class="price-btn price-btn-outline">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section id="contact" class="cta-section">
+            <div class="container" style="text-align:center;">
+                <h2>Bereit, loszulegen?</h2>
+                <p style="color:var(--text-muted);margin:16px 0 32px;">Erstellen Sie jetzt kostenlos Ihre erste
+                    KI-Grußkarte.</p>
+                <button class="btn btn-primary" onclick="loginWithGoogle()">🚀 Kostenlos starten mit Google</button>
+            </div>
+        </section>
+
+        <footer class="b2b-footer">
+            <div class="container">
+                <p>© 2026 grussgenerator.de | <a href="impressum.html">Impressum</a> | <a
+                        href="datenschutz.html">Datenschutz</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ========== VIEW 2: DASHBOARD ========== -->
+    <div id="viewDashboard" class="hidden">
+        <div class="container dash-container">
+
+            <!-- Step 1: Text Generation -->
+            <section class="dash-card" id="dashStep1">
+                <h2>✨ Grußtext generieren</h2>
+                <form id="dashForm">
+                    <!-- Occasion Grid -->
+                    <div class="form-group">
+                        <label>📅 Anlass</label>
+                        <div class="occasion-grid">
+                            <button type="button" class="occasion-btn active" data-occasion="birthday"><span
+                                    class="occasion-icon">🎂</span><span>Geburtstag</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="wedding"><span
+                                    class="occasion-icon">💒</span><span>Hochzeit</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="christmas"><span
+                                    class="occasion-icon">🎄</span><span>Weihnachten</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="easter"><span
+                                    class="occasion-icon">🐰</span><span>Ostern</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="newyear"><span
+                                    class="occasion-icon">🎆</span><span>Neujahr</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="thanks"><span
+                                    class="occasion-icon">💐</span><span>Danke</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="baby"><span
+                                    class="occasion-icon">👶</span><span>Baby</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="getwell"><span
+                                    class="occasion-icon">🏥</span><span>Gute Besserung</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="mothersday"><span
+                                    class="occasion-icon">👩‍👧</span><span>Muttertag</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="fathersday"><span
+                                    class="occasion-icon">👨‍👦</span><span>Vatertag</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="graduation"><span
+                                    class="occasion-icon">🎓</span><span>Abschluss</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="anniversary"><span
+                                    class="occasion-icon">💍</span><span>Jubiläum</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="ramadan"><span
+                                    class="occasion-icon">🌙</span><span>Ramadan</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="lent"><span
+                                    class="occasion-icon">✝️</span><span>Fastenzeit</span></button>
+                            <button type="button" class="occasion-btn" data-occasion="general"><span
+                                    class="occasion-icon">💌</span><span>Sonstiges</span></button>
+                        </div>
+                    </div>
+                    <div class="form-row-2col">
+                        <div class="form-group"><label>👤 Name</label><input type="text" id="dashName"
+                                placeholder="z.B. Anna..." required></div>
+                        <div class="form-group"><label>💝 Beziehung</label>
+                            <select id="dashRelation" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="none">Keine Angabe</option>
                                 <option value="friend">Freund/in</option>
-                                <option value="partner">Partner/in</option>
-                                <option value="colleague">Kolleg/in</option>
+                                <option value="romantic">Partner/in 💕</option>
                                 <option value="family">Familie</option>
-                                <option value="customer" selected>Kunde/in</option>
+                                <option value="colleague">Kollege/in</option>
+                                <option value="boss">Chef/in</option>
+                                <option value="acquaintance">Bekannte/r</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Anlass</label>
-                            <select id="demoOccasion">
-                                <option value="birthday" selected>Geburtstag 🎂</option>
-                                <option value="wedding">Hochzeit 💍</option>
-                                <option value="thanks">Danke 💐</option>
-                                <option value="christmas">Weihnachten 🎄</option>
-                                <option value="getwell">Gute Besserung 💊</option>
-                                <option value="ramadan">Ramadan 🌙</option>
-                                <option value="general">Allgemein 💌</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tonalität</label>
-                            <select id="demoTone">
-                                <option value="warm" selected>Warm & Herzlich</option>
-                                <option value="funny">Lustig & Locker</option>
-                                <option value="formal">Formell & Geschäftlich</option>
-                                <option value="poetic">Poetisch & Kreativ</option>
-                                <option value="short">Kurz & Knapp</option>
-                            </select>
-                        </div>
-                        <button class="demo-btn" id="demoBtn" onclick="runDemo()">⚡ Text generieren</button>
                     </div>
-                    <div class="demo-result">
-                        <div class="result-label">API Response</div>
-                        <div class="result-text placeholder" id="demoResult">
-                            Klicken Sie „Text generieren" um die API zu testen...
+                    <div class="form-group"><label>💡 Zusatzinfo (optional)</label><textarea id="dashInfo"
+                            placeholder="z.B. 'wird 30', 'liebt Reisen'..."></textarea></div>
+                    <div class="form-row-2col">
+                        <div class="form-group"><label>🎨 Tonalität</label>
+                            <select id="dashTone">
+                                <option value="warm">😊 Warm & Herzlich</option>
+                                <option value="funny">😂 Humorvoll</option>
+                                <option value="formal">👔 Formell</option>
+                                <option value="poetic">✍️ Poetisch</option>
+                                <option value="short">⚡ Kurz & Knackig</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>🌍 Sprache</label>
+                            <select id="dashLang">
+                                <option value="de">🇩🇪 Deutsch</option>
+                                <option value="en">🇬🇧 English</option>
+                                <option value="tr">🇹🇷 Türkçe</option>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="fr">🇫🇷 Français</option>
+                                <option value="it">🇮🇹 Italiano</option>
+                                <option value="bg">🇧🇬 Български</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-generate" id="dashGenBtn">
+                        <span class="btn-text">✨ Gruß generieren ✨</span>
+                        <span class="btn-loading hidden"><span class="loading-spinner"></span> Die KI denkt
+                            nach...</span>
+                    </button>
+                </form>
+            </section>
 
-                            Der generierte Text erscheint hier – in Echtzeit von unserer KI erstellt.</div>
-                        <div class="result-meta" id="demoMeta"></div>
+            <!-- Step 2: Card Editor -->
+            <section class="dash-card hidden" id="dashStep2">
+                <div class="editor-header">
+                    <button class="btn-back" id="backToForm">← Zurück</button>
+                    <h2>🎉 Grußkarte gestalten</h2>
+                </div>
+                <div class="editor-layout">
+                    <!-- LEFT: Sticker Panel -->
+                    <div class="sticker-panel">
+                        <h3>🎨 Sticker</h3>
+                        <div class="sticker-tabs-wrapper">
+                            <div class="sticker-tabs-nav" id="stickerTabsNav">
+                                <button class="sticker-tab-btn active" data-tab="feiern">🎉</button>
+                                <button class="sticker-tab-btn" data-tab="herzen">❤️</button>
+                                <button class="sticker-tab-btn" data-tab="natur">🌸</button>
+                                <button class="sticker-tab-btn" data-tab="symbole">🍀</button>
+                                <button class="sticker-tab-btn" data-tab="weihnachten">🎅</button>
+                                <button class="sticker-tab-btn" data-tab="ostern">🐰</button>
+                                <button class="sticker-tab-btn" data-tab="essen">🍾</button>
+                                <button class="sticker-tab-btn" data-tab="gesichter">😊</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content active" id="tab-feiern">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🎈">🎈</button><button class="sticker"
+                                    data-emoji="🎉">🎉</button><button class="sticker"
+                                    data-emoji="🎊">🎊</button><button class="sticker"
+                                    data-emoji="🎁">🎁</button><button class="sticker"
+                                    data-emoji="🎂">🎂</button><button class="sticker"
+                                    data-emoji="🎄">🎄</button><button class="sticker"
+                                    data-emoji="🎆">🎆</button><button class="sticker"
+                                    data-emoji="🎇">🎇</button><button class="sticker"
+                                    data-emoji="🪅">🪅</button><button class="sticker" data-emoji="🧨">🧨</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-herzen">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="❤️">❤️</button><button class="sticker"
+                                    data-emoji="💕">💕</button><button class="sticker"
+                                    data-emoji="💖">💖</button><button class="sticker"
+                                    data-emoji="💗">💗</button><button class="sticker"
+                                    data-emoji="💘">💘</button><button class="sticker"
+                                    data-emoji="💝">💝</button><button class="sticker"
+                                    data-emoji="💞">💞</button><button class="sticker"
+                                    data-emoji="💓">💓</button><button class="sticker"
+                                    data-emoji="🩷">🩷</button><button class="sticker" data-emoji="🧡">🧡</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-natur">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🌸">🌸</button><button class="sticker"
+                                    data-emoji="🌺">🌺</button><button class="sticker"
+                                    data-emoji="🌷">🌷</button><button class="sticker"
+                                    data-emoji="🌹">🌹</button><button class="sticker"
+                                    data-emoji="🌻">🌻</button><button class="sticker" data-emoji="⭐">⭐</button><button
+                                    class="sticker" data-emoji="✨">✨</button><button class="sticker"
+                                    data-emoji="🌈">🌈</button><button class="sticker"
+                                    data-emoji="☀️">☀️</button><button class="sticker" data-emoji="🌙">🌙</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-symbole">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="👶">👶</button><button class="sticker"
+                                    data-emoji="💒">💒</button><button class="sticker"
+                                    data-emoji="🎓">🎓</button><button class="sticker"
+                                    data-emoji="🏆">🏆</button><button class="sticker"
+                                    data-emoji="🍀">🍀</button><button class="sticker"
+                                    data-emoji="🦋">🦋</button><button class="sticker"
+                                    data-emoji="💍">💍</button><button class="sticker"
+                                    data-emoji="🏡">🏡</button><button class="sticker"
+                                    data-emoji="👨‍👩‍👧">👨‍👩‍👧</button><button class="sticker"
+                                    data-emoji="📜">📜</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-weihnachten">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🎅">🎅</button><button class="sticker"
+                                    data-emoji="🤶">🤶</button><button class="sticker"
+                                    data-emoji="❄️">❄️</button><button class="sticker" data-emoji="⛄">⛄</button><button
+                                    class="sticker" data-emoji="🦌">🦌</button><button class="sticker"
+                                    data-emoji="🌟">🌟</button><button class="sticker"
+                                    data-emoji="🕯️">🕯️</button><button class="sticker"
+                                    data-emoji="🧣">🧣</button><button class="sticker"
+                                    data-emoji="🎿">🎿</button><button class="sticker" data-emoji="🛷">🛷</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-ostern">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🐰">🐰</button><button class="sticker"
+                                    data-emoji="🥚">🥚</button><button class="sticker"
+                                    data-emoji="🐣">🐣</button><button class="sticker"
+                                    data-emoji="🐤">🐤</button><button class="sticker"
+                                    data-emoji="🌼">🌼</button><button class="sticker"
+                                    data-emoji="🐝">🐝</button><button class="sticker"
+                                    data-emoji="🌱">🌱</button><button class="sticker" data-emoji="🐞">🐞</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-essen">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="🥂">🥂</button><button class="sticker"
+                                    data-emoji="🍾">🍾</button><button class="sticker"
+                                    data-emoji="🍰">🍰</button><button class="sticker" data-emoji="☕">☕</button><button
+                                    class="sticker" data-emoji="🍩">🍩</button><button class="sticker"
+                                    data-emoji="🍪">🍪</button><button class="sticker"
+                                    data-emoji="🍫">🍫</button><button class="sticker" data-emoji="🧁">🧁</button>
+                            </div>
+                        </div>
+                        <div class="sticker-tab-content hidden" id="tab-gesichter">
+                            <div class="sticker-grid">
+                                <button class="sticker" data-emoji="😊">😊</button><button class="sticker"
+                                    data-emoji="😂">😂</button><button class="sticker"
+                                    data-emoji="🥳">🥳</button><button class="sticker"
+                                    data-emoji="😍">😍</button><button class="sticker"
+                                    data-emoji="🤗">🤗</button><button class="sticker"
+                                    data-emoji="🙏">🙏</button><button class="sticker"
+                                    data-emoji="😇">😇</button><button class="sticker"
+                                    data-emoji="🥹">🥹</button><button class="sticker"
+                                    data-emoji="🤩">🤩</button><button class="sticker" data-emoji="😘">😘</button>
+                            </div>
+                        </div>
+                        <button class="btn-clear-stickers" id="clearStickersBtn">🗑️ Alle entfernen</button>
+                    </div>
+
+                    <!-- CENTER: Card -->
+                    <div class="card-center">
+                        <div class="greeting-card-wrapper">
+                            <div class="greeting-card" id="greetingCard" data-mood="1">
+                                <div class="placed-stickers" id="placedStickers"></div>
+                                <div class="card-overlay"></div>
+                                <img id="cardCustomBg" class="card-custom-bg hidden" crossorigin="anonymous" alt="">
+                                <div id="generatedMessage" class="message-text"></div>
+                                <div class="card-footer"><span class="card-watermark"><img src="assets/favicon.png"
+                                            alt="" class="brand-icon small"> grussgenerator.de</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Design Panel -->
+                    <div class="design-panel">
+                        <h3>⚙️ Design</h3>
+                        <div class="design-tabs-nav">
+                            <button class="design-tab-btn active" data-tab="mood">🎨</button>
+                            <button class="design-tab-btn" data-tab="text">Aa</button>
+                            <button class="design-tab-btn" data-tab="image">📷</button>
+                        </div>
+                        <!-- Mood Tab -->
+                        <div class="design-tab-content active" id="design-tab-mood">
+                            <div class="design-section">
+                                <span class="section-label">Stimmung</span>
+                                <div class="mood-grid-compact" id="staticMoodsContainer"></div>
+                                <div class="remix-section">
+                                    <div id="supabaseMoods" class="mood-grid-compact"
+                                        style="margin-top:15px;border-top:1px solid rgba(255,255,255,0.08);padding-top:15px;">
+                                    </div>
+                                    <button class="btn-remix" id="remixBtn">🎲 Zufall</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Text Tab -->
+                        <div class="design-tab-content hidden" id="design-tab-text">
+                            <div class="design-section">
+                                <span class="section-label">Farbe & Größe</span>
+                                <div class="mini-controls">
+                                    <input type="color" id="textColorPicker" value="#1e293b" class="mini-color-picker">
+                                    <input type="range" id="textSizeSlider" min="1.0" max="2.2" step="0.1" value="1.4"
+                                        class="mini-slider">
+                                </div>
+                            </div>
+                            <div class="design-section">
+                                <span class="section-label">Effekte</span>
+                                <div class="effect-toggles">
+                                    <button class="effect-btn" id="effectShadow">🌑 Schatten</button>
+                                    <button class="effect-btn" id="effectOutline">⭕ Umrandung</button>
+                                    <button class="effect-btn" id="effectGlow">✨ Leuchten</button>
+                                </div>
+                            </div>
+                            <div class="design-section">
+                                <span class="section-label">Schriftart</span>
+                                <div class="font-grid-mini">
+                                    <button class="font-mini active" data-font="'Outfit', sans-serif">Aa</button>
+                                    <button class="font-mini" data-font="'Playfair Display', serif"
+                                        style="font-family:'Playfair Display',serif">Aa</button>
+                                    <button class="font-mini" data-font="'Caveat', cursive"
+                                        style="font-family:'Caveat',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Indie Flower', cursive"
+                                        style="font-family:'Indie Flower',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Kalam', cursive"
+                                        style="font-family:'Kalam',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Patrick Hand', cursive"
+                                        style="font-family:'Patrick Hand',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Shadows Into Light', cursive"
+                                        style="font-family:'Shadows Into Light',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Dancing Script', cursive"
+                                        style="font-family:'Dancing Script',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Great Vibes', cursive"
+                                        style="font-family:'Great Vibes',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Sacramento', cursive"
+                                        style="font-family:'Sacramento',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Satisfy', cursive"
+                                        style="font-family:'Satisfy',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Pacifico', cursive"
+                                        style="font-family:'Pacifico',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Lobster', cursive"
+                                        style="font-family:'Lobster',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Amatic SC', cursive"
+                                        style="font-family:'Amatic SC',cursive;font-weight:700">Aa</button>
+                                    <button class="font-mini" data-font="'Permanent Marker', cursive"
+                                        style="font-family:'Permanent Marker',cursive">Aa</button>
+                                    <button class="font-mini" data-font="'Comic Neue', cursive"
+                                        style="font-family:'Comic Neue',cursive">Aa</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image Tab -->
+                        <div class="design-tab-content hidden" id="design-tab-image">
+                            <div class="design-section">
+                                <span class="section-label">Bild hinzufügen</span>
+                                <div class="upload-controls-row">
+                                    <div class="upload-mini" id="uploadBgZone"><input type="file" id="bgUpload"
+                                            accept="image/*" class="hidden"><span>🖼️ Hintergrund</span></div>
+                                    <div class="upload-mini" id="uploadStickerZone"><input type="file"
+                                            id="stickerUpload" accept="image/*" class="hidden"><span>🧩 Sticker</span>
+                                    </div>
+                                </div>
+                                <button class="btn-remove-mini hidden" id="removeBgBtn">❌ Hintergrund entfernen</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Action Bar -->
+                <div class="unified-action-bar">
+                    <button class="btn-download-compact" id="downloadBtn"><span>📸</span> Als Bild speichern</button>
+                    <button class="btn-share-trigger" id="copyTextBtn"><span>📋</span> Text kopieren</button>
+                    <button class="btn-share-trigger" id="newCardBtn"><span>✨</span> Neue Karte</button>
+                </div>
+            </section>
         </div>
-    </section>
+    </div>
 
-    <!-- API Docs -->
-    <section id="docs">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Dokumentation</div>
-                <h2>Einfache REST API</h2>
-                <p>Ein Endpoint, ein POST-Request – fertig. Hier die Integration in 3 Sprachen.</p>
-            </div>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
-            <div class="endpoint-box">
-                <span class="endpoint-method">POST</span>
-                <span class="endpoint-url">https://grussgenerator.de/api/generate-greeting-b2b</span>
-            </div>
-
-            <div class="code-section">
-                <div class="code-tabs">
-                    <button class="code-tab active" onclick="switchTab('curl')">cURL</button>
-                    <button class="code-tab" onclick="switchTab('js')">JavaScript</button>
-                    <button class="code-tab" onclick="switchTab('python')">Python</button>
-                </div>
-                <div class="code-panel active" id="tab-curl">
-                    <button class="code-copy" onclick="copyCode('curl')">Kopieren</button>
-                    <pre id="code-curl"><span class="hl-fn">curl</span> -X POST https://grussgenerator.de/api/generate-greeting-b2b \
-  -H <span class="hl-str">"Content-Type: application/json"</span> \
-  -H <span class="hl-str">"x-api-key: YOUR_API_KEY"</span> \
-  -d <span class="hl-str">'{
-    "name": "Maria",
-    "relation": "customer",
-    "occasion": "birthday",
-    "tone": "warm",
-    "lang": "de",
-    "info": "Langjährige Kundin, bestellt regelmäßig Rosen"
-  }'</span></pre>
-                </div>
-                <div class="code-panel" id="tab-js">
-                    <button class="code-copy" onclick="copyCode('js')">Kopieren</button>
-                    <pre
-                        id="code-js"><span class="hl-kw">const</span> response = <span class="hl-kw">await</span> <span class="hl-fn">fetch</span>(<span class="hl-str">'https://grussgenerator.de/api/generate-greeting-b2b'</span>, {
-  <span class="hl-key">method</span>: <span class="hl-str">'POST'</span>,
-  <span class="hl-key">headers</span>: {
-    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
-    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'YOUR_API_KEY'</span>
-  },
-  <span class="hl-key">body</span>: <span class="hl-fn">JSON.stringify</span>({
-    <span class="hl-key">name</span>: <span class="hl-str">'Maria'</span>,
-    <span class="hl-key">relation</span>: <span class="hl-str">'customer'</span>,
-    <span class="hl-key">occasion</span>: <span class="hl-str">'birthday'</span>,
-    <span class="hl-key">tone</span>: <span class="hl-str">'warm'</span>,
-    <span class="hl-key">lang</span>: <span class="hl-str">'de'</span>
-  })
-});
-
-<span class="hl-kw">const</span> data = <span class="hl-kw">await</span> response.<span class="hl-fn">json</span>();
-console.<span class="hl-fn">log</span>(data.text); <span class="hl-com">// → "Liebe Maria, zum Geburtstag..."</span></pre>
-                </div>
-                <div class="code-panel" id="tab-python">
-                    <button class="code-copy" onclick="copyCode('python')">Kopieren</button>
-                    <pre
-                        id="code-python"><span class="hl-kw">import</span> requests
-
-response = requests.<span class="hl-fn">post</span>(
-    <span class="hl-str">"https://grussgenerator.de/api/generate-greeting-b2b"</span>,
-    <span class="hl-key">headers</span>={<span class="hl-str">"x-api-key"</span>: <span class="hl-str">"YOUR_API_KEY"</span>},
-    <span class="hl-key">json</span>={
-        <span class="hl-str">"name"</span>: <span class="hl-str">"Maria"</span>,
-        <span class="hl-str">"relation"</span>: <span class="hl-str">"customer"</span>,
-        <span class="hl-str">"occasion"</span>: <span class="hl-str">"birthday"</span>,
-        <span class="hl-str">"tone"</span>: <span class="hl-str">"warm"</span>,
-        <span class="hl-str">"lang"</span>: <span class="hl-str">"de"</span>
-    }
-)
-
-data = response.<span class="hl-fn">json</span>()
-<span class="hl-fn">print</span>(data[<span class="hl-str">"text"</span>])  <span class="hl-com"># → "Liebe Maria, zum Geburtstag..."</span></pre>
-                </div>
-            </div>
-
-            <!-- Parameters Table -->
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">📋 Request-Parameter</h3>
-            <table class="resp-table">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Typ</th>
-                        <th>Pflicht</th>
-                        <th>Beschreibung</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>name</code></td>
-                        <td>String</td>
-                        <td>Ja</td>
-                        <td>Name des Empfängers (max. 100 Zeichen)</td>
-                    </tr>
-                    <tr>
-                        <td><code>relation</code></td>
-                        <td>String</td>
-                        <td>Ja</td>
-                        <td>Beziehung: friend, partner, colleague, family, customer</td>
-                    </tr>
-                    <tr>
-                        <td><code>occasion</code></td>
-                        <td>String</td>
-                        <td>Ja</td>
-                        <td>Anlass: birthday, wedding, christmas, thanks, getwell, ramadan, …</td>
-                    </tr>
-                    <tr>
-                        <td><code>tone</code></td>
-                        <td>String</td>
-                        <td>Nein</td>
-                        <td>Stil: warm, funny, formal, poetic, short (Default: warm)</td>
-                    </tr>
-                    <tr>
-                        <td><code>lang</code></td>
-                        <td>String</td>
-                        <td>Nein</td>
-                        <td>Sprache: de, en, tr, es, fr, it, bg (Default: de)</td>
-                    </tr>
-                    <tr>
-                        <td><code>info</code></td>
-                        <td>String</td>
-                        <td>Nein</td>
-                        <td>Zusätzlicher Kontext (max. 500 Zeichen)</td>
-                    </tr>
-                    <tr>
-                        <td><code>mood</code></td>
-                        <td>Integer</td>
-                        <td>Nein</td>
-                        <td>Design-Vorlage 1–27 (Default: zufällig). Siehe <a href="/api/moods"
-                                style="color:var(--primary-light)">/api/moods</a></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">📤 Response-Format</h3>
-            <div class="code-section">
-                <div class="code-panel active" style="display:block;">
-                    <pre>{
-  <span class="hl-key">"text"</span>: <span class="hl-str">"Liebe Maria, zu deinem Geburtstag wünsche ich dir..."</span>,
-  <span class="hl-key">"occasion"</span>: <span class="hl-str">"birthday"</span>,
-  <span class="hl-key">"lang"</span>: <span class="hl-str">"de"</span>,
-  <span class="hl-key">"tone"</span>: <span class="hl-str">"warm"</span>,
-  <span class="hl-key">"card"</span>: {
-    <span class="hl-key">"mood"</span>: <span class="hl-num">25</span>,
-    <span class="hl-key">"imageUrl"</span>: <span class="hl-str">"https://grussgenerator.de/api/render-card?text=...&mood=25"</span>,
-    <span class="hl-key">"backgroundUrl"</span>: <span class="hl-str">"https://grussgenerator.de/assets/templates/mood25.jpg"</span>,
-    <span class="hl-key">"width"</span>: <span class="hl-num">1080</span>,
-    <span class="hl-key">"height"</span>: <span class="hl-num">1080</span>
-  },
-  <span class="hl-key">"_links"</span>: {
-    <span class="hl-key">"moodsCatalog"</span>: <span class="hl-str">"https://grussgenerator.de/api/moods"</span>,
-    <span class="hl-key">"docs"</span>: <span class="hl-str">"https://grussgenerator.de/api-partner.html#docs"</span>
-  }
-}</pre>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">🎨 Zusätzliche Endpoints</h3>
-            <table class="resp-table">
-                <thead>
-                    <tr>
-                        <th>Endpoint</th>
-                        <th>Methode</th>
-                        <th>Beschreibung</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>/api/moods</code></td>
-                        <td>GET</td>
-                        <td>Katalog aller 27 Designvorlagen mit Metadaten und Preview-URLs</td>
-                    </tr>
-                    <tr>
-                        <td><code>/api/render-card</code></td>
-                        <td>GET / POST</td>
-                        <td>Rendert Text + Design zu einem fertigen 1080×1080 PNG-Kartenbild</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- Integration Steps -->
-    <section id="steps">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Integration</div>
-                <h2>In 3 Schritten live</h2>
-            </div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-num">1</div>
-                    <h3>API Key anfordern</h3>
-                    <p>Schreiben Sie uns – Sie erhalten Ihren Key + 50 kostenlose Requests zum Testen.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">2</div>
-                    <h3>Code einbinden</h3>
-                    <p>Ein POST-Request im Checkout – fertig. Unsere Docs machen es einfach.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">3</div>
-                    <h3>Kunden begeistern</h3>
-                    <p>Ihre Kunden erhalten persönliche Grußtexte – und Sie höhere Conversions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Preise</div>
-                <h2>Transparent & fair</h2>
-                <p>Starten Sie kostenlos. Skalieren Sie, wenn Ihre Kunden es lieben.</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <div class="price-name">Free Trial</div>
-                    <div class="price-amount">0<span class="eur">€</span></div>
-                    <div class="price-period">50 Requests / Tag</div>
-                    <ul class="price-features">
-                        <li>KI-Textgenerierung</li>
-                        <li>Alle 15 Anlässe & 7 Sprachen</li>
-                        <li>27 Design-Vorlagen</li>
-                        <li>Ideal zum Testen</li>
-                    </ul>
-                    <a href="#contact" class="price-btn price-btn-outline">Kostenlos starten</a>
-                </div>
-                <div class="price-card featured">
-                    <div class="price-name">Starter</div>
-                    <div class="price-amount">99<span class="eur">€/Mo</span></div>
-                    <div class="price-period">1.000 Requests / Monat</div>
-                    <ul class="price-features">
-                        <li>KI-Text + fertige Kartenbilder</li>
-                        <li>27 Design-Vorlagen als PNG</li>
-                        <li>Card Render API</li>
-                        <li>E-Mail Support</li>
-                    </ul>
-                    <a href="#contact" class="price-btn price-btn-primary">Jetzt starten</a>
-                </div>
-                <div class="price-card">
-                    <div class="price-name">Enterprise</div>
-                    <div class="price-amount">299<span class="eur">€/Mo</span></div>
-                    <div class="price-period">Unlimited Requests</div>
-                    <ul class="price-features">
-                        <li>Alles aus Starter</li>
-                        <li>White-Label (kein Branding)</li>
-                        <li>Custom Designs möglich</li>
-                        <li>Priority Support + SLA</li>
-                    </ul>
-                    <a href="#contact" class="price-btn price-btn-outline">Kontakt aufnehmen</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="contact" class="cta-section">
-        <div class="container">
-            <h2>Bereit, Ihren Shop<br>smarter zu machen?</h2>
-            <p>Schreiben Sie uns für Ihren kostenlosen API Key – oder stellen Sie uns Ihre Fragen.</p>
-            <a href="mailto:api@grussgenerator.de?subject=API%20Key%20Anfrage&body=Hallo%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20die%20Greeting%20Text%20API.%0A%0AShop-URL%3A%20%0AGeplante%20Nutzung%3A%20%0A%0AVielen%20Dank!"
-                class="btn btn-primary" style="font-size: 1.05rem;">📩 API Key anfragen</a>
-            <div class="cta-email">
-                <span>api@grussgenerator.de</span>
-                <button class="cta-email-btn" onclick="copyEmail()">Kopieren</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="b2b-footer">
-        <div class="container">
-            <p>© 2026 <a href="https://grussgenerator.de">grussgenerator.de</a> · <a href="impressum.html">Impressum</a>
-                · <a href="datenschutz.html">Datenschutz</a></p>
-        </div>
-    </footer>
-
-    <script>
-        // === DEMO ===
-        async function runDemo() {
-            const btn = document.getElementById('demoBtn');
-            const result = document.getElementById('demoResult');
-            const meta = document.getElementById('demoMeta');
-
-            btn.disabled = true;
-            btn.textContent = '⏳ Generiere…';
-            result.classList.add('placeholder');
-            result.textContent = 'KI denkt nach…';
-
-            const start = performance.now();
-
-            try {
-                const res = await fetch('/api/generate-greeting', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: document.getElementById('demoName').value || 'Maria',
-                        relation: document.getElementById('demoRelation').value,
-                        occasion: document.getElementById('demoOccasion').value,
-                        tone: document.getElementById('demoTone').value,
-                        lang: 'de'
-                    })
-                });
-
-                const data = await res.json();
-                const elapsed = ((performance.now() - start) / 1000).toFixed(1);
-
-                if (data.text) {
-                    result.classList.remove('placeholder');
-                    result.textContent = data.text;
-                    meta.textContent = `✅ Antwortzeit: ${elapsed}s · Anlass: ${data.occasion} · Sprache: ${data.lang}`;
-                } else {
-                    result.textContent = '❌ Fehler: ' + (data.error || 'Unbekannter Fehler');
-                }
-            } catch (err) {
-                result.textContent = '❌ Netzwerkfehler: ' + err.message;
-            }
-
-            btn.disabled = false;
-            btn.textContent = '⚡ Text generieren';
-        }
-
-        // === CODE TABS ===
-        function switchTab(tab) {
-            document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('tab-' + tab).classList.add('active');
-        }
-
-        // === COPY CODE ===
-        function copyCode(tab) {
-            const pre = document.getElementById('code-' + tab);
-            const text = pre.textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = pre.parentElement.querySelector('.code-copy');
-                btn.textContent = '✓ Kopiert!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = 'Kopieren';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        // === COPY EMAIL ===
-        function copyEmail() {
-            navigator.clipboard.writeText('api@grussgenerator.de').then(() => {
-                const btn = document.querySelector('.cta-email-btn');
-                btn.textContent = '✓ Kopiert!';
-                setTimeout(() => btn.textContent = 'Kopieren', 2000);
-            });
-        }
-    </script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"
+        crossorigin="anonymous"></script>
+    <script src="partner.js"></script>
 </body>
 
 </html>
