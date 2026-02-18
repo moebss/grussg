@@ -5,5 +5,8 @@
     "main": "index.html",
     "scripts": {
         "dev": "npx servor"
+    },
+    "dependencies": {
+        "@vercel/og": "^0.6.0"
     }
 }

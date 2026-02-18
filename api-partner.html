@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greeting Text API für Shops | Grussgenerator.de – KI-Grußtexte per API</title>
+    <title>Greeting Card Engine für Shops | Grussgenerator.de – KI-Grußkarten per API</title>
     <meta name="description"
-        content="Integrieren Sie KI-generierte Grußkartentexte in Ihren Online-Shop. API für Floristen, Geschenkshops & E-Commerce. 15 Anlässe, 7 Sprachen, 5 Stile.">
+        content="Komplette KI-Grußkarten-Engine für Ihren Online-Shop: Text + fertige Kartenbilder per API. 27 Designs, 15 Anlässe, 7 Sprachen.">
     <link rel="canonical" href="https://grussgenerator.de/api-partner.html">
-    <meta property="og:title" content="Greeting Text API für Online-Shops | Grussgenerator.de">
+    <meta property="og:title" content="Greeting Card Engine für Online-Shops | Grussgenerator.de">
     <meta property="og:description"
-        content="KI-Grußtexte per API für Floristen und Geschenkshops. Einfache Integration, sofortige Ergebnisse.">
+        content="KI-Grußkarten per API: Text-Generierung + fertige Kartenbilder mit 27 Designvorlagen. Für Floristen und Geschenkshops.">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1069,10 +1069,10 @@
                 <div class="dot"></div>
                 API v1 – Live & bereit
             </div>
-            <h1>KI-Grußtexte<br>für <span class="gradient">Ihren Online-Shop</span></h1>
+            <h1>KI-Grußkarten-Engine<br>für <span class="gradient">Ihren Online-Shop</span></h1>
             <p class="hero-sub">
-                Integrieren Sie personalisierte Grußkartentexte in Ihren Checkout –
-                in unter einer Stunde. Perfekt für Floristen, Geschenkshops und E-Commerce.
+                Text + fertige Kartenbilder per API – in unter einer Stunde integriert.
+                27 Designs, 15 Anlässe, 7 Sprachen. Perfekt für Floristen und Geschenkshops.
             </p>
             <div class="btn-group">
                 <a href="#demo" class="btn btn-primary">🚀 Live Demo testen</a>
@@ -1080,16 +1080,16 @@
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
+                    <div class="hero-stat-num">27</div>
+                    <div class="hero-stat-label">Card Designs</div>
+                </div>
+                <div class="hero-stat">
                     <div class="hero-stat-num">15</div>
                     <div class="hero-stat-label">Anlässe</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-num">7</div>
                     <div class="hero-stat-label">Sprachen</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num">5</div>
-                    <div class="hero-stat-label">Tonalitäten</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-num">&lt;2s</div>
@@ -1118,10 +1118,10 @@
                 </div>
                 <div class="arrow-center">→</div>
                 <div class="prob-card solution">
-                    <h3>✅ Mit Greeting API</h3>
+                    <h3>✅ Mit Card Engine API</h3>
                     <ul>
                         <li>KI generiert persönliche Texte in 2 Sekunden</li>
-                        <li>Höhere Conversion im Checkout</li>
+                        <li>27 fertige Kartendesigns – sofort als PNG</li>
                         <li>15 Anlässe, 5 Stile – von lustig bis formell</li>
                         <li>7 Sprachen inkl. Deutsch, Englisch, Türkisch</li>
                     </ul>
@@ -1318,6 +1318,13 @@ data = response.<span class="hl-fn">json</span>()
                         <td>Nein</td>
                         <td>Zusätzlicher Kontext (max. 500 Zeichen)</td>
                     </tr>
+                    <tr>
+                        <td><code>mood</code></td>
+                        <td>Integer</td>
+                        <td>Nein</td>
+                        <td>Design-Vorlage 1–27 (Default: zufällig). Siehe <a href="/api/moods"
+                                style="color:var(--primary-light)">/api/moods</a></td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -1327,10 +1334,45 @@ data = response.<span class="hl-fn">json</span>()
                     <pre>{
   <span class="hl-key">"text"</span>: <span class="hl-str">"Liebe Maria, zu deinem Geburtstag wünsche ich dir..."</span>,
   <span class="hl-key">"occasion"</span>: <span class="hl-str">"birthday"</span>,
-  <span class="hl-key">"lang"</span>: <span class="hl-str">"de"</span>
+  <span class="hl-key">"lang"</span>: <span class="hl-str">"de"</span>,
+  <span class="hl-key">"tone"</span>: <span class="hl-str">"warm"</span>,
+  <span class="hl-key">"card"</span>: {
+    <span class="hl-key">"mood"</span>: <span class="hl-num">25</span>,
+    <span class="hl-key">"imageUrl"</span>: <span class="hl-str">"https://grussgenerator.de/api/render-card?text=...&mood=25"</span>,
+    <span class="hl-key">"backgroundUrl"</span>: <span class="hl-str">"https://grussgenerator.de/assets/templates/mood25.jpg"</span>,
+    <span class="hl-key">"width"</span>: <span class="hl-num">1080</span>,
+    <span class="hl-key">"height"</span>: <span class="hl-num">1080</span>
+  },
+  <span class="hl-key">"_links"</span>: {
+    <span class="hl-key">"moodsCatalog"</span>: <span class="hl-str">"https://grussgenerator.de/api/moods"</span>,
+    <span class="hl-key">"docs"</span>: <span class="hl-str">"https://grussgenerator.de/api-partner.html#docs"</span>
+  }
 }</pre>
                 </div>
             </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 16px;">🎨 Zusätzliche Endpoints</h3>
+            <table class="resp-table">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Methode</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/api/moods</code></td>
+                        <td>GET</td>
+                        <td>Katalog aller 27 Designvorlagen mit Metadaten und Preview-URLs</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/render-card</code></td>
+                        <td>GET / POST</td>
+                        <td>Rendert Text + Design zu einem fertigen 1080×1080 PNG-Kartenbild</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -1375,34 +1417,34 @@ data = response.<span class="hl-fn">json</span>()
                     <div class="price-amount">0<span class="eur">€</span></div>
                     <div class="price-period">50 Requests / Tag</div>
                     <ul class="price-features">
-                        <li>Alle 15 Anlässe</li>
-                        <li>Alle 7 Sprachen</li>
-                        <li>Alle Tonalitäten</li>
+                        <li>KI-Textgenerierung</li>
+                        <li>Alle 15 Anlässe & 7 Sprachen</li>
+                        <li>27 Design-Vorlagen</li>
                         <li>Ideal zum Testen</li>
                     </ul>
                     <a href="#contact" class="price-btn price-btn-outline">Kostenlos starten</a>
                 </div>
                 <div class="price-card featured">
                     <div class="price-name">Starter</div>
-                    <div class="price-amount">49<span class="eur">€/Mo</span></div>
+                    <div class="price-amount">99<span class="eur">€/Mo</span></div>
                     <div class="price-period">1.000 Requests / Monat</div>
                     <ul class="price-features">
-                        <li>Alles aus Free Trial</li>
-                        <li>Höhere Rate Limits</li>
+                        <li>KI-Text + fertige Kartenbilder</li>
+                        <li>27 Design-Vorlagen als PNG</li>
+                        <li>Card Render API</li>
                         <li>E-Mail Support</li>
-                        <li>Usage Dashboard</li>
                     </ul>
                     <a href="#contact" class="price-btn price-btn-primary">Jetzt starten</a>
                 </div>
                 <div class="price-card">
-                    <div class="price-name">Growth</div>
-                    <div class="price-amount">149<span class="eur">€/Mo</span></div>
-                    <div class="price-period">5.000 Requests / Monat</div>
+                    <div class="price-name">Enterprise</div>
+                    <div class="price-amount">299<span class="eur">€/Mo</span></div>
+                    <div class="price-period">Unlimited Requests</div>
                     <ul class="price-features">
                         <li>Alles aus Starter</li>
-                        <li>Priority Support</li>
-                        <li>Custom Prompts</li>
                         <li>White-Label (kein Branding)</li>
+                        <li>Custom Designs möglich</li>
+                        <li>Priority Support + SLA</li>
                     </ul>
                     <a href="#contact" class="price-btn price-btn-outline">Kontakt aufnehmen</a>
                 </div>

@@ -65,7 +65,10 @@ export default async (req, res) => {
     rateLimitMap.set(apiKey, recentRequests);
 
     // --- REQUEST BODY ---
-    const { name: rawName, relation: rawRelation, info: rawInfo, tone, lang, occasion } = req.body;
+    const { name: rawName, relation: rawRelation, info: rawInfo, tone, lang, occasion, mood: rawMood } = req.body;
+
+    // Parse mood (1-27, optional)
+    const mood = rawMood ? Math.min(27, Math.max(1, parseInt(rawMood) || 1)) : null;
 
     // --- INPUT VALIDATION & SANITIZATION ---
     function sanitizeInput(str, maxLen) {
@@ -198,11 +201,26 @@ IMPORTANT RULES:
         // --- USAGE LOGGING ---
         console.log(`[B2B] key=${apiKey.substring(0, 8)}... occasion=${occasion} lang=${lang} tone=${tone}`);
 
+        const generatedText = data.choices[0].message.content.trim();
+        const selectedMood = mood || Math.floor(Math.random() * 27) + 1;
+        const encodedText = encodeURIComponent(generatedText);
+
         return res.status(200).json({
-            text: data.choices[0].message.content.trim(),
+            text: generatedText,
             occasion: occasion || 'general',
             lang: lang || 'de',
-            tone: tone || 'warm'
+            tone: tone || 'warm',
+            card: {
+                mood: selectedMood,
+                imageUrl: `https://grussgenerator.de/api/render-card?text=${encodedText}&mood=${selectedMood}`,
+                backgroundUrl: `https://grussgenerator.de/assets/templates/mood${selectedMood}.jpg`,
+                width: 1080,
+                height: 1080
+            },
+            _links: {
+                moodsCatalog: 'https://grussgenerator.de/api/moods',
+                docs: 'https://grussgenerator.de/api-partner.html#docs'
+            }
         });
 
     } catch (err) {
