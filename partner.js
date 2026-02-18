@@ -111,6 +111,7 @@ document.getElementById('demoGenBtn')?.addEventListener('click', async () => {
         const data = await res.json();
         if (data.text) {
             document.getElementById('demoCardText').textContent = data.text;
+            document.getElementById('demoTextEditor').value = data.text;
             const mood = Math.floor(Math.random() * TOTAL_MOODS) + 1;
             document.getElementById('demoCardBg').src = `assets/templates/mood${mood}.jpg`;
             document.getElementById('demoMeta').textContent = `✅ Generiert in <2s | Design: mood${mood} | ${occasion} / ${tone}`;
@@ -151,6 +152,25 @@ document.querySelectorAll('.demo-font').forEach(btn => {
         btn.classList.add('active');
         document.getElementById('demoCardText').style.fontFamily = btn.dataset.font;
     });
+});
+
+// Demo: Textarea sync - edits in textarea update the card text
+document.getElementById('demoTextEditor')?.addEventListener('input', (e) => {
+    document.getElementById('demoCardText').textContent = e.target.value;
+});
+
+// Demo: Text alignment
+document.querySelectorAll('.demo-align-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.demo-align-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('demoCardText').style.textAlign = btn.dataset.align;
+    });
+});
+
+// Demo: Font size slider
+document.getElementById('demoFontSize')?.addEventListener('input', (e) => {
+    document.getElementById('demoCardText').style.fontSize = `${e.target.value}rem`;
 });
 
 // ===========================

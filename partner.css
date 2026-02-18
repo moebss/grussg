@@ -581,6 +581,63 @@ section {
     border-color: var(--primary-light);
 }
 
+/* Demo Text Editor Controls */
+.demo-text-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.demo-align-group {
+    display: flex;
+    gap: 4px;
+}
+
+.demo-align-btn {
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-align-btn.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary);
+    color: var(--text);
+}
+
+.demo-align-btn:hover {
+    border-color: var(--primary-light);
+}
+
+.demo-size-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.demo-size-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.demo-size-slider {
+    flex: 1;
+    accent-color: var(--primary);
+    height: 4px;
+}
+
 /* Features */
 .features-grid {
     display: grid;

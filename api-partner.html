@@ -125,6 +125,29 @@
                                 </select>
                             </div>
                             <button class="demo-btn" id="demoGenBtn">✨ Text generieren</button>
+                            <!-- Text Editor -->
+                            <div class="demo-editor" id="demoEditor">
+                                <div class="form-group" style="margin-top:16px;">
+                                    <label>📝 Text bearbeiten</label>
+                                    <textarea id="demoTextEditor" rows="4"
+                                        placeholder="Hier erscheint der generierte Text..."></textarea>
+                                </div>
+                                <div class="demo-text-controls">
+                                    <div class="demo-align-group">
+                                        <button class="demo-align-btn" data-align="left" title="Linksbündig">⬅</button>
+                                        <button class="demo-align-btn active" data-align="center"
+                                            title="Zentriert">⬛</button>
+                                        <button class="demo-align-btn" data-align="right"
+                                            title="Rechtsbündig">➡</button>
+                                    </div>
+                                    <div class="demo-size-group">
+                                        <span class="demo-size-label">A</span>
+                                        <input type="range" id="demoFontSize" min="0.6" max="1.4" step="0.05"
+                                            value="0.85" class="demo-size-slider">
+                                        <span class="demo-size-label" style="font-size:1.2em">A</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="demo-result">
                             <div class="demo-card-preview">
