@@ -259,26 +259,26 @@
                         <!-- Name -->
                         <div class="form-group">
                             <label for="recipientName">
-                                <span>👤 Name der Person</span>
+                                <span data-i18n="label-name">👤 Name der Person</span>
                             </label>
                             <input type="text" id="recipientName" name="recipientName" placeholder="z.B. Anna..."
-                                required>
+                                data-i18n-placeholder="placeholder-name" required>
                         </div>
 
                         <!-- Relationship -->
                         <div class="form-group">
                             <label for="relationship">
-                                <span>💝 Beziehung</span>
+                                <span data-i18n="label-relationship">💝 Beziehung</span>
                             </label>
                             <select id="relationship" name="relationship" required>
-                                <option value="">Bitte wählen...</option>
-                                <option value="none">Keine Angabe</option>
-                                <option value="friend">Freund/in</option>
-                                <option value="romantic">Partner/in 💕</option>
-                                <option value="family">Familie</option>
-                                <option value="colleague">Kollege/in</option>
-                                <option value="boss">Chef/in</option>
-                                <option value="acquaintance">Bekannte/r</option>
+                                <option value="" data-i18n="option-select">Bitte wählen...</option>
+                                <option value="none" data-i18n="option-none">Keine Angabe</option>
+                                <option value="friend" data-i18n="option-friend">Freund/in</option>
+                                <option value="romantic" data-i18n="option-romantic">Partner/in 💕</option>
+                                <option value="family" data-i18n="option-family">Familie</option>
+                                <option value="colleague" data-i18n="option-colleague">Kollege/in</option>
+                                <option value="boss" data-i18n="option-boss">Chef/in</option>
+                                <option value="acquaintance" data-i18n="option-acquaintance">Bekannte/r</option>
                             </select>
                         </div>
                     </div>
@@ -286,53 +286,53 @@
                     <!-- Additional Info -->
                     <div class="form-group">
                         <label for="additionalInfo">
-                            <span>💡 Zusätzliche Infos (optional)</span>
+                            <span data-i18n="label-info">💡 Zusätzliche Infos (optional)</span>
                         </label>
-                        <textarea id="additionalInfo"
-                            placeholder="Z.B. 'wird 30', 'liebt Reisen', 'neuer Job'..."></textarea>
+                        <textarea id="additionalInfo" placeholder="Z.B. 'wird 30', 'liebt Reisen', 'neuer Job'..."
+                            data-i18n-placeholder="placeholder-info"></textarea>
                     </div>
 
                     <!-- Tone -->
                     <div class="form-group">
                         <label for="tone">
-                            <span>🎨 Stil / Tonalität</span>
+                            <span data-i18n="label-tone">🎨 Stil / Tonalität</span>
                         </label>
                         <select id="tone" name="tone" required>
-                            <option value="warm">😊 Warm & Herzlich</option>
-                            <option value="funny">😂 Humorvoll & Lustig</option>
-                            <option value="formal">👔 Formell & Professionell</option>
-                            <option value="poetic">✍️ Poetisch & Kreativ</option>
-                            <option value="short">⚡ Kurz & Knackig</option>
+                            <option value="warm" data-i18n="tone-warm">😊 Warm & Herzlich</option>
+                            <option value="funny" data-i18n="tone-funny">😂 Humorvoll & Lustig</option>
+                            <option value="formal" data-i18n="tone-formal">👔 Formell & Professionell</option>
+                            <option value="poetic" data-i18n="tone-poetic">✍️ Poetisch & Kreativ</option>
+                            <option value="short" data-i18n="tone-short">⚡ Kurz & Knackig</option>
                         </select>
                     </div>
 
                     <!-- Submit -->
                     <button type="submit" class="btn-generate" id="generateBtn">
-                        <span class="btn-text">✨ Gruß generieren ✨</span>
+                        <span class="btn-text" data-i18n="btn-generate">✨ Gruß generieren ✨</span>
                         <span class="btn-loading hidden">
                             <span class="loading-spinner"></span>
-                            Die KI denkt nach...
+                            <span data-i18n="toast-loading">Die KI denkt nach...</span>
                         </span>
                     </button>
 
                     <!-- Trust Badges -->
                     <div class="trust-badges">
-                        <span>🔒 100% kostenlos</span>
-                        <span>⚡ In Sekunden fertig</span>
-                        <span>🌍 6 Sprachen</span>
+                        <span data-i18n="badge-free">🔒 100% kostenlos</span>
+                        <span data-i18n="badge-fast">⚡ In Sekunden fertig</span>
+                        <span data-i18n="badge-languages">🌍 6 Sprachen</span>
                     </div>
                 </form>
 
                 <!-- History Collapse -->
                 <div class="history-section" id="historySection">
                     <button class="history-toggle" id="historyToggle">
-                        <span>📜 Deine letzten Grüße</span>
+                        <span data-i18n="history-title">📜 Deine letzten Grüße</span>
                         <span class="history-badge" id="historyBadge">0</span>
                         <span class="toggle-arrow">▼</span>
                     </button>
                     <div class="history-content hidden" id="historyContent">
                         <div id="historyList" class="history-list">
-                            <p class="empty-history">Noch keine Grüße erstellt.</p>
+                            <p class="empty-history" data-i18n="history-empty">Noch keine Grüße erstellt.</p>
                         </div>
                     </div>
                 </div>
@@ -347,7 +347,7 @@
                             <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
                     </button>
-                    <h2>🎉 Dein persönlicher Gruß</h2>
+                    <h2 data-i18n="output-title">🎉 Dein persönlicher Gruß</h2>
                 </div>
 
                 <!-- 3-Column Editor Layout -->
@@ -703,14 +703,14 @@
                     <!-- 2. Download Button -->
                     <button class="btn-download-compact" id="downloadBtn">
                         <span>📸</span>
-                        Als Bild speichern
+                        <span data-i18n="btn-download">Als Bild speichern</span>
                     </button>
 
                     <!-- 3. Share Dropdown -->
                     <div class="share-dropdown-container" id="shareDropdown">
                         <button class="btn-share-trigger"
                             onclick="document.getElementById('shareDropdown').classList.toggle('active')">
-                            <span>📤</span> Teilen
+                            <span>📤</span> <span data-i18n="btn-share">Teilen</span>
                         </button>
 
                         <div class="share-options-menu">
@@ -744,9 +744,9 @@
 
                 <!-- History Section in Output -->
                 <div class="output-history">
-                    <h4>📜 Deine Gruß-Historie</h4>
+                    <h4 data-i18n="history-title">📜 Deine Gruß-Historie</h4>
                     <div class="output-history-list" id="outputHistoryList">
-                        <p class="empty-history">Noch keine Grüße erstellt.</p>
+                        <p class="empty-history" data-i18n="history-empty">Noch keine Grüße erstellt.</p>
                     </div>
 
                 </div>
@@ -756,45 +756,52 @@
         <!-- SEO Content Section -->
         <section class="seo-section card glass">
             <div class="seo-content">
-                <h2>Warum den KI Grußgenerator nutzen?</h2>
-                <p>Der <strong>Grussgenerator.de</strong> ist dein ultimatives Tool, um in Sekunden herzliche, lustige
+                <h2 data-i18n="seo-title">Warum den KI Grußgenerator nutzen?</h2>
+                <p data-i18n="seo-intro">Der <strong>Grussgenerator.de</strong> ist dein ultimatives Tool, um in
+                    Sekunden herzliche, lustige
                     oder professionelle Grüße zu erstellen. Egal ob du Glückwünsche zum Geburtstag suchst, eine
                     romantische Nachricht zur Hochzeit verfassen möchtest oder festliche Weihnachtsgrüße benötigst –
                     unsere künstliche Intelligenz findet immer die richtigen Worte.</p>
 
                 <div class="seo-grid">
                     <div class="seo-card">
-                        <h3>🎂 Geburtstagswünsche</h3>
-                        <p>Von lustigen Sprüchen bis hin zu tiefgründigen Weisheiten. Personalisiere deine Wünsche mit
+                        <h3 data-i18n="seo-birthday-title">🎂 Geburtstagswünsche</h3>
+                        <p data-i18n="seo-birthday-text">Von lustigen Sprüchen bis hin zu tiefgründigen Weisheiten.
+                            Personalisiere deine Wünsche mit
                             dem Namen des Geburtstagskindes.</p>
                     </div>
                     <div class="seo-card">
-                        <h3>💍 Hochzeit & Jubiläum</h3>
-                        <p>Finde elegante und emotionale Worte für den schönsten Tag im Leben. Ideal für Karten, Reden
+                        <h3 data-i18n="seo-wedding-title">💍 Hochzeit & Jubiläum</h3>
+                        <p data-i18n="seo-wedding-text">Finde elegante und emotionale Worte für den schönsten Tag im
+                            Leben. Ideal für Karten, Reden
                             oder WhatsApp-Grüße.</p>
                     </div>
                     <div class="seo-card">
-                        <h3>🎄 Festtage & Feiertage</h3>
-                        <p>Ob Weihnachten, Neujahr, Ostern oder Muttertag – verbreite Freude mit einzigartigen digitalen
+                        <h3 data-i18n="seo-holidays-title">🎄 Festtage & Feiertage</h3>
+                        <p data-i18n="seo-holidays-text">Ob Weihnachten, Neujahr, Ostern oder Muttertag – verbreite
+                            Freude mit einzigartigen digitalen
                             Grußkarten.</p>
                     </div>
                 </div>
 
-                <h3>Häufig gestellte Fragen (FAQ)</h3>
+                <h3 data-i18n="faq-title">Häufig gestellte Fragen (FAQ)</h3>
                 <div class="seo-faq">
                     <div class="faq-item">
-                        <strong>Ist der Grußgenerator kostenlos?</strong>
-                        <p>Ja, Grussgenerator.de ist zu 100% kostenlos nutzbar. Du kannst so viele Grüße generieren und
+                        <strong data-i18n="faq-q1">Ist der Grußgenerator kostenlos?</strong>
+                        <p data-i18n="faq-a1">Ja, Grussgenerator.de ist zu 100% kostenlos nutzbar. Du kannst so viele
+                            Grüße generieren und
                             teilen, wie du möchtest.</p>
                     </div>
                     <div class="faq-item">
-                        <strong>Wie funktioniert die KI-Erstellung?</strong>
-                        <p>Unsere KI analysiert deine Angaben zu Anlass, Beziehung und Tonalität, um einen
+                        <strong data-i18n="faq-q2">Wie funktioniert die KI-Erstellung?</strong>
+                        <p data-i18n="faq-a2">Unsere KI analysiert deine Angaben zu Anlass, Beziehung und Tonalität, um
+                            einen
                             maßgeschneiderten Text zu kreieren, der genau auf deine Bedürfnisse zugeschnitten ist.</p>
                     </div>
                     <div class="faq-item">
-                        <strong>Kann ich die Grüße als Bild speichern?</strong>
-                        <p>Absolut! Du kannst dein Design direkt als hochwertiges Bild (JPG/PNG) herunterladen oder über
+                        <strong data-i18n="faq-q3">Kann ich die Grüße als Bild speichern?</strong>
+                        <p data-i18n="faq-a3">Absolut! Du kannst dein Design direkt als hochwertiges Bild (JPG/PNG)
+                            herunterladen oder über
                             WhatsApp und Social Media teilen.</p>
                     </div>
                 </div>
@@ -804,9 +811,10 @@
         <!-- Footer -->
         <footer class="footer">
             <p>© 2026 grussgenerator.de | Made with ❤️ in Germany (v3.1-DEBUG)</p>
-            <p><a href="blog/">Blog</a> | <a href="impressum.html">Impressum</a> | <a
-                    href="datenschutz.html">Datenschutz</a></p>
-            <p class="footer-viral">Bereits <strong id="footerCount">12,847</strong> Grüße erstellt! 🚀</p>
+            <p><a href="blog/">Blog</a> | <a href="impressum.html" data-i18n="footer-imprint">Impressum</a> | <a
+                    href="datenschutz.html" data-i18n="footer-privacy">Datenschutz</a></p>
+            <p class="footer-viral" data-i18n="footer-count">Bereits <strong id="footerCount">12,847</strong> Grüße
+                erstellt! 🚀</p>
         </footer>
     </div>
 

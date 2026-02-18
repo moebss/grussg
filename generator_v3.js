@@ -23,6 +23,16 @@ let currentCardTheme = 'gradient';
 let soundEnabled = true;
 let totalGreetings = 12847; // Starting number for social proof
 
+// --- i18n Helper ---
+function getTranslation(key) {
+    const t = window.uiTranslations && window.uiTranslations[currentLanguage];
+    if (t && t[key]) return t[key];
+    // Fallback to English, then to the key itself
+    const en = window.uiTranslations && window.uiTranslations['en'];
+    if (en && en[key]) return en[key];
+    return key;
+}
+
 // --- DOM Elements ---
 const greetingForm = document.getElementById('greetingForm');
 const generateBtn = document.getElementById('generateBtn');
@@ -1308,7 +1318,7 @@ greetingForm.addEventListener('submit', async (e) => {
     const tone = document.getElementById('tone').value;
 
     if (!name || !relation) {
-        showToast('Bitte fülle alle Pflichtfelder aus! ⚠️', 'error');
+        showToast(getTranslation('toast-fields-required'), 'error');
         return;
     }
 
@@ -1376,12 +1386,12 @@ greetingForm.addEventListener('submit', async (e) => {
 
         // Success feedback
         playSound(successSound);
-        showToast('Gruß erfolgreich generiert! 🎉', 'success');
+        showToast(getTranslation('toast-generated'), 'success');
         launchConfetti();
 
     } catch (err) {
         console.error('Generation error:', err);
-        showToast(`Fehler: ${err.message} 😞`, 'error');
+        showToast(`${getTranslation('toast-error')} ${err.message} 😞`, 'error');
     } finally {
         generateBtn.disabled = false;
         generateBtn.querySelector('.btn-text').classList.remove('hidden');
@@ -1501,7 +1511,7 @@ function renderHistory(history) {
                     item.classList.add('active');
 
                     playSound(clickSound);
-                    showToast('Gruß geladen! 📜', 'info');
+                    showToast(getTranslation('toast-history-loaded'), 'info');
                 });
             });
         }
@@ -1522,7 +1532,7 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
         document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         playSound(successSound);
-        showToast('Danke für dein Feedback! ❤️', 'success');
+        showToast(getTranslation('toast-feedback'), 'success');
     });
 });
 
@@ -1537,9 +1547,9 @@ document.getElementById('copyBtn')?.addEventListener('click', () => {
     navigator.clipboard.writeText(generatedMessage.textContent)
         .then(() => {
             playSound(clickSound);
-            showToast('Text kopiert! 📋', 'success');
+            showToast(getTranslation('toast-copied'), 'success');
         })
-        .catch(() => showToast('Kopieren fehlgeschlagen 😞', 'error'));
+        .catch(() => showToast(getTranslation('toast-copy-fail'), 'error'));
 });
 
 // ===========================
@@ -1631,7 +1641,7 @@ async function shareCardAsImage(platform) {
 
     try {
         playSound(clickSound);
-        showToast(`Bereite Bild für ${platform} vor... 📤`, 'info');
+        showToast(getTranslation('toast-share-prep'), 'info');
 
         // Capture as Blob
         const { blob, dataUrl } = await generateCardBlob();
@@ -1645,7 +1655,7 @@ async function shareCardAsImage(platform) {
                 text: 'Schau mal, was ich gerade erstellt habe! 💌 grussgenerator.de'
             });
             playSound(successSound);
-            showToast('Erfolgreich geteilt! 🎉', 'success');
+            showToast(getTranslation('toast-share-success'), 'success');
             return true;
         }
 
@@ -1654,7 +1664,7 @@ async function shareCardAsImage(platform) {
     } catch (error) {
         if (error.name !== 'AbortError') {
             console.error('Sharing Error:', error);
-            showToast(`Teilen fehlgeschlagen: ${error.message}`, 'error');
+            showToast(`${getTranslation('toast-share-fail')}: ${error.message}`, 'error');
         }
         return false;
     }
@@ -1669,7 +1679,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 
     try {
         playSound(clickSound);
-        showToast('Wird erstellt (1080x1080)... 📸', 'info');
+        showToast(getTranslation('toast-download-prep'), 'info');
 
         // Create 1080p JPEG
         const dataUrl = await captureCard('jpeg', 1080);
@@ -1683,7 +1693,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
         document.body.removeChild(link);
 
         playSound(successSound);
-        showToast('Bild gespeichert! 🎉', 'success');
+        showToast(getTranslation('toast-download-success'), 'success');
         trackEvent('card_downloaded', { format: 'jpeg' });
     } catch (error) {
         console.error('Download Error:', error);
@@ -1969,7 +1979,7 @@ stickerUpload?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
         if (stickerCount >= 15) {
-            showToast('Zu viele Elemente auf der Karte!', 'warning');
+            showToast(getTranslation('toast-too-many'), 'warning');
             return;
         }
 
@@ -2021,7 +2031,7 @@ stickerUpload?.addEventListener('change', (e) => {
             placedStickers?.appendChild(wrapper);
             stickerCount++;
             playSound(successSound);
-            showToast('Bild hinzugefügt! Ziehe an der Ecke zum Skalieren. 📐', 'success');
+            showToast(getTranslation('toast-image-added'), 'success');
         };
         reader.readAsDataURL(file);
 
@@ -2114,7 +2124,7 @@ function initUrlParameters() {
     }
 
     // Show Toast
-    showToast('Daten aus Link geladen! ✨', 'success');
+    showToast(getTranslation('toast-link-loaded'), 'success');
 
     // Optional: Auto-generate if all fields are present?
     // for now, let the user click to be safe.
