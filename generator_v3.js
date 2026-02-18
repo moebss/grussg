@@ -21,6 +21,14 @@ const generateBtn = document.getElementById('generateBtn');
 const inputSection = document.getElementById('inputSection');
 const outputSection = document.getElementById('outputSection');
 const generatedMessage = document.getElementById('generatedMessage');
+
+// ── GA Event Helper ──
+function trackEvent(eventName, params = {}) {
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, params);
+        console.log(`[GA] ${eventName}`, params);
+    }
+}
 const historyToggle = document.getElementById('historyToggle');
 const historyContent = document.getElementById('historyContent');
 const historyList = document.getElementById('historyList');
@@ -1339,6 +1347,9 @@ greetingForm.addEventListener('submit', async (e) => {
         inputSection.classList.add('hidden');
         outputSection.classList.remove('hidden');
 
+        // Track card creation
+        trackEvent('card_created', { occasion: currentOccasion, language: currentLanguage });
+
         // Update card themes for this occasion
         renderOccasionThemes(currentOccasion);
 
@@ -1513,6 +1524,7 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
 // Copy to clipboard
 // Copy to clipboard
 document.getElementById('copyBtn')?.addEventListener('click', () => {
+    trackEvent('card_copied');
     navigator.clipboard.writeText(generatedMessage.textContent)
         .then(() => {
             playSound(clickSound);
@@ -1663,6 +1675,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 
         playSound(successSound);
         showToast('Bild gespeichert! 🎉', 'success');
+        trackEvent('card_downloaded', { format: 'jpeg' });
     } catch (error) {
         console.error('Download Error:', error);
         alert('Fehler: ' + error.message);
@@ -1676,6 +1689,7 @@ function isMobileDevice() {
 
 // WhatsApp share - try image, fallback to text
 document.getElementById('whatsappBtn')?.addEventListener('click', async () => {
+    trackEvent('card_shared', { platform: 'whatsapp' });
     const shared = await shareCardAsImage('WhatsApp');
     if (!shared) {
         const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit grussgenerator.de');
@@ -1696,6 +1710,7 @@ document.getElementById('whatsappBtn')?.addEventListener('click', async () => {
 
 // Twitter share - try image, fallback to text
 document.getElementById('twitterBtn')?.addEventListener('click', async () => {
+    trackEvent('card_shared', { platform: 'twitter' });
     // Twitter doesn't support direct image sharing via web intent well, mostly text/url
     // We prioritize text share for Twitter
     const text = encodeURIComponent('Gerade einen tollen Gruß erstellt! 💌\n\n' + generatedMessage.textContent.substring(0, 100) + '...\n\nProbiere es selbst: https://grussgenerator.de');
@@ -1704,6 +1719,7 @@ document.getElementById('twitterBtn')?.addEventListener('click', async () => {
 
 // Telegram share - try image, fallback to text
 document.getElementById('telegramBtn')?.addEventListener('click', async () => {
+    trackEvent('card_shared', { platform: 'telegram' });
     const shared = await shareCardAsImage('Telegram');
     if (!shared) {
         const text = encodeURIComponent(generatedMessage.textContent + '\n\n💌 Erstellt mit https://grussgenerator.de');
@@ -1892,6 +1908,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Facebook share - try image, fallback to link
 document.getElementById('facebookBtn')?.addEventListener('click', async () => {
+    trackEvent('card_shared', { platform: 'facebook' });
     const shared = await shareCardAsImage('Facebook');
     if (!shared && !navigator.canShare) {
         window.open('https://www.facebook.com/sharer/sharer.php?u=https://grussgenerator.de', '_blank');
