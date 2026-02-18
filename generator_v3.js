@@ -927,7 +927,7 @@ document.querySelectorAll('.design-tab-btn').forEach(tab => {
 // REMIX FEATURE (Supabase Storage)
 // ===========================
 const REMIX_API_ENDPOINT = '/api/get-random-card';
-const TOTAL_MOODS = 14;
+const TOTAL_MOODS = 27;
 
 const remixBtn = document.getElementById('remixBtn');
 const remixAgainBtn = document.getElementById('remixAgainBtn');
@@ -1755,7 +1755,7 @@ document.getElementById('telegramBtn')?.addEventListener('click', async () => {
 // ===========================
 // MOOD MANAGER (Refactored)
 // ===========================
-const STATIC_MOOD_COUNT = 24;
+const STATIC_MOOD_COUNT = 27;
 
 function renderStaticMoods() {
     // We target a specific container now (if present), or fall back to finding where to insert
