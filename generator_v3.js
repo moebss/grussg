@@ -9,7 +9,15 @@ const MAX_HISTORY = 5;
 const STATS_KEY = 'grussgenerator_stats';
 
 // --- State ---
-let currentLanguage = 'de';
+// Auto-detect browser language, default to English for unsupported languages
+const SUPPORTED_LANGS = ['de', 'en', 'es', 'fr', 'tr', 'it'];
+function detectLanguage() {
+    const stored = localStorage.getItem('grussgenerator_lang');
+    if (stored && SUPPORTED_LANGS.includes(stored)) return stored;
+    const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().split('-')[0];
+    return SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
+}
+let currentLanguage = detectLanguage();
 let currentOccasion = 'birthday';
 let currentCardTheme = 'gradient';
 let soundEnabled = true;
@@ -1185,6 +1193,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentLanguage = btn.dataset.lang;
+        localStorage.setItem('grussgenerator_lang', currentLanguage);
         playSound(clickSound);
         if (typeof applyTranslations === 'function') {
             applyTranslations(currentLanguage);
@@ -2131,7 +2140,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLiveCounter();
     initUrlParameters(); // Check for URL params
 
-    // Apply initial language
+    // Apply initial language (auto-detected or stored)
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    const activeLangBtn = document.querySelector(`.lang-btn[data-lang="${currentLanguage}"]`);
+    if (activeLangBtn) activeLangBtn.classList.add('active');
     if (typeof applyTranslations === 'function') {
         applyTranslations(currentLanguage);
     }
