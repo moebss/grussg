@@ -110,7 +110,7 @@ document.getElementById('demoGenBtn')?.addEventListener('click', async () => {
         });
         const data = await res.json();
         if (data.text) {
-            document.getElementById('demoCardText').textContent = data.text;
+            document.getElementById('demoCardText').innerHTML = data.text.replace(/\n/g, '<br>');
             document.getElementById('demoTextEditor').value = data.text;
             const mood = Math.floor(Math.random() * TOTAL_MOODS) + 1;
             document.getElementById('demoCardBg').src = `assets/templates/mood${mood}.jpg`;
@@ -154,10 +154,47 @@ document.querySelectorAll('.demo-font').forEach(btn => {
     });
 });
 
-// Demo: Textarea sync - edits in textarea update the card text
+// Demo: Textarea sync - edits in textarea update the card text (preserves line breaks)
 document.getElementById('demoTextEditor')?.addEventListener('input', (e) => {
-    document.getElementById('demoCardText').textContent = e.target.value;
+    const html = e.target.value.replace(/\n/g, '<br>');
+    document.getElementById('demoCardText').innerHTML = html;
 });
+
+// Demo: Make card text draggable
+(function initDemoTextDrag() {
+    const textEl = document.getElementById('demoCardText');
+    if (!textEl) return;
+    let isDragging = false, startX, startY, origLeft, origTop;
+    textEl.style.cursor = 'grab';
+    textEl.style.position = 'absolute';
+    textEl.style.left = '50%';
+    textEl.style.top = '50%';
+    textEl.style.transform = 'translate(-50%, -50%)';
+    textEl.style.width = '85%';
+
+    textEl.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = textEl.getBoundingClientRect();
+        const parentRect = textEl.closest('.mini-card').getBoundingClientRect();
+        origLeft = rect.left - parentRect.left + rect.width / 2;
+        origTop = rect.top - parentRect.top + rect.height / 2;
+        textEl.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+    document.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        textEl.style.left = `${origLeft + dx}px`;
+        textEl.style.top = `${origTop + dy}px`;
+        textEl.style.transform = 'translate(-50%, -50%)';
+    });
+    document.addEventListener('pointerup', () => {
+        if (isDragging) { isDragging = false; textEl.style.cursor = 'grab'; }
+    });
+})();
 
 // Demo: Text alignment
 document.querySelectorAll('.demo-align-btn').forEach(btn => {
