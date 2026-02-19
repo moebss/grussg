@@ -36,6 +36,11 @@ section {
     padding: 80px 0;
 }
 
+/* Cream background override */
+[data-theme="light"] .aurora-background {
+    background-color: #f5efe0;
+}
+
 /* Nav */
 .nav {
     position: sticky;
