@@ -1,118 +1,39 @@
 /* ===========================
    PARTNER PAGE CSS
+   Overrides for generator.css base
    =========================== */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
+/* Partner-specific overrides */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #818cf8;
-    --accent: #f472b6;
-    --success: #22c55e;
-    --bg: #0f0f1a;
-    --bg-surface: rgba(255, 255, 255, 0.04);
-    --bg-card: rgba(255, 255, 255, 0.06);
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
-    --border: rgba(255, 255, 255, 0.08);
-    --glow: 0 0 60px rgba(99, 102, 241, 0.15);
-    --font: 'Outfit', -apple-system, sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-    --radius: 16px;
-    --radius-sm: 10px;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    overflow-x: hidden;
+    --p-primary: var(--color-primary, #6366f1);
+    --p-primary-dark: var(--color-primary-dark, #4f46e5);
+    --p-primary-light: var(--color-primary-light, #818cf8);
+    --p-accent: var(--color-secondary, #f472b6);
+    --p-success: var(--color-success, #22c55e);
+    --p-text: var(--color-text, #1e293b);
+    --p-text-muted: var(--color-text-muted, #64748b);
+    --p-border: var(--color-border, rgba(0, 0, 0, 0.1));
+    --p-card-bg: var(--glass-bg, rgba(255, 255, 255, 0.85));
+    --p-card-shadow: var(--glass-shadow, 0 4px 24px 0 rgba(0, 0, 0, 0.08));
+    --p-card-border: var(--glass-border, rgba(0, 0, 0, 0.08));
+    --p-radius: var(--radius-md, 16px);
+    --p-radius-sm: var(--radius-sm, 8px);
+    --p-font: var(--font-family, 'Outfit', sans-serif);
 }
 
 .hidden {
     display: none !important;
 }
 
-.container {
-    position: relative;
-    z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
+/* Override generator.css container for partner page */
+body .container {
     padding: 0 24px;
+    min-height: auto;
+    display: block;
 }
 
 section {
     padding: 80px 0;
-}
-
-/* Aurora */
-.aurora {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.aurora .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.3;
-    animation: float 20s ease-in-out infinite;
-}
-
-.aurora .orb-1 {
-    width: 600px;
-    height: 600px;
-    background: var(--primary);
-    top: -10%;
-    left: -5%;
-}
-
-.aurora .orb-2 {
-    width: 500px;
-    height: 500px;
-    background: var(--accent);
-    bottom: -10%;
-    right: -5%;
-    animation-delay: -7s;
-}
-
-.aurora .orb-3 {
-    width: 400px;
-    height: 400px;
-    background: #22d3ee;
-    top: 40%;
-    left: 50%;
-    animation-delay: -14s;
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1)
-    }
-
-    33% {
-        transform: translate(30px, -30px) scale(1.05)
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.95)
-    }
 }
 
 /* Nav */
@@ -121,8 +42,8 @@ section {
     top: 0;
     z-index: 100;
     backdrop-filter: blur(20px);
-    background: rgba(15, 15, 26, 0.8);
-    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--p-border);
     padding: 16px 0;
 }
 
@@ -135,7 +56,7 @@ section {
 .nav-brand {
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--text);
+    color: var(--p-text);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -143,7 +64,7 @@ section {
 }
 
 .nav-brand span {
-    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    background: linear-gradient(135deg, var(--p-primary-light), var(--p-accent));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -162,7 +83,7 @@ section {
 }
 
 .nav-links a {
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -170,18 +91,18 @@ section {
 }
 
 .nav-links a:hover {
-    color: var(--text);
+    color: var(--p-text);
 }
 
 .nav-cta {
-    background: var(--primary);
+    background: var(--p-primary);
     color: white;
     padding: 8px 20px;
     border-radius: 50px;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--p-font);
     font-size: 0.9rem;
     transition: all 0.2s;
 }
@@ -201,24 +122,24 @@ section {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--p-primary);
 }
 
 .nav-logout {
     background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
+    border: 1px solid var(--p-border);
+    color: var(--p-text-muted);
     padding: 6px 14px;
     border-radius: 50px;
-    font-family: var(--font);
+    font-family: var(--p-font);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .nav-logout:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--p-accent);
+    color: var(--p-accent);
 }
 
 /* Hero */
@@ -231,12 +152,12 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
     border-radius: 50px;
     padding: 6px 16px;
     font-size: 0.85rem;
-    color: var(--primary-light);
+    color: var(--p-primary-light);
     margin-bottom: 24px;
 }
 
@@ -244,7 +165,7 @@ section {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--success);
+    background: var(--p-success);
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -269,7 +190,7 @@ section {
 }
 
 .hero h1 .gradient {
-    background: linear-gradient(135deg, var(--primary-light), var(--accent), #fbbf24);
+    background: linear-gradient(135deg, var(--p-primary-light), var(--p-accent), #fbbf24);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -277,7 +198,7 @@ section {
 
 .hero-sub {
     font-size: 1.15rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     max-width: 640px;
     margin: 0 auto 40px;
 }
@@ -293,7 +214,7 @@ section {
 .hero-stat-num {
     font-size: 2rem;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    background: linear-gradient(135deg, var(--p-primary-light), var(--p-accent));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -301,7 +222,7 @@ section {
 
 .hero-stat-label {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     margin-top: 4px;
 }
 
@@ -311,7 +232,7 @@ section {
     gap: 8px;
     padding: 14px 32px;
     border-radius: 50px;
-    font-family: var(--font);
+    font-family: var(--p-font);
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -321,7 +242,7 @@ section {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, var(--p-primary), var(--p-primary-dark));
     color: white;
     box-shadow: 0 4px 24px rgba(99, 102, 241, 0.3);
 }
@@ -333,13 +254,13 @@ section {
 
 .btn-outline {
     background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
+    color: var(--p-text);
+    border: 1px solid var(--p-border);
 }
 
 .btn-outline:hover {
-    border-color: var(--primary-light);
-    background: var(--bg-card);
+    border-color: var(--p-primary-light);
+    background: var(--p-card-bg);
 }
 
 .btn-group {
@@ -360,7 +281,7 @@ section {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--primary-light);
+    color: var(--p-primary-light);
     margin-bottom: 12px;
 }
 
@@ -372,23 +293,23 @@ section {
 }
 
 .section-header p {
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     max-width: 600px;
     margin: 0 auto;
 }
 
 /* Demo */
 .demo-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
     overflow: hidden;
-    box-shadow: var(--glow);
+    box-shadow: var(--p-card-shadow);
 }
 
 .demo-header {
-    background: rgba(99, 102, 241, 0.08);
-    border-bottom: 1px solid var(--border);
+    background: rgba(99, 102, 241, 0.06);
+    border-bottom: 1px solid var(--p-border);
     padding: 16px 24px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -401,7 +322,7 @@ section {
 
 .demo-form {
     padding: 32px;
-    border-right: 1px solid var(--border);
+    border-right: 1px solid var(--p-border);
 }
 
 .demo-result {
@@ -420,7 +341,7 @@ section {
     display: block;
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     margin-bottom: 6px;
 }
 
@@ -429,11 +350,11 @@ section {
 .form-group textarea {
     width: 100%;
     padding: 10px 14px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-family: var(--font);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-sm);
+    color: var(--p-text);
+    font-family: var(--p-font);
     font-size: 0.95rem;
     transition: border-color 0.2s;
 }
@@ -442,11 +363,11 @@ section {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-light);
+    border-color: var(--p-primary-light);
 }
 
 .form-group select option {
-    background: var(--bg);
+    background: var(--color-bg);
 }
 
 .form-group textarea {
@@ -457,11 +378,11 @@ section {
 .demo-btn {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, var(--p-primary), var(--p-primary-dark));
     color: white;
     border: none;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
@@ -480,14 +401,14 @@ section {
 .result-meta {
     margin-top: 12px;
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-align: center;
 }
 
 .mini-card {
     width: 280px;
     height: 280px;
-    border-radius: var(--radius);
+    border-radius: var(--p-radius);
     overflow: hidden;
     position: relative;
     display: flex;
@@ -525,7 +446,7 @@ section {
     display: block;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
@@ -550,7 +471,7 @@ section {
 
 .demo-mood-btn.active,
 .demo-mood-btn:hover {
-    border-color: var(--primary);
+    border-color: var(--p-primary);
     transform: scale(1.1);
 }
 
@@ -562,23 +483,23 @@ section {
 
 .demo-font {
     padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--p-border);
     border-radius: 6px;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .demo-font.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .demo-font:hover {
-    border-color: var(--primary-light);
+    border-color: var(--p-primary-light);
 }
 
 /* Demo Text Editor Controls */
@@ -597,10 +518,10 @@ section {
 .demo-align-btn {
     width: 34px;
     height: 34px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--p-border);
     border-radius: 6px;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
@@ -610,13 +531,13 @@ section {
 }
 
 .demo-align-btn.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .demo-align-btn:hover {
-    border-color: var(--primary-light);
+    border-color: var(--p-primary-light);
 }
 
 .demo-size-group {
@@ -628,13 +549,13 @@ section {
 
 .demo-size-label {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     font-weight: 600;
 }
 
 .demo-size-slider {
     flex: 1;
-    accent-color: var(--primary);
+    accent-color: var(--p-primary);
     height: 4px;
 }
 
@@ -646,9 +567,9 @@ section {
 }
 
 .feature-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
     padding: 32px 24px;
     text-align: center;
     transition: transform 0.3s;
@@ -671,7 +592,7 @@ section {
 
 .feature-card p {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
 }
 
 /* Pricing */
@@ -682,9 +603,9 @@ section {
 }
 
 .price-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
     padding: 40px 32px;
     position: relative;
     transition: transform 0.3s;
@@ -695,8 +616,8 @@ section {
 }
 
 .price-card.featured {
-    border-color: var(--primary);
-    box-shadow: var(--glow);
+    border-color: var(--p-primary);
+    box-shadow: var(--p-card-shadow);
 }
 
 .price-card.featured::before {
@@ -705,7 +626,7 @@ section {
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: linear-gradient(135deg, var(--p-primary), var(--p-accent));
     color: white;
     font-size: 0.75rem;
     font-weight: 700;
@@ -717,7 +638,7 @@ section {
 .price-name {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
@@ -733,12 +654,12 @@ section {
 .price-amount .eur {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
 }
 
 .price-period {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     margin-bottom: 24px;
 }
 
@@ -752,7 +673,7 @@ section {
 
 .price-features li {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     padding-left: 24px;
     position: relative;
 }
@@ -761,7 +682,7 @@ section {
     content: '✓';
     position: absolute;
     left: 0;
-    color: var(--success);
+    color: var(--p-success);
     font-weight: 700;
 }
 
@@ -770,8 +691,8 @@ section {
     text-align: center;
     width: 100%;
     padding: 12px;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
@@ -781,7 +702,7 @@ section {
 }
 
 .price-btn-primary {
-    background: var(--primary);
+    background: var(--p-primary);
     color: white;
 }
 
@@ -791,12 +712,12 @@ section {
 
 .price-btn-outline {
     background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
+    color: var(--p-text);
+    border: 1px solid var(--p-border);
 }
 
 .price-btn-outline:hover {
-    border-color: var(--primary-light);
+    border-color: var(--p-primary-light);
 }
 
 .cta-section {
@@ -805,22 +726,22 @@ section {
 
 .b2b-footer {
     padding: 32px 0;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--p-border);
     text-align: center;
 }
 
 .b2b-footer p {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
 }
 
 .b2b-footer a {
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-decoration: none;
 }
 
 .b2b-footer a:hover {
-    color: var(--text);
+    color: var(--p-text);
 }
 
 /* ===========================
@@ -832,9 +753,9 @@ section {
 }
 
 .dash-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
     padding: 40px;
     margin-bottom: 24px;
 }
@@ -857,25 +778,25 @@ section {
     align-items: center;
     gap: 4px;
     padding: 12px 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text-muted);
-    font-family: var(--font);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-sm);
+    color: var(--p-text-muted);
+    font-family: var(--p-font);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .occasion-btn:hover {
-    border-color: var(--primary-light);
-    color: var(--text);
+    border-color: var(--p-primary-light);
+    color: var(--p-text);
 }
 
 .occasion-btn.active {
-    background: rgba(99, 102, 241, 0.15);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .occasion-icon {
@@ -891,11 +812,11 @@ section {
 .btn-generate {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: linear-gradient(135deg, var(--p-primary), var(--p-accent));
     color: white;
     border: none;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-weight: 700;
     font-size: 1.1rem;
     cursor: pointer;
@@ -941,18 +862,18 @@ section {
 
 .btn-back {
     background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
+    border: 1px solid var(--p-border);
+    color: var(--p-text-muted);
     padding: 8px 16px;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .btn-back:hover {
-    border-color: var(--primary-light);
-    color: var(--text);
+    border-color: var(--p-primary-light);
+    color: var(--p-text);
 }
 
 .editor-layout {
@@ -964,8 +885,8 @@ section {
 .sticker-panel,
 .design-panel {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-sm);
     padding: 16px;
     max-height: 500px;
     overflow-y: auto;
@@ -986,7 +907,7 @@ section {
 }
 
 .sticker-tab-btn {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 6px 8px;
@@ -996,8 +917,8 @@ section {
 }
 
 .sticker-tab-btn.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
 }
 
 .sticker-tab-content {
@@ -1015,7 +936,7 @@ section {
 }
 
 .sticker {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 8px;
@@ -1026,7 +947,7 @@ section {
 }
 
 .sticker:hover {
-    background: rgba(99, 102, 241, 0.2);
+    background: rgba(99, 102, 241, 0.12);
     transform: scale(1.15);
 }
 
@@ -1035,18 +956,18 @@ section {
     margin-top: 12px;
     padding: 8px;
     background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border: 1px solid var(--p-border);
+    color: var(--p-text-muted);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .btn-clear-stickers:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--p-accent);
+    color: var(--p-accent);
 }
 
 /* Card */
@@ -1064,7 +985,7 @@ section {
 .greeting-card {
     width: 100%;
     aspect-ratio: 1;
-    border-radius: var(--radius);
+    border-radius: var(--p-radius);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -1148,11 +1069,11 @@ section {
 .design-tab-btn {
     flex: 1;
     padding: 8px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid transparent;
     border-radius: 8px;
-    color: var(--text-muted);
-    font-family: var(--font);
+    color: var(--p-text-muted);
+    font-family: var(--p-font);
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
@@ -1161,9 +1082,9 @@ section {
 }
 
 .design-tab-btn.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .design-tab-content {
@@ -1182,7 +1103,7 @@ section {
     display: block;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
@@ -1207,7 +1128,7 @@ section {
 
 .mood-btn.active,
 .mood-btn:hover {
-    border-color: var(--primary);
+    border-color: var(--p-primary);
     transform: scale(1.05);
 }
 
@@ -1215,11 +1136,11 @@ section {
     width: 100%;
     margin-top: 8px;
     padding: 10px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: linear-gradient(135deg, var(--p-primary), var(--p-accent));
     color: white;
     border: none;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -1246,7 +1167,7 @@ section {
 
 .mini-slider {
     flex: 1;
-    accent-color: var(--primary);
+    accent-color: var(--p-primary);
 }
 
 .effect-toggles {
@@ -1257,11 +1178,11 @@ section {
 
 .effect-btn {
     padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--p-border);
     border-radius: 8px;
-    color: var(--text-muted);
-    font-family: var(--font);
+    color: var(--p-text-muted);
+    font-family: var(--p-font);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
@@ -1269,9 +1190,9 @@ section {
 }
 
 .effect-btn.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .font-grid-mini {
@@ -1282,10 +1203,10 @@ section {
 
 .font-mini {
     padding: 8px 4px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid transparent;
     border-radius: 6px;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s;
@@ -1293,9 +1214,9 @@ section {
 }
 
 .font-mini.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: var(--primary);
-    color: var(--text);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--p-primary);
+    color: var(--p-text);
 }
 
 .upload-controls-row {
@@ -1306,18 +1227,18 @@ section {
 .upload-mini {
     flex: 1;
     padding: 16px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 2px dashed var(--border);
-    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.03);
+    border: 2px dashed var(--p-border);
+    border-radius: var(--p-radius-sm);
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--p-text-muted);
 }
 
 .upload-mini:hover {
-    border-color: var(--primary-light);
+    border-color: var(--p-primary-light);
 }
 
 .btn-remove-mini {
@@ -1327,8 +1248,8 @@ section {
     background: none;
     border: 1px solid rgba(239, 68, 68, 0.3);
     color: #f87171;
-    border-radius: var(--radius-sm);
-    font-family: var(--font);
+    border-radius: var(--p-radius-sm);
+    font-family: var(--p-font);
     font-size: 0.8rem;
     cursor: pointer;
 }
@@ -1345,11 +1266,11 @@ section {
 .btn-download-compact,
 .btn-share-trigger {
     padding: 12px 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-family: var(--font);
+    background: var(--p-card-bg);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-sm);
+    color: var(--p-text);
+    font-family: var(--p-font);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
@@ -1361,7 +1282,7 @@ section {
 
 .btn-download-compact:hover,
 .btn-share-trigger:hover {
-    border-color: var(--primary);
+    border-color: var(--p-primary);
     background: rgba(99, 102, 241, 0.1);
 }
 
@@ -1378,9 +1299,9 @@ section {
 
 .toast {
     padding: 12px 20px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--p-radius-sm);
     font-size: 0.9rem;
-    font-family: var(--font);
+    font-family: var(--p-font);
     color: white;
     animation: slideIn 0.3s ease;
 }
@@ -1394,7 +1315,7 @@ section {
 }
 
 .toast.info {
-    background: var(--primary);
+    background: var(--p-primary);
 }
 
 @keyframes slideIn {
@@ -1417,7 +1338,7 @@ section {
 
     .demo-form {
         border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--p-border);
     }
 
     .features-grid {
