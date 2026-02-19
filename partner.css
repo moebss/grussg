@@ -730,31 +730,19 @@ p {
     margin: 0 auto 1.5rem;
 }
 
-.feature-card:nth-child(3n+1) .feature-icon {
+.feature-card:nth-child(1) .feature-icon {
     background: var(--yellow-light);
     color: var(--text-primary);
 }
 
-.feature-card:nth-child(3n+1):hover {
-    border-color: var(--yellow);
-}
-
-.feature-card:nth-child(3n+2) .feature-icon {
+.feature-card:nth-child(2) .feature-icon {
     background: var(--pink-light);
     color: var(--text-primary);
 }
 
-.feature-card:nth-child(3n+2):hover {
-    border-color: var(--pink);
-}
-
-.feature-card:nth-child(3n) .feature-icon {
+.feature-card:nth-child(3) .feature-icon {
     background: var(--blue-light);
     color: var(--text-primary);
-}
-
-.feature-card:nth-child(3n):hover {
-    border-color: var(--blue);
 }
 
 .feature-card h3 {
@@ -1540,6 +1528,42 @@ p {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+/* ===========================
+   CONFETTI PATTERN (CTA)
+   =========================== */
+.cta-section {
+    position: relative;
+    padding: 6rem 2rem;
+    background-color: var(--bg-dark);
+    /* Confetti Pattern: Multiple radial gradients to create scattered dots */
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(245, 200, 66, 0.8) 2px, transparent 3px),
+        radial-gradient(circle at 25% 30%, rgba(232, 96, 122, 0.8) 2px, transparent 3px),
+        radial-gradient(circle at 35% 70%, rgba(90, 143, 212, 0.8) 2px, transparent 3px),
+        radial-gradient(circle at 45% 20%, rgba(245, 200, 66, 0.6) 1.5px, transparent 2.5px),
+        radial-gradient(circle at 55% 80%, rgba(232, 96, 122, 0.6) 1.5px, transparent 2.5px),
+        radial-gradient(circle at 65% 40%, rgba(90, 143, 212, 0.6) 2px, transparent 3px),
+        /* Subtle noise texture */
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+    background-size: 250px 250px, 250px 250px, 250px 250px, 180px 180px, 180px 180px, 180px 180px, 40px 40px, 40px 40px;
+    background-repeat: repeat;
+    border-radius: 32px;
+    text-align: center;
+    color: var(--text-inverse);
+    margin: 4rem 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-section h2,
+.cta-section p,
+.cta-section .btn {
+    position: relative;
+    z-index: 2;
 }
 
 /* Responsive */
