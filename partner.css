@@ -404,20 +404,27 @@ p {
    DEMO CARD
    =========================== */
 .demo-card {
-    background: var(--bg-white);
+    background: white;
+    /* Explicit white background */
+    border-radius: var(--radius-lg);
     border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-xl);
     overflow: hidden;
+    margin-top: 2rem;
+}
+
+/* Hide API Live-Tester label */
+.section-label {
+    display: none;
 }
 
 .demo-header {
-    background: var(--bg-subtle);
+    background: var(--bg-white);
     border-bottom: 1px solid var(--border);
-    padding: 1.25rem 2rem;
-    font-weight: 700;
-    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: var(--text-primary);
     font-family: var(--font-heading);
 }
