@@ -36,9 +36,14 @@ section {
     padding: 80px 0;
 }
 
-/* Cream background override */
+/* Clean mono-color background – no blobs, no pattern */
 [data-theme="light"] .aurora-background {
     background-color: #f5efe0;
+    background-image: none;
+}
+
+.aurora-blob {
+    display: none !important;
 }
 
 /* Nav */
