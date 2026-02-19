@@ -705,7 +705,8 @@ p {
 }
 
 .feature-card {
-    background: var(--bg-white);
+    background-color: white;
+    /* Explicit white base */
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 2.5rem 2rem;
@@ -716,29 +717,29 @@ p {
     z-index: 1;
 }
 
-/* Airbrush Effects */
+/* Airbrush Effects - Gradient ON TOP of white */
 .feature-card:nth-child(1) {
-    background: radial-gradient(circle at 50% 30%, rgba(121, 202, 231, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(121, 202, 231, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 .feature-card:nth-child(2) {
-    background: radial-gradient(circle at 50% 30%, rgba(255, 246, 124, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(255, 246, 124, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 .feature-card:nth-child(3) {
-    background: radial-gradient(circle at 50% 30%, rgba(255, 161, 194, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(255, 161, 194, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 .feature-card:nth-child(4) {
-    background: radial-gradient(circle at 50% 30%, rgba(121, 202, 231, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(121, 202, 231, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 .feature-card:nth-child(5) {
-    background: radial-gradient(circle at 50% 30%, rgba(255, 246, 124, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(255, 246, 124, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 .feature-card:nth-child(6) {
-    background: radial-gradient(circle at 50% 30%, rgba(255, 161, 194, 0.4) 0%, rgba(255, 255, 255, 0) 60%), var(--bg-white);
+    background-image: radial-gradient(circle at 50% 30%, rgba(255, 161, 194, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 
@@ -757,16 +758,24 @@ p {
     font-size: 3rem;
     /* Larger emoji */
     margin: 0 auto 1rem;
-    background: transparent;
-    box-shadow: none;
+    background: transparent !important;
+    /* Force transparent */
+    box-shadow: none !important;
+    border: none !important;
     position: relative;
     z-index: 2;
 }
 
+/* Ensure no child elements inside icon have background */
+.feature-icon * {
+    background: transparent !important;
+}
+
 /* Remove old specific icon coloring since we have airbrush cards */
 .feature-card:nth-child(n) .feature-icon {
-    background: white;
+    background: transparent !important;
     color: var(--text-primary);
+    box-shadow: none !important;
 }
 
 .feature-card h3 {
