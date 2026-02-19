@@ -730,19 +730,31 @@ p {
     margin: 0 auto 1.5rem;
 }
 
-.feature-card:nth-child(1) .feature-icon {
+.feature-card:nth-child(3n+1) .feature-icon {
     background: var(--yellow-light);
     color: var(--text-primary);
 }
 
-.feature-card:nth-child(2) .feature-icon {
+.feature-card:nth-child(3n+1):hover {
+    border-color: var(--yellow);
+}
+
+.feature-card:nth-child(3n+2) .feature-icon {
     background: var(--pink-light);
     color: var(--text-primary);
 }
 
-.feature-card:nth-child(3) .feature-icon {
+.feature-card:nth-child(3n+2):hover {
+    border-color: var(--pink);
+}
+
+.feature-card:nth-child(3n) .feature-icon {
     background: var(--blue-light);
     color: var(--text-primary);
+}
+
+.feature-card:nth-child(3n):hover {
+    border-color: var(--blue);
 }
 
 .feature-card h3 {
