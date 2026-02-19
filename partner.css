@@ -406,11 +406,12 @@ p {
 .demo-card {
     background: white;
     /* Explicit white background */
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius);
     border: 1.5px solid var(--border);
     box-shadow: var(--shadow-xl);
     overflow: hidden;
     margin-top: 2rem;
+    padding: 2rem;
 }
 
 /* Hide API Live-Tester label */
@@ -419,9 +420,9 @@ p {
 }
 
 .demo-header {
-    background: var(--bg-white);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 1.5rem;
+    background: transparent;
+    border-bottom: none;
+    padding: 0 0 1.5rem 0;
     display: flex;
     align-items: center;
     gap: 12px;
