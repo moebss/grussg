@@ -751,16 +751,14 @@ p {
 .feature-icon {
     width: 64px;
     height: 64px;
-    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    margin: 0 auto 1.5rem;
-    background: white;
-    /* Clean white background for icon */
-    box-shadow: var(--shadow-sm);
-    color: var(--text-primary);
+    font-size: 3rem;
+    /* Larger emoji */
+    margin: 0 auto 1rem;
+    background: transparent;
+    box-shadow: none;
     position: relative;
     z-index: 2;
 }
