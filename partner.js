@@ -112,10 +112,9 @@ document.getElementById('demoGenBtn')?.addEventListener('click', async () => {
         if (data.text) {
             document.getElementById('demoCardText').innerHTML = data.text.replace(/\n/g, '<br>');
             document.getElementById('demoTextEditor').value = data.text;
-            // Prioritize Omnia designs (1-3)
-            const mood = Math.floor(Math.random() * 3) + 1;
+            const mood = Math.floor(Math.random() * TOTAL_MOODS) + 1;
             document.getElementById('demoCardBg').src = `assets/templates/mood${mood}.jpg`;
-            document.getElementById('demoMeta').textContent = `✅ Generiert in <2s | Design: Omnia ${mood} | ${occasion} / ${tone}`;
+            document.getElementById('demoMeta').textContent = `✅ Generiert in <2s | Design: mood${mood} | ${occasion} / ${tone}`;
         } else {
             document.getElementById('demoCardText').textContent = data.error || 'Fehler bei der Generierung.';
         }
