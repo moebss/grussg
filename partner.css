@@ -86,11 +86,11 @@ section {
 }
 
 section:nth-of-type(odd) {
-    background-color: #f5f0e8;
+    background-color: #f8f4ee;
 }
 
 section:nth-of-type(even) {
-    background-color: #eee8d8;
+    background-color: #f0ebe1;
 }
 
 /* Typography */
