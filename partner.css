@@ -85,6 +85,14 @@ section {
     padding: 5rem 0;
 }
 
+section:nth-of-type(odd) {
+    background-color: #f5f0e8;
+}
+
+section:nth-of-type(even) {
+    background-color: #eee8d8;
+}
+
 /* Typography */
 h1,
 h2,
