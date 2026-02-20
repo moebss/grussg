@@ -1733,5 +1733,18 @@ div {
 }
 
 .hero h1 .gradient {
-    -webkit-text-fill-color: #000000 !important;
+    background-image:
+        /* Ultra Coarse Noise Texture */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.25' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfuncA type='linear' slope='10' intercept='-5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.9'/%3E%3C/svg%3E"),
+        /* Vibrant Gradient */
+        linear-gradient(90deg, #79cae7 0%, #fff67c 50%, #ffa1c2 100%);
+    background-blend-mode: hard-light, normal;
+    background-size: 150px 150px, 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    display: inline-block;
+    padding: 0 5px;
+    /* prevent clipping on edges */
 }
