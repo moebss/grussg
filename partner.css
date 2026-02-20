@@ -1589,29 +1589,16 @@ p {
 }
 
 /* ===========================
-   CONFETTI PATTERN (CTA)
+   GRAINY TEXTURE (CTA)
    =========================== */
 .cta-section {
     position: relative;
     padding: 6rem 2rem;
-    /* Vibrant Gradient Base */
-    /* Vibrant Pink Base + White Confetti */
     background-color: #FFA1C2;
     background-image:
-        /* Confetti Layer */
-        radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.6) 2px, transparent 3px),
-        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.6) 2px, transparent 3px),
-        radial-gradient(circle at 35% 70%, rgba(255, 255, 255, 0.6) 2px, transparent 3px),
-        radial-gradient(circle at 45% 20%, rgba(255, 255, 255, 0.5) 1.5px, transparent 2.5px),
-        radial-gradient(circle at 55% 80%, rgba(255, 255, 255, 0.5) 1.5px, transparent 2.5px),
-        radial-gradient(circle at 65% 40%, rgba(255, 255, 255, 0.6) 2px, transparent 3px),
-
-        /* Subtle noise texture as overlay */
-        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-
-    background-size: 250px 250px, 250px 250px, 250px 250px, 180px 180px, 180px 180px, 180px 180px, 40px 40px, 40px 40px;
-    background-repeat: repeat;
+        /* Ultra Coarse Noise Texture */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.25' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfuncA type='linear' slope='10' intercept='-5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.9'/%3E%3C/svg%3E");
+    background-blend-mode: hard-light;
     border-radius: 32px;
     text-align: center;
     color: var(--text-inverse);
