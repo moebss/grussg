@@ -34,8 +34,8 @@
 
     --radius: 20px;
     --radius-sm: 12px;
-    --font-heading: 'Instrument Serif', serif;
-    --font-body: 'Instrument Serif', serif;
+    --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 *,
@@ -1747,46 +1747,4 @@ div {
     display: inline-block;
     padding: 0 5px;
     /* prevent clipping on edges */
-}
-
-/* === INSTRUMENT SERIF FIXES === */
-h1,
-h2,
-h3,
-h4,
-.hero-stat-num,
-.price-amount,
-.dash-card h2,
-.cta-section h2 {
-    font-weight: 400 !important;
-    letter-spacing: 0 !important;
-    line-height: 1.1 !important;
-    transform: scaleY(1.05);
-    /* FAKE BOLD FOR INSTRUMENT SERIF */
-    -webkit-text-stroke: 0.5px currentColor;
-    text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
-}
-
-body,
-p,
-a,
-span,
-button,
-input,
-select,
-textarea,
-label {
-    font-weight: 400 !important;
-    letter-spacing: 0.02em !important;
-    /* SLIGHT FAKE BOLD FOR BODY */
-    -webkit-text-stroke: 0.2px currentColor;
-}
-
-.hero h1 {
-    font-size: clamp(3.8rem, 7vw, 6rem) !important;
-    line-height: 1.05 !important;
-}
-
-.hero-sub {
-    font-size: 1.4rem !important;
 }
