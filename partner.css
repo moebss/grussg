@@ -12,9 +12,9 @@
     --bg-dark: #0F0D0A;
 
     /* Typography */
-    --text-primary: #0F0D0A;
-    --text-secondary: #3D3830;
-    --text-muted: #8A8278;
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-muted: #000000;
     --text-inverse: #F5F0E8;
 
     /* Accents */
