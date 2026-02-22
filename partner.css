@@ -232,15 +232,122 @@ p {
    HERO
    =========================== */
 .hero {
-    text-align: center;
+    text-align: left;
     padding: 6rem 1rem 5rem;
+    overflow: hidden;
 }
 
-.hero .container {
-    max-width: 860px;
+.hero .hero-split {
+    max-width: 1200px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
 }
 
+.hero-visual {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    perspective: 1000px;
+}
+
+.floating-card {
+    position: absolute;
+    width: 240px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    background: white;
+    border: 1px solid var(--border);
+    transition: transform 0.4s ease-out;
+    transform-style: preserve-3d;
+}
+
+.floating-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    display: block;
+}
+
+.card-front {
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    animation: float1 6s ease-in-out infinite;
+    transform: translate(-50%, -50%) rotateY(-5deg) rotateX(5deg);
+}
+
+.card-back {
+    top: 35%;
+    left: 20%;
+    z-index: 2;
+    animation: float2 7s ease-in-out infinite 1s;
+    transform: translate(-50%, -50%) rotate(-8deg) scale(0.9) translateZ(-50px);
+    opacity: 0.85;
+}
+
+.card-back-2 {
+    top: 65%;
+    left: 80%;
+    z-index: 1;
+    animation: float3 8s ease-in-out infinite 0.5s;
+    transform: translate(-50%, -50%) rotate(12deg) scale(0.85) translateZ(-100px);
+    opacity: 0.7;
+}
+
+.hero-visual:hover .card-front {
+    transform: translate(-50%, -55%) rotateY(0deg) rotateX(0deg) scale(1.05);
+}
+
+.hero-visual:hover .card-back {
+    transform: translate(-60%, -40%) rotate(-12deg) scale(0.95) translateZ(-30px);
+    opacity: 1;
+}
+
+.hero-visual:hover .card-back-2 {
+    transform: translate(-30%, -60%) rotate(18deg) scale(0.9) translateZ(-60px);
+    opacity: 0.9;
+}
+
+@keyframes float1 {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotateY(-5deg) rotateX(5deg);
+    }
+
+    50% {
+        transform: translate(-50%, -55%) rotateY(-3deg) rotateX(8deg);
+    }
+}
+
+@keyframes float2 {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(-8deg) scale(0.9) translateZ(-50px);
+    }
+
+    50% {
+        transform: translate(-50%, -48%) rotate(-6deg) scale(0.9) translateZ(-50px);
+    }
+}
+
+@keyframes float3 {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(12deg) scale(0.85) translateZ(-100px);
+    }
+
+    50% {
+        transform: translate(-50%, -52%) rotate(10deg) scale(0.85) translateZ(-100px);
+    }
+}
+
+/* Base resets */
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -1637,6 +1744,15 @@ p {
 
     .hero {
         padding: 4rem 1rem;
+    }
+
+    .hero .hero-split {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .hero-visual {
+        height: 350px;
     }
 
     .hero h1 {
