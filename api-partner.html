@@ -21,7 +21,7 @@
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;900&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&family=Indie+Flower&family=Kalam:wght@400;700&family=Comic+Neue:wght@400;700&family=Lobster&family=Sacramento&family=Shadows+Into+Light&family=Fredericka+the+Great&family=Patrick+Hand&display=swap"
         rel="stylesheet">
     <link rel="icon" href="assets/favicon.png" type="image/png">
-    <link rel="stylesheet" href="partner.css?v=20">
+    <link rel="stylesheet" href="partner.css?v=21">
 </head>
 
 <body>
@@ -61,7 +61,12 @@
                 <div class="hero-badge">
                     <div class="dot"></div> Live – Jetzt testen
                 </div>
-                <h1>Deine Grußkarte – <br>KI textet. KI designt.<br><span class="gradient">Du begeisterst.</span></h1>
+                <h1>
+                    Deine Grußkarte – <br>
+                    <span id="typewriter-text"></span><span class="typewriter-cursor">|</span><br>
+                    <span id="headline-highlight" class="gradient" style="opacity: 0; transition: opacity 0.8s ease;">Du
+                        begeisterst.</span>
+                </h1>
                 <p class="hero-sub">Text + fertige Kartenbilder per API – in unter einer Stunde integriert. 27 Designs,
                     15 Anlässe, 7 Sprachen.</p>
                 <div class="btn-group">
@@ -638,6 +643,33 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"
         crossorigin="anonymous"></script>
     <script src="partner.js"></script>
+
+    <script>
+        // TYPEWRITER EFFECT
+        document.addEventListener('DOMContentLoaded', () => {
+            const textToType = 'KI textet. KI designt.';
+            const typeContainer = document.getElementById('typewriter-text');
+            const highlightWord = document.getElementById('headline-highlight');
+            let index = 0;
+            const typingSpeed = 60; // ms per character
+
+            function typeWriter() {
+                if (index < textToType.length) {
+                    typeContainer.textContent += textToType.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                    // Start fading in the specific word afterwards
+                    setTimeout(() => {
+                        highlightWord.style.opacity = '1';
+                    }, 200);
+                }
+            }
+
+            // Start typing after a short delay
+            setTimeout(typeWriter, 500);
+        });
+    </script>
 </body>
 
 </html>
