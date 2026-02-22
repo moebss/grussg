@@ -1731,18 +1731,38 @@ div {
 }
 
 .hero h1 .gradient {
+    position: relative;
     background-image:
         /* Ultra Coarse Noise Texture */
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.25' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfuncA type='linear' slope='10' intercept='-5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.9'/%3E%3C/svg%3E"),
-        /* Solid Pink Gradient for background-image */
-        linear-gradient(0deg, #ffa1c2, #ffa1c2);
+        /* Moving Vibrant Gradient Layer */
+        linear-gradient(90deg, #ffa1c2, #ffb6c1, #ffa1c2, #e8607a, #ffa1c2);
+    /* Hard-light for strong contrast of the grain against colors */
     background-blend-mode: hard-light, normal;
-    background-size: 150px 150px, 100% 100%;
+    background-size: 150px 150px, 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent !important;
     color: transparent !important;
     display: inline-block;
     padding: 0 5px;
-    /* prevent clipping on edges */
+    animation: gradientPan 8s linear infinite;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+}
+
+.hero h1 .gradient:hover {
+    transform: scale(1.05) rotate(-1deg);
+    animation: gradientPan 3s linear infinite;
+}
+
+@keyframes gradientPan {
+    0% {
+        background-position: 0% 50%, 0% 50%;
+    }
+
+    100% {
+        background-position: 150px 50%, 300% 50%;
+        /* Moves noise slightly, moves gradient full cycle */
+    }
 }
