@@ -21,7 +21,7 @@
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;900&family=Caveat:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;700&family=Satisfy&family=Great+Vibes&family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Playfair+Display:wght@400;700&family=Indie+Flower&family=Kalam:wght@400;700&family=Comic+Neue:wght@400;700&family=Lobster&family=Sacramento&family=Shadows+Into+Light&family=Fredericka+the+Great&family=Patrick+Hand&display=swap"
         rel="stylesheet">
     <link rel="icon" href="assets/favicon.png" type="image/png">
-    <link rel="stylesheet" href="partner.css?v=24">
+    <link rel="stylesheet" href="partner.css?v=26">
 </head>
 
 <body>
@@ -300,6 +300,58 @@
                             <li>Custom Designs</li>
                             <li>Priority Support</li>
                         </ul><a href="mailto:api@grussgenerator.de" class="price-btn price-btn-outline">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">FAQ</div>
+                    <h2>Häufig gestellte Fragen</h2>
+                </div>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Wie lange dauert die Integration?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Dank unserer fertigen Snippets und der einfachen REST-API dauert die Einbindung der
+                                Engine in deine App oder Website meist weniger als eine Stunde.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Kann ich das Design anpassen?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ja! Das gesamte UI der Grußkarten-Erstellung lässt sich per CSS anpassen. Eigene Sticker,
+                                Logos und Hintergründe sind im Enterprise-Plan verfügbar.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Gibt es ein Rate-Limit?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Im kostenlosen Entwickler-Plan hast du 50 Requests pro Tag. Darüber hinaus gibt es
+                                flexible, skalierbare Tarife für hohes Volumen in Produktion.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Können die erstellten Bilder kommerziell genutzt werden?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Als API-Partner in den Bezahl-Tarifen liegen die vollständigen Nutzungsrechte der
+                                generierten Grafiken bei dir und deinen Endnutzern.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -690,6 +742,26 @@
             // Start typing after a short delay
             setTimeout(typeWriter, 500);
         });
+
+        // FAQ ACCORDION
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const questionBtn = item.querySelector('.faq-question');
+                questionBtn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    // Close all others
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+                    // Toggle current
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+
         // COUNTER ANIMATION
         document.addEventListener("DOMContentLoaded", () => {
             const counters = document.querySelectorAll(".hero-stat-num");
