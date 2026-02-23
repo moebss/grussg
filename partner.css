@@ -1776,61 +1776,7 @@ p {
     }
 }
 
-/* === FORCE ALL TEXT BLACK === */
-:root {
-    --text-inverse: #000000 !important;
-}
 
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-a,
-span,
-label,
-input,
-select,
-textarea,
-button,
-.section-label,
-.demo-label,
-.mini-card-text,
-.result-meta,
-div {
-    color: #000000 !important;
-}
-
-/* Fix black backgrounds */
-.nav-cta,
-.demo-font.active,
-.demo-align-btn.active,
-.occasion-btn.active,
-.design-tab-btn.active,
-.font-mini.active,
-.price-btn-primary,
-.cta-section .btn-secondary {
-    background: #ffffff !important;
-    border: 2px solid #000000 !important;
-    color: #000000 !important;
-}
-
-.nav-cta:hover,
-.demo-font.active:hover,
-.demo-align-btn.active:hover,
-.occasion-btn.active:hover,
-.design-tab-btn.active:hover,
-.btn-primary:hover {
-    background: var(--yellow) !important;
-    color: #000000 !important;
-}
-
-.price-card.featured::before {
-    background: var(--yellow) !important;
-    color: #000000 !important;
-    border: 1px solid #000;
-}
 
 .hero h1 .gradient {
     position: relative;
