@@ -63,6 +63,13 @@ body {
     min-height: 100vh;
 }
 
+input,
+button,
+textarea,
+select {
+    font-family: inherit;
+}
+
 /* Hide generator.css background */
 .aurora-background,
 .aurora-blob {
