@@ -152,6 +152,12 @@ p {
     gap: 8px;
 }
 
+.nav-brand-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+}
+
 .nav-brand span {
     color: var(--text-primary);
 }
