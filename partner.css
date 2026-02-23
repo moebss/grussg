@@ -4,39 +4,40 @@
    =========================== */
 
 /* --- Design Tokens --- */
-/* Base – warm ecru/cream */
---bg-base: #F2EFE7;
---bg-white: #FFFFFF;
---bg-subtle: #E8E4DB;
---bg-dark: #1A1A1A;
+:root {
+    /* Base – warm ecru/cream */
+    --bg-base: #F2EFE7;
+    --bg-white: #FFFFFF;
+    --bg-subtle: #E8E4DB;
+    --bg-dark: #1A1A1A;
 
-/* Typography */
---text-primary: #1A1A1A;
---text-secondary: #000000;
---text-muted: rgba(26, 26, 26, 0.7);
---text-inverse: #F2EFE7;
+    /* Typography */
+    --text-primary: #1A1A1A;
+    --text-secondary: #000000;
+    --text-muted: rgba(26, 26, 26, 0.7);
+    --text-inverse: #F2EFE7;
 
-/* Accents */
---yellow: #F5C518;
---yellow-light: #FCE89B;
+    /* Accents */
+    --yellow: #F5C518;
+    --yellow-light: #FCE89B;
 
-/* UI neutrals */
---border: rgba(15, 13, 10, 0.1);
---border-strong: rgba(15, 13, 10, 0.2);
---shadow-sm: 0 2px 8px rgba(15, 13, 10, 0.06);
---shadow-md: 0 4px 24px rgba(15, 13, 10, 0.1);
---shadow-lg: 0 8px 48px rgba(15, 13, 10, 0.14);
+    /* UI neutrals */
+    --border: rgba(15, 13, 10, 0.1);
+    --border-strong: rgba(15, 13, 10, 0.2);
+    --shadow-sm: 0 2px 8px rgba(15, 13, 10, 0.06);
+    --shadow-md: 0 4px 24px rgba(15, 13, 10, 0.1);
+    --shadow-lg: 0 8px 48px rgba(15, 13, 10, 0.14);
 
---radius: 20px;
---radius-sm: 12px;
---font-heading: 'Archivo',
-system-ui,
--apple-system,
-sans-serif;
---font-body: 'Archivo',
-system-ui,
--apple-system,
-sans-serif;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --font-heading: 'Archivo',
+        system-ui,
+        -apple-system,
+        sans-serif;
+    --font-body: 'Archivo',
+        system-ui,
+        -apple-system,
+        sans-serif;
 }
 
 *,
